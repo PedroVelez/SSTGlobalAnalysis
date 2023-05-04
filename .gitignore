@@ -1,0 +1,10 @@
+*.*~
+*._*
+*.log
+*.nc
+*.png
+**/Info/*
+.DS_Store
+.AppleDouble
+data/*
+images/*
