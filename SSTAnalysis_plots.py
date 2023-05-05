@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 from matplotlib.dates import DateFormatter
 matplotlib.use('agg')
 
-Titulos = ['Oceano Global']
-Titulos_short = ['GO']
+Titulos = ['Oceano Global','Hemisferio norte']
+Titulos_short = ['GO','NH']
 
 ## Funciones
 

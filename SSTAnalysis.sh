@@ -6,14 +6,19 @@ strval=$(uname -a)
 if [[ $strval == *EemmMBP* ]];
 then
 imagesDir=$HOME/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/images
-conda activate ocean
-/Users/pvb/miniconda3/envs/ocean/bin/python SSTAnalysis_daily_Plots.py
+pythonDir=/Users/pvb/miniconda3/envs/ocean/bin
+
 fi
 
 if [[ $strval == *rossby* ]];
 then
-  MatVersion=/usr/bin/matlab
+imagesDir=$HOME/Analisis/SSTGlobalAnalysis/images
+pythonDir=/opt/conda/bin/python
 fi
+
+conda activate ocean
+$pythonDir/SSTAnalysis_data.py
+$pythonDir/SSTAnalysis_plots.py
 
 
 URL="https://api.telegram.org/bot$ArgoEsBotTOKEN/sendMessage"
