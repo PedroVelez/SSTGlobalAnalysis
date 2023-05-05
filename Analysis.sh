@@ -13,11 +13,12 @@ fi
 if [[ $strval == *rossby* ]];
 then
 imagesDir=$HOME/Analisis/SSTGlobalAnalysis/images
-pythonDir=/opt/conda/bin/python
+pythonDir=/opt/conda/envs/ocean/bin/python
 fi
 
-/opt/conda/bin/conda activate ocean
-#$pythonDir Analysis_DownloadData.py
+source /opt/conda/bin/activate ocean
+
+$pythonDir Analysis_DownloadData.py
 #$pythonDir Analysis_data.py
 $pythonDir Analysis_plots.py
 
