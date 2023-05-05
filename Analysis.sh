@@ -24,10 +24,10 @@ printf "  pythonDir $pythonDir \n"
 
 
 printf "   > Download data SSTs \n"
-#$pythonDir/Analysis_DownloadData.py
+$pythonDir/Analysis_DownloadData.py
 
 printf "   > Update SSTs \n"
-#$pythonDir/Analysis_data.py
+$pythonDir/Analysis_data.py
 
 printf "   > Plots SSTs \n"
 $pythonDir Analysis_plots.py
