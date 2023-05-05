@@ -7,10 +7,13 @@ import matplotlib.pyplot as plt
 from matplotlib.dates import DateFormatter
 matplotlib.use('agg')
 
-Titulos = ['Oceano Global','Hemisferio norte']
-Titulos_short = ['GO','NH']
+#Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur']
+#Titulos_short = ['GO','NH','SH']
 
 ## Funciones
+
+Titulos = ['Hemisferio sur']
+Titulos_short = ['SH']
 
 def FiguraSerieTemporal(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
 ## Serie temporal anotada con valores maximos y minimos
@@ -59,7 +62,7 @@ def FiguraSerieTemporal(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
                  ' (' + d_tmin.dt.strftime("%d %B %Y").values + ')' + 
                  '\n' +
               "[" + sstd.time[0].dt.strftime("%d %B %Y").values + "-"+ sstd.time[-1].dt.strftime("%d %B %Y").values + "]");
-    ax.set_ylim(Ymin,Ymax)
+    #ax.set_ylim(Ymin,Ymax)
     plt.savefig(FileOut)
     
 #----def FiguraSerieTemporal
@@ -102,7 +105,7 @@ def FiguraSerieTemporal_anual(sst,Xlabel,Ylabel,TituloFigura,FileOut,Ymin,Ymax):
     ax.text(df.index[indLastData], df[currentYear][indLastData], 
                 '%2.3f ºC '%(sst[-1].values) + ' - ' + sstd.time[-1].dt.strftime("%d %B %Y").values,
                 horizontalalignment = 'center' , verticalalignment = 'top' ,
-                bbox = dict(facecolor = 'gray' , alpha=0.8))
+                bbox = dict(facecolor = 'lightgray' , alpha=0.8))
 
     
     ax.set_xlim(df.index[0],df.index[365])
@@ -119,7 +122,7 @@ def FiguraSerieTemporal_anual(sst,Xlabel,Ylabel,TituloFigura,FileOut,Ymin,Ymax):
                  'Max: ' + "%2.3f ºC"%(sst.isel(sst.argmax(...)).values) +
                  ' (' + sst.time.isel(sst.argmax(...)).dt.strftime("%d %B %Y").values + ')' + '\n' +
                  '['+sstd.time[0].dt.strftime("%d %B %Y").values + "-"+ sstd.time[-1].dt.strftime("%d %B %Y").values + ']');
-    ax.set_ylim(Ymin,Ymax)
+    #ax.set_ylim(Ymin,Ymax)
     plt.savefig(FileOut)
 
 #---FiguraSerieTemporal_anual
@@ -135,26 +138,28 @@ for i in range(0,len(Titulos)):
     titulo = Titulos[i]
     titulo_short = Titulos_short[i]
     
+    print('>>>>> Figuras: '+titulo+titulo_short)
+    
     # Daily data
-    data = xr.open_dataset('./data/sstd_'+titulo_short+'mean.nc')
+    data = xr.open_dataset('./data/sstd_mean_'+titulo_short+'.nc')
     sstd = data.sst
-    data = xr.open_dataset('./data/sstd_anom_'+titulo_short+'mean.nc')
+    data = xr.open_dataset('./data/sstd_anom_mean_'+titulo_short+'.nc')
     sstd_anom = data.sst
 
     # Monthly data
-    data = xr.open_dataset('./data/sstm_'+titulo_short+'mean.nc')
+    data = xr.open_dataset('./data/sstm_mean_'+titulo_short+'.nc')
     sstm = data.sst
-    data = xr.open_dataset('./data/sstm_anom_'+titulo_short+'mean.nc')
+    data = xr.open_dataset('./data/sstm_anom_mean_'+titulo_short+'.nc')
     sstm_anom = data.sst
     
     ## Times series mean Sea Surface Temperature
     Title1  = 'Temperatura superficial promedio en el '+ titulo
-    File1 = './images/sstd_'+titulo_short+'_mean.png'
+    File1 = './images/sstd_mean_'+titulo_short+'.png'
     FiguraSerieTemporal(sstd,Ylabel,Xlabel,Title1,File1,17.5,19)
     
     ## Times series mean Sea Surface Temperature anomaly 
     Title2  = 'Anomalia de temperatura superficial promedio en el '+ titulo + '\nAnomalia respecto de 1982-1992'
-    File2 = './images/sstd_anom_'+titulo_short+'_mean.png'
+    File2 = './images/sstd_anom_mean_'+titulo_short+'.png'
     FiguraSerieTemporal(sstd_anom,Ylabel,Xlabel,Title2,File2,-0.25,0.8,)
     
     ## Daily times series Sea Surface Temperature
