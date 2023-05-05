@@ -99,10 +99,10 @@ def FiguraSerieTemporal_anual(sst,Xlabel,Ylabel,TituloFigura,FileOut,Ymin,Ymax):
                             label='1.5*std')
 
 
-    ax.text(df.index[indLastData], df[currentYear][indLastData] + dTText, 
+    ax.text(df.index[indLastData], df[currentYear][indLastData], 
                 '%2.3f ºC '%(sst[-1].values) + ' - ' + sstd.time[-1].dt.strftime("%d %B %Y").values,
                 horizontalalignment = 'center' , verticalalignment = 'top' ,
-                bbox = dict(facecolor = 'white' , alpha=0.5))
+                bbox = dict(facecolor = 'gray' , alpha=0.8))
 
     
     ax.set_xlim(df.index[0],df.index[365])
@@ -121,6 +121,7 @@ def FiguraSerieTemporal_anual(sst,Xlabel,Ylabel,TituloFigura,FileOut,Ymin,Ymax):
                  '['+sstd.time[0].dt.strftime("%d %B %Y").values + "-"+ sstd.time[-1].dt.strftime("%d %B %Y").values + ']');
     ax.set_ylim(Ymin,Ymax)
     plt.savefig(FileOut)
+
 #---FiguraSerieTemporal_anual
     
 Ylabel  = 'Temperatura[($^\circ$C)]'
