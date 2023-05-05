@@ -7,14 +7,10 @@ import matplotlib.pyplot as plt
 from matplotlib.dates import DateFormatter
 matplotlib.use('agg')
 
-#Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur']
-#Titulos_short = ['GO','NH','SH']
+Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur']
+Titulos_short = ['GO','NH','SH']
 
 ## Funciones
-
-Titulos = ['Hemisferio sur']
-Titulos_short = ['SH']
-
 def FiguraSerieTemporal(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
 ## Serie temporal anotada con valores maximos y minimos
 

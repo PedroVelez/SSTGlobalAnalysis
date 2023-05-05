@@ -17,8 +17,9 @@ pythonDir=/opt/conda/bin/python
 fi
 
 conda activate ocean
-$pythonDir/SSTAnalysis_data.py
-$pythonDir/SSTAnalysis_plots.py
+$pythonDir/Analysis_DownloadData.py
+$pythonDir/Analysis_data.py
+$pythonDir/Analysis_plots.py
 
 
 URL="https://api.telegram.org/bot$ArgoEsBotTOKEN/sendMessage"
