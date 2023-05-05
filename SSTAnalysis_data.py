@@ -19,7 +19,7 @@ if os.uname().nodename.lower().find('eemmmbp') != -1:
 elif os.uname().nodename.lower().find('rossby') != -1:
     base_file = '/data/shareddata/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
 
-files = [f'{base_file}.{year}.nc' for year in range(1982, 1985)]
+files = [f'{base_file}.{year}.nc' for year in range(1982, 2024)]
 DS = xr.open_mfdataset(files)
 
 for i in range(0,len(Titulos)):
