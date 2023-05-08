@@ -24,10 +24,10 @@ printf "  pythonDir $pythonDir \n"
 
 
 printf "   > Download data SSTs \n"
-$pythonDir/Analysis_DownloadData.py
+$pythonDir Analysis_DownloadData.py
 
 printf "   > Update SSTs \n"
-$pythonDir/Analysis_data.py
+$pythonDir Analysis_data.py
 
 printf "   > Plots SSTs \n"
 $pythonDir Analysis_plots.py
@@ -42,8 +42,7 @@ URLimg="https://api.telegram.org/bot$ArgoEsBotTOKEN/sendphoto?chat_id=$ArgoEsCha
 MENSAJE="Global Analisis SST"
 
 curl -s -X POST $URL -d chat_id=$ArgoEsChannel -d text="$MENSAJE" -d parse_mode=html
-curl -F "photo=@$imagesDir/sstd_GO_mean.png" $URLimg -F caption="Global SST mean anomlay"
-curl -F "photo=@$imagesDir/sstd_anom_GO_mean.png" $URLimg -F caption="Global SST mean anomlay"
-curl -F "photo=@$imagesDir/sstd_GO.png" $URLimg -F caption="Global SST mean anomlay"
-curl -F "photo=@$imagesDir/sstd_anom_GO.png" $URLimg -F caption="Global SST mean anomlay"
+#curl -F "photo=@$imagesDir/sstd_mean_GO.png" $URLimg -F caption="Global SST mean anomlay"
+curl -F "photo=@$imagesDir/sstd_anom_mean_GO.png" $URLimg -F caption="Global SST mean anomlay"
+curl -F "photo=@$imagesDir/sstd_GO.png" $URLimg -F caption="Global SST"
 
