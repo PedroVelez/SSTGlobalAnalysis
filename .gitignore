@@ -3,6 +3,7 @@
 *.log
 *.nc
 *.png
+Prueba*
 **/Info/*
 .DS_Store
 .AppleDouble
