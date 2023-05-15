@@ -34,20 +34,20 @@ land = cartopy.feature.NaturalEarthFeature('physical',
 ax.add_feature(land, facecolor='beige')
 ax.add_feature(cfeature.LAND)
     
-#ax.set_extent([-180 , 180, -85,85], crs=ccrs.PlateCarree())
-
-
-cm=ax.contourf(sst.lon,sst.lat,sst, levels=np.arange(-4,4.1,0.1), 
+cm=ax.contourf(sst.lon,sst.lat,sst, levels=np.arange(-4,4.1,0.25), 
                transform=ccrs.PlateCarree(),
                cmap = plt.cm.RdBu.reversed(),
                vmin = -4,vmax = 4,extend='both')
 
-ax.contour(sst.lon,sst.lat,sst, levels=[2,3], colors='k',
-               transform=ccrs.PlateCarree())
+#ax.contour(sst.lon,sst.lat,sst, levels=[2,3], colors='k',
+#               transform=ccrs.PlateCarree())
 
 cbar=fig.colorbar(cm,ax=ax, location='bottom',
-                  shrink=.8, ticks=[-4,-2,0,2,4], drawedges=True)
-ax.gridlines(draw_labels=True, linewidth=.5, color='gray', alpha=0.5, linestyle='--')
+                  shrink=.8, ticks=[-4,-2,0,2,4], 
+                  drawedges=True)
+
+ax.gridlines(draw_labels=True, linewidth=.5, 
+             color='gray', alpha=0.5, linestyle='--')
 
 ax.set_title(Title + '\n' +
              sst.time.dt.strftime("%d %B %Y").values);

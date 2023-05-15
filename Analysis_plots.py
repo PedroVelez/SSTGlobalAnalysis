@@ -6,6 +6,9 @@ import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.dates import DateFormatter
 matplotlib.use('agg')
+import warnings
+warnings.filterwarnings("ignore")
+
 
 Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur']
 Titulos_short = ['GO','NH','SH']
@@ -86,9 +89,13 @@ def FiguraSerieTemporal_anual(sst,Xlabel,Ylabel,TituloFigura,FileOut,Ymin,Ymax):
     fig, ax = plt.subplots(figsize=(14,8))
 
     ax.plot(df.index,df[currentYear],'b',linewidth='3',label=currentYear)
+    for year in range(currentYear-6,1981,-1):
+        ax.plot(df.index,df[year],color='#D3D3D3')
+
     for year in range(currentYear-1,currentYear-6,-1):
         ax.plot(df.index,df[year],label=year)
 
+        
     ax.plot(df.index,df[1982],label='1982')
 
     ax.plot(df.index[indLastData],df[currentYear][indLastData],'bo', markersize=12)
@@ -98,7 +105,7 @@ def FiguraSerieTemporal_anual(sst,Xlabel,Ylabel,TituloFigura,FileOut,Ymin,Ymax):
                             label='1.5*std')
 
 
-    ax.text(df.index[indLastData], df[currentYear][indLastData], 
+    ax.text(df.index[indLastData], df[currentYear][indLastData] + dTText, 
                 '%2.3f ºC '%(sst[-1].values) + ' - ' + sstd.time[-1].dt.strftime("%d %B %Y").values,
                 horizontalalignment = 'center' , verticalalignment = 'top' ,
                 bbox = dict(facecolor = 'lightgray' , alpha=0.8))

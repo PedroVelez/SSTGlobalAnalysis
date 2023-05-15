@@ -2,43 +2,43 @@
 source $HOME/.zshrc
 source $HOME/.telegram
 
+printf ">>>> Updating analisis global SSTs \n"
+
 strval=$(uname -a)
+printf "   > $strval\n"
+
 if [[ $strval == *EemmMBP* ]];
 then
-  imagesDir=$HOME/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/images
+  analisisDir=$HOME/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis
   pythonDir=/Users/pvb/miniconda3/envs/ocean/bin/python
-
 fi
 if [[ $strval == *rossby* ]];
 then
-  dataDir=$HOME/Analisis/SSTGlobalAnalysis/data
-  imagesDir=$HOME/Analisis/SSTGlobalAnalysis/images
+  analisisDir=$HOME/Analisis/SSTGlobalAnalysis
   pythonDir=/opt/conda/envs/ocean/bin/python
 fi
 
 #------------------------------------
 #Inicio
 #------------------------------------
-printf ">>>> Updating SSTs \n"
-printf "  imagesDir $imagesDir \n"
-printf "  dataDir $dataDir \n"
-printf "  pythonDir $pythonDir \n"
+printf "   > Directorio $analisisDir \n"
 
-/bin/rm $dataDir/*.nc
-/bin/rm $imagesDir/*.png
+/bin/rm $analisisDir/Analysis.log
+/bin/touch $analisisDir/Analysis.log
 
 printf "   > Download data SSTs \n"
-$pythonDir Analysis_DownloadData.py
+#$pythonDir Analysis_DownloadData.py >> $analisisDir/Analysis.log
 
-printf "   > Update SSTs \n"
-$pythonDir Analysis_data.py
+printf "   > Update data SSTs \n"
+/bin/rm $analisisDir/data/*.nc
+$pythonDir Analysis_data.py >> $analisisDir/Analysis.log
 
 printf "   > Plots SSTs \n"
-$pythonDir Analysis_plots.py
+#/bin/rm $analisisDir/images/*.png
+#$pythonDir Analysis_plots.py >> $analisisDir/Analysis.log
 
 printf "   > Plots Mapa anomalia \n"
-$pythonDir Analysis_plots_maps.py
-
+#$pythonDir Analysis_plots_maps.py >> $analisisDir/Analysis.log
 
 #------------------------------------
 #TelegramBot
@@ -46,10 +46,10 @@ $pythonDir Analysis_plots_maps.py
 
 URL="https://api.telegram.org/bot$ArgoEsBotTOKEN/sendMessage"
 URLimg="https://api.telegram.org/bot$ArgoEsBotTOKEN/sendphoto?chat_id=$ArgoEsChannel"
-MENSAJE="Global Analisis SST"
+URLdoc="https://api.telegram.org/bot$ArgoEsBotTOKEN/sendDocument?chat_id=$ArgoEsChannel"
 
-curl -s -X POST $URL -d chat_id=$ArgoEsChannel -d text="$MENSAJE" -d parse_mode=html
-#curl -F "photo=@$imagesDir/sstd_mean_GO.png" $URLimg -F caption="Global SST mean anomlay"
-curl -F "photo=@$imagesDir/sstd_anom_mean_GO.png" $URLimg -F caption="Global SST mean anomlay"
-curl -F "photo=@$imagesDir/sstd_GO.png" $URLimg -F caption="Global SST"
-curl -F "photo=@$imagesDir//map_sstd_anom_GO.png" $URLimg -F caption="Map Anomalia SST"
+curl -s -X POST $URL -d chat_id=$ArgoEsChannel -d text="Global Analisis SST" -d parse_mode=html >> $analisisDir/Analysis.log
+curl -F "photo=@$analisisDir/images/sstd_anom_mean_GO.png" $URLimg -F caption="Global SST mean anomlay" >> $analisisDir/Analysis.log
+curl -F "photo=@$analisisDir/images/sstd_GO.png" $URLimg -F caption="Global SST" >> $analisisDir/Analysis.log
+curl -F "photo=@$analisisDir/images/map_sstd_anom_GO.png" $URLimg -F caption="Map Anomalia SST" >> $analisisDir/Analysis.log
+#curl -F "document=@$analisisDir/Analysis.log" $URLdoc >> $analisisDir/Analysis.log
