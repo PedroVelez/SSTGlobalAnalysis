@@ -13,14 +13,12 @@ year2='1992'
 Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur']
 Titulos_short = ['GO','NH','SH']
 
-#Titulos = ['Oceano Global']
-#Titulos_short = ['GO']
-
 # Load data
 if os.uname().nodename.lower().find('eemmmbp') != -1:
     base_file = '/Users/pvb/Dropbox/Oceanografia/Data/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
 elif os.uname().nodename.lower().find('rossby') != -1:
     base_file = '/data/shareddata/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
+    dataDir = '/home/pvb/Analisis/SSTGlobalAnalysis/data'
 
 print('>>>>> Cargando ficheros de '+base_file)
 files = [f'{base_file}.{year}.nc' for year in range(1982, 2024)]
@@ -69,12 +67,12 @@ for i in range(0,len(Titulos)):
 
 ## Save in netcdf
     print('    > Save to netcdf')
-    sst_wmean.to_netcdf('./data/sstd_mean_'+titulo_short+'.nc',mode='w')
-    sst_anom_wmean.to_netcdf('./data/sstd_anom_mean_'+titulo_short+'.nc',mode='w')
-    #sst_clim.to_netcdf('./data/sstd_clim_'+titulo_short+'.nc',mode='w')    
+    sst_wmean.to_netcdf(dataDir+'/sstd_mean_'+titulo_short+'.nc',mode='w')
+    sst_anom_wmean.to_netcdf(dataDir+'/sstd_anom_mean_'+titulo_short+'.nc',mode='w')
+
     if titulo_short=='GO':
         sst_anom_LD=sst_anom[-1,:,:]
-        sst_anom_LD.to_netcdf('./data/sstLD_anom_'+titulo_short+'.nc',mode='w')
+        sst_anom_LD.to_netcdf(dataDir+'/sstLD_anom_'+titulo_short+'.nc',mode='w')
     
 # Monthly analisis
     print('>>>>> Monthly'+titulo+titulo_short)
@@ -106,7 +104,7 @@ for i in range(0,len(Titulos)):
     
 ##Save in netcdf
     print('    > to netcdf')
-    sst_anom.to_netcdf('./data/sstm_anom_'+titulo_short+'.nc',mode='w')
-    sst_wmean.to_netcdf('./data/sstm_mean_'+titulo_short+'.nc',mode='w')
-    sst_anom_wmean.to_netcdf('./data/sstm_anom_mean_'+titulo_short+'.nc',mode='w')
-    #sst_clim.to_netcdf('./data/sstm_clim_'+titulo_short+'.nc',mode='w')    
+    sst_anom.to_netcdf(dataDir+'/sstm_anom_'+titulo_short+'.nc',mode='w')
+    sst_wmean.to_netcdf(dataDir+'/sstm_mean_'+titulo_short+'.nc',mode='w')
+    sst_anom_wmean.to_netcdf(dataDir+'/sstm_anom_mean_'+titulo_short+'.nc',mode='w')
+
