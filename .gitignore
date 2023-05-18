@@ -1,3 +1,5 @@
+.DS_Store
+.AppleDouble
 *.*~
 *._*
 *.log
@@ -5,7 +7,6 @@
 *.png
 Prueba*
 **/Info/*
-.DS_Store
-.AppleDouble
 data/*
 images/*
+.ipynb*

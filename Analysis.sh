@@ -1,6 +1,6 @@
 #! /bin/zsh
 source $HOME/.zshrc
-source $HOME/.telegram
+source $HOME/.env
 
 ## SEtting bases on computer
 strval=$(uname -a)
@@ -41,6 +41,10 @@ $pythonDir $analisisDir/Analysis_plots.py >> $analisisDir/Analysis.log
 
 printf "   > Plots Mapa anomalia \n"
 $pythonDir Analysis_plots_maps.py >> $analisisDir/Analysis.log
+
+printf "   > Upload Plots \n"
+$pythonDir Analysis_UploadImages.py >> $analisisDir/Analysis.log
+
 
 #------------------------------------
 #TelegramBot
