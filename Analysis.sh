@@ -42,6 +42,9 @@ $pythonDir $analisisDir/Analysis_plots.py >> $analisisDir/Analysis.log
 printf "   > Plots Mapa anomalia \n"
 $pythonDir Analysis_plots_maps.py >> $analisisDir/Analysis.log
 
+printf "   > Plots comparacionHS \n"
+$pythonDir Analysis_plots_compara.py >> $analisisDir/Analysis.log
+
 printf "   > Upload Plots \n"
 $pythonDir Analysis_UploadImages.py >> $analisisDir/Analysis.log
 
