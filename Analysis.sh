@@ -28,25 +28,25 @@ printf "   > Directorio $analisisDir \n"
 /bin/rm $analisisDir/Analysis.log
 /bin/touch $analisisDir/Analysis.log
 
-printf "   > Download data from current year SSTs \n"
-$pythonDir $analisisDir/Analysis_DownloadData.py >> $analisisDir/Analysis.log
+#printf "   > Download data from current year SSTs \n"
+#$pythonDir $analisisDir/Analysis_DownloadData.py >> $analisisDir/Analysis.log
 
-printf "   > Update data SSTs \n"
-/bin/rm $analisisDir/data/*.nc
-$pythonDir $analisisDir/Analysis_data.py >> $analisisDir/Analysis.log
+#printf "   > Update data SSTs \n"
+#/bin/rm $analisisDir/data/*.nc
+#$pythonDir $analisisDir/Analysis_data.py >> $analisisDir/Analysis.log
 
 printf "   > Plots SSTs \n"
-#/bin/rm $analisisDir/images/*.png
+/bin/rm $analisisDir/images/*.png
 $pythonDir $analisisDir/Analysis_plots.py >> $analisisDir/Analysis.log
 
 printf "   > Plots Mapa anomalia \n"
-$pythonDir Analysis_plots_maps.py >> $analisisDir/Analysis.log
+$pythonDir $analisisDir/Analysis_plots_maps.py >> $analisisDir/Analysis.log
 
 printf "   > Plots comparacionHS \n"
-$pythonDir Analysis_plots_compara.py >> $analisisDir/Analysis.log
+$pythonDir $analisisDir/Analysis_plots_compara.py >> $analisisDir/Analysis.log
 
 printf "   > Upload Plots \n"
-$pythonDir Analysis_UploadImages.py >> $analisisDir/Analysis.log
+$pythonDir $analisisDir/Analysis_UploadImages.py >> $analisisDir/Analysis.log
 
 
 #------------------------------------
