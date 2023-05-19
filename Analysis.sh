@@ -37,13 +37,13 @@ $pythonDir $analisisDir/DownloadData.py >> $analisisDir/Analysis.log
 
 printf "   > Plots SSTs \n"
 /bin/rm $analisisDir/images/*.png
-$pythonDir $analisisDir/plotsTS.py >> $analisisDir/Analysis.log
+$pythonDir $analisisDir/plotsTimeSeries.py >> $analisisDir/Analysis.log
 
 printf "   > Plots Mapa anomalia \n"
-$pythonDir $analisisDir/plotsMaps.py >> $analisisDir/Analysis.log
+$pythonDir $analisisDir/plotsMapAnomalies.py >> $analisisDir/Analysis.log
 
 printf "   > Plots comparacionHS \n"
-$pythonDir $analisisDir/plotsCompara.py >> $analisisDir/Analysis.log
+$pythonDir $analisisDir/plotsComparaHemispheres.py >> $analisisDir/Analysis.log
 
 printf "   > Upload Plots \n"
 $pythonDir $analisisDir/UploadImages.py >> $analisisDir/Analysis.log
