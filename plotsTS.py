@@ -1,3 +1,5 @@
+import os
+import math
 import numpy as np
 import xarray as xr
 import pandas as pd
@@ -6,8 +8,9 @@ import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.dates import DateFormatter
 matplotlib.use('agg')
-import os
+
 import warnings
+
 warnings.filterwarnings("ignore")
 
 Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur']
@@ -36,38 +39,26 @@ def FiguraSerieTemporal(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
     
     fig, ax = plt.subplots(1 , 1 , figsize = (14,8))
     ax.plot(sst.time , sst,'c' , label = 'Diario')
-    #ax.plot(sstm.time,sstm,'g',label='mensual',linewidth='3')
-    ax.plot(sst_rolling.time , sst_rolling,'r', label='Suavizado (1 año)' , linewidth = '3')
+    ax.plot(sst_rolling.time , sst_rolling,'b', label='Suavizado (1 año)' , linewidth = '3')
 
     ax.plot(d_tmax , tmax,'rs' , markersize = 12 , markeredgecolor='k')
     ax.plot(d_tmin , tmin,'bs' , markersize = 12 , markeredgecolor='k')
 
-    #Texto del maximo
-    #ax.text(d_tmax , tmax + dTText , 
-    #            d_tmax.dt.strftime("%d %B %Y").values + 
-    #            '\n' + "%2.3f ºC"%(tmax) ,
-    #            horizontalalignment = 'center' , verticalalignment = 'top' ,
-    #            bbox = dict(facecolor = 'white' , alpha=0.5))
-
-    #Texto del minimo
-    #ax.text(d_tmin , tmin - dTText , 
-    #            d_tmin.dt.strftime("%d %B %Y").values + 
-    #            '\n' + "%2.3f ºC"%(tmin) ,
-    #            horizontalalignment = 'center', verticalalignment = 'top' ,
-    #            bbox = dict(facecolor = 'white', alpha = 0.5))
-    ax.grid()
     ax.legend(loc = 4)
+
+    tTActual = sst.time[-1].dt.strftime("%d %B %Y").values + " %2.3f ºC "%(sst[-1].values)
+    tTMaxima =  'T maxima: ' + "%2.3f ºC"%(tmax) + ' el ' + d_tmax.dt.strftime("%d %B %Y").values
+    tTMinima =  'T minima: ' + "%2.3f ºC"%(tmin) + ' el ' + d_tmin.dt.strftime("%d %B %Y").values
+    tPeriodo =  " [" + sstd.time[0].dt.strftime("%d %B %Y").values + " - "+ sstd.time[-1].dt.strftime("%d %B %Y").values + "]"
+
+    ax.set_title(TituloFigura + tPeriodo + '\n' + tTMaxima + ' - ' + tTMinima);
+    ax.text(sst.time[0] , math.floor(ax.get_ylim()[1]*10)/10 , tTActual, va = 'center',
+                bbox={'facecolor':'white', 'edgecolor':'none', 'pad':10},size=14)
+
+    ax.grid(linestyle='-', linewidth=.9)
     ax.set_ylabel(Ylabel)
     ax.set_xlabel(Xlabel)
-    ax.set_title(TituloFigura + '\n' +
-             'T maxima: ' + "%2.3f ºC"%(tmax) +
-                 ' el ' + d_tmax.dt.strftime("%d %B %Y").values +
-                 ' - ' +
-              'T minima: ' + "%2.3f ºC"%(tmin) +
-                 ' el ' + d_tmin.dt.strftime("%d %B %Y").values + 
-                 '\n' +
-              "Periodo [" + sstd.time[0].dt.strftime("%d %B %Y").values + " - "+ sstd.time[-1].dt.strftime("%d %B %Y").values + "]");
-    #ax.set_ylim(Ymin,Ymax)
+    ax.set_frame_on(False)
     plt.savefig(FileOut)
     
 #----def FiguraSerieTemporal
@@ -109,32 +100,25 @@ def FiguraSerieTemporal_anual(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
     ax.fill_between(x=df.index, y1=df["mean"]+2*df["std"], 
                             y2=df["mean"]-2*df["std"],alpha=0.5, color='#D3D3D3',
                             label='1.5*std')
-
-
-    #ax.text(df.index[indLastData], df[currentYear][indLastData] + dTText, 
-    #            '%2.3f ºC '%(sst[-1].values) + ' - ' + sstd.time[-1].dt.strftime("%d %B %Y").values,
-    #            horizontalalignment = 'center' , verticalalignment = 'top' ,
-    #            bbox = dict(facecolor = 'lightgray' , alpha=0.8))
-
-    
     ax.set_xlim(df.index[0],df.index[365])
     ax.xaxis.set_major_formatter(date_form)
 
     ax.legend(loc = 4)
-    ax.grid(linestyle=':', linewidth=.5)
+    ax.grid(linestyle='-', linewidth=.9)
+
+    tPeriodo = ' ['+sst.time[0].dt.strftime("%d %B %Y").values + " - "+ sst.time[-1].dt.strftime("%d %B %Y").values + ']'
+    tTActual = sst.time[-1].dt.strftime("%d %B %Y").values + " %2.3f ºC "%(sst[-1].values)
+    tTMaxima = 'Maximo: ' + "%2.3f ºC"%(sst.isel(sst.argmax(...)).values)
+    tFechaTMaxima = ' el ' + sst.time.isel(sst.argmax(...)).dt.strftime("%d %B %Y").values
+
+    ax.set_title(TituloFigura + tPeriodo +'\n' + tTActual + '. ' + tTMaxima + tFechaTMaxima);
 
     ax.set_ylabel(Ylabel)
     ax.set_xlabel(Xlabel)
-    ax.set_title(TituloFigura + '\n' + 
-                 "%2.3f ºC "%(sst[-1].values) + sstd.time[-1].dt.strftime("%d %B %Y").values +
-                 '\n' + 
-                 'Temperatura maxima: ' + "%2.3f ºC"%(sst.isel(sst.argmax(...)).values) +
-                 ' (' + sst.time.isel(sst.argmax(...)).dt.strftime("%d %B %Y").values + ')' + '\n' +
-                 'Periodo ['+sstd.time[0].dt.strftime("%d %B %Y").values + "-"+ sstd.time[-1].dt.strftime("%d %B %Y").values + ']');
-    #ax.set_ylim(Ymin,Ymax)
+    ax.set_frame_on(False)
     plt.savefig(FileOut)
-#---FiguraSerieTemporal_anual
 
+#---FiguraSerieTemporal_anual
 Ylabel  = 'Temperatura [($^\circ$C)]'
 Xlabel  = 'Fecha'
 

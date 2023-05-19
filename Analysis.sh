@@ -28,8 +28,8 @@ printf "   > Directorio $analisisDir \n"
 /bin/rm $analisisDir/Analysis.log
 /bin/touch $analisisDir/Analysis.log
 
-#printf "   > Download data from current year SSTs \n"
-#$pythonDir $analisisDir/Analysis_DownloadData.py >> $analisisDir/Analysis.log
+printf "   > Download data from current year SSTs \n"
+$pythonDir $analisisDir/DownloadData.py >> $analisisDir/Analysis.log
 
 #printf "   > Update data SSTs \n"
 #/bin/rm $analisisDir/data/*.nc
@@ -37,16 +37,16 @@ printf "   > Directorio $analisisDir \n"
 
 printf "   > Plots SSTs \n"
 /bin/rm $analisisDir/images/*.png
-$pythonDir $analisisDir/Analysis_plots.py >> $analisisDir/Analysis.log
+$pythonDir $analisisDir/plotsTS.py >> $analisisDir/Analysis.log
 
 printf "   > Plots Mapa anomalia \n"
-$pythonDir $analisisDir/Analysis_plots_maps.py >> $analisisDir/Analysis.log
+$pythonDir $analisisDir/plotsMaps.py >> $analisisDir/Analysis.log
 
 printf "   > Plots comparacionHS \n"
-$pythonDir $analisisDir/Analysis_plots_compara.py >> $analisisDir/Analysis.log
+$pythonDir $analisisDir/plotsCompara.py >> $analisisDir/Analysis.log
 
 printf "   > Upload Plots \n"
-$pythonDir $analisisDir/Analysis_UploadImages.py >> $analisisDir/Analysis.log
+$pythonDir $analisisDir/UploadImages.py >> $analisisDir/Analysis.log
 
 
 #------------------------------------
@@ -58,8 +58,8 @@ URLimg="https://api.telegram.org/bot$ArgoEsBotTOKEN/sendphoto?chat_id=$ArgoEsCha
 URLdoc="https://api.telegram.org/bot$ArgoEsBotTOKEN/sendDocument?chat_id=$ArgoEsChannel"
 
 curl -s -X POST $URL -d chat_id=$ArgoEsChannel -d text="Global Analisis SST" -d parse_mode=html
-curl -F "photo=@$analisisDir/images/sstd_anom_mean_GO.png" $URLimg -F caption="Global SST mean anomlay"
-curl -F "photo=@$analisisDir/images/sstd_GO.png" $URLimg -F caption="Global SST"
 curl -F "photo=@$analisisDir/images/map_sstd_anom_GO.png" $URLimg -F caption="Map Anomalia SST"
-curl -s -X POST $URL -d chat_id=$ArgoEsChannel -d text="<strong>Log</strong>%0A%0A `date +"%b %d %T"` %0A`cat /home/pvb/Analisis/SSTGlobalAnalysis/Analysis.log` %0A" -d parse_mode=html
+curl -F "photo=@$analisisDir/images/sstd_GO.png" $URLimg -F caption="Global SST"
+curl -F "photo=@$analisisDir/images/sstd_anom_mean_GO_HN_HS.png" $URLimg -F caption="Global SST mean anomlay"
 
+#curl -s -X POST $URL -d chat_id=$ArgoEsChannel -d text="<strong>Log</strong>%0A%0A `date +"%b %d %T"` %0A`cat /home/pvb/Analisis/SSTGlobalAnalysis/Analysis.log` %0A" -d parse_mode=html
