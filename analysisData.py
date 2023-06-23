@@ -10,8 +10,11 @@ import os
 year1='1982'
 year2='1992'
 
-Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur']
-Titulos_short = ['GO','NH','SH']
+#Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte']
+#Titulos_short = ['GO','NH','SH','NAtl']
+
+Titulos = ['AtlanticoNorte']
+Titulos_short = ['NAtl']
 
 # Load data
 if os.uname().nodename.lower().find('eemmmbp') != -1:
@@ -28,18 +31,26 @@ for i in range(0,len(Titulos)):
     titulo = Titulos[i]
     titulo_short = Titulos_short[i]
     
-    if titulo_short=='NH':
+    if titulo_short == 'NH':
         sst = DS.sst.sel(lat=slice(0,80))
         print('>>>>> '+titulo)
-    elif titulo_short=='SH':
+    elif titulo_short == 'SH':
         sst = DS.sst.sel(lat=slice( -80, 0))
         print('>>>>> '+titulo)
-    elif titulo_short=='GO':
+    elif titulo_short == 'GO':
         sst = DS.sst.sel(lat=slice( -80, 80))
         print('>>>>> '+titulo)
-    elif titulo_short=='NCanarias':
+    elif titulo_short == 'NCanarias':
         sst = DS.sst.sel(lon=360-16.1188,lat=28.5559,method='nearest')
         print('>>>>> '+titulo)
+    elif titulo_short == 'NAtl':
+        sst = DS.sst.sel(lat=slice(0, 80))
+        basins = xr.open_dataset('./data/basins.nc')
+        basin_surf = basins.basin[0]
+        basin_surf_interp = basin_surf.interp_like(sst, method='nearest')
+        sst = sst.where((basin_surf_interp==1) | (basin_surf_interp==4) ,drop=True)
+        print('>>>>> '+titulo)
+
                 
 # Daily analisis
     print('>>>>> Daily'+titulo+titulo_short)
@@ -70,7 +81,7 @@ for i in range(0,len(Titulos)):
     sst_wmean.to_netcdf(dataDir+'/sstd_mean_'+titulo_short+'.nc',mode='w')
     sst_anom_wmean.to_netcdf(dataDir+'/sstd_anom_mean_'+titulo_short+'.nc',mode='w')
 
-    if titulo_short=='GO':
+    if titulo_short=='GO' or titulo_short=='NAtl':
         sst_anom_LD=sst_anom[-1,:,:]
         sst_anom_LD.to_netcdf(dataDir+'/sstLD_anom_'+titulo_short+'.nc',mode='w')
     

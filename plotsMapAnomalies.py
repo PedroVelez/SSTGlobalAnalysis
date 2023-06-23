@@ -18,9 +18,9 @@ elif os.uname().nodename.lower().find('rossby') != -1:
     imagesDir = '/home/pvb/Analisis/SSTGlobalAnalysis/images'
     dataDir = '/home/pvb/Analisis/SSTGlobalAnalysis/data'
 
-FileIn =  dataDir + '/sstLD_anom_GO.nc'
-FileOut = imagesDir + '/map_sstd_anom_GO.png'
-Title  = 'Anomalia de temperatura superficial '
+FileIn =  './data/sstLD_anom_'+titulo_short+'.nc'
+FileOut = './images/map_sstd_anom_'+titulo_short+'.png'
+Title  = 'Anomalia de temperatura superficial en el '+ titulo
 
 data = xr.open_dataset(FileIn)
 sst = data.sst
