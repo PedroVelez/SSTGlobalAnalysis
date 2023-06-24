@@ -29,7 +29,7 @@ printf "   > Directorio $analisisDir \n"
 /bin/touch $analisisDir/updateSSTGlobal.log
 
 printf "   > Download data from current year SSTs \n"
-#$pythonDir $analisisDir/downloadData.py >> $analisisDir/updateSSTGlobal.log
+$pythonDir $analisisDir/downloadData.py >> $analisisDir/updateSSTGlobal.log
 
 printf "   > Update data SSTs \n"
 /bin/rm $analisisDir/data/sst*.nc
@@ -46,7 +46,7 @@ printf "   > Plots comparacionHS \n"
 $pythonDir $analisisDir/plotsComparaHemispheres.py >> $analisisDir/updateSSTGlobal.log
 
 printf "   > Upload Plots \n"
-$pythonDir $analisisDir/pploadImages.py >> $analisisDir/updateSSTGlobal.log
+$pythonDir $analisisDir/uploadImages.py >> $analisisDir/updateSSTGlobal.log
 
 
 #------------------------------------

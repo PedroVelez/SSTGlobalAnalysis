@@ -13,8 +13,8 @@ import warnings
 
 warnings.filterwarnings("ignore")
 
-Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur']
-Titulos_short = ['GO','NH','SH']
+Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte']
+Titulos_short = ['GO','NH','SH','NAtl']
 
 if os.uname().nodename.lower().find('eemmmbp') != -1:
     imagesDir = '/home/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/images'

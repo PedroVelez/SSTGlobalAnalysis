@@ -10,11 +10,8 @@ import os
 year1='1982'
 year2='1992'
 
-#Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte']
-#Titulos_short = ['GO','NH','SH','NAtl']
-
-Titulos = ['AtlanticoNorte']
-Titulos_short = ['NAtl']
+Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte']
+Titulos_short = ['GO','NH','SH','NAtl']
 
 # Load data
 if os.uname().nodename.lower().find('eemmmbp') != -1:
