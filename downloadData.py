@@ -19,4 +19,4 @@ ftp.login()
 ftp.cwd('Datasets/noaa.oisst.v2.highres/');
 
 ftp.retrbinary("RETR " + fileThisYear, open(fileThisYear, 'wb').write)
-ftp.quit();
+ftp.quit()

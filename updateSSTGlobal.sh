@@ -28,12 +28,12 @@ printf "   > Directorio $analisisDir \n"
 /bin/rm $analisisDir/updateSSTGlobal.log
 /bin/touch $analisisDir/updateSSTGlobal.log
 
-printf "   > Download data from current year SSTs \n"
-$pythonDir $analisisDir/downloadData.py >> $analisisDir/updateSSTGlobal.log
+#printf "   > Download data from current year SSTs \n"
+#$pythonDir $analisisDir/downloadData.py >> $analisisDir/updateSSTGlobal.log
 
 printf "   > Update data SSTs \n"
-/bin/rm $analisisDir/data/sst*.nc
-$pythonDir $analisisDir/analysisData.py >> $analisisDir/updateSSTGlobal.log
+#/bin/rm $analisisDir/data/sst*.nc
+#$pythonDir $analisisDir/analysisData.py >> $analisisDir/updateSSTGlobal.log
 
 printf "   > Plots SSTs \n"
 /bin/rm $analisisDir/images/*.png
@@ -61,5 +61,6 @@ curl -s -X POST $URL -d chat_id=$ArgoEsChannel -d text="Global Analisis SST" -d 
 curl -F "photo=@$analisisDir/images/map_sstd_anom_GO.png" $URLimg -F caption="Map Anomalia SST"
 curl -F "photo=@$analisisDir/images/sstd_GO.png" $URLimg -F caption="Global SST"
 curl -F "photo=@$analisisDir/images/sstd_anom_mean_GO_HN_HS.png" $URLimg -F caption="Compare HGlobal SST"
+curl -F "photo=@$analisisDir/images/sstd_anom_mean_NAtl.png" $URLimg -F caption="Atlantico Norte promedio SST"
+curl -F "photo=@$analisisDir/images/sstd_anom_NAtl.png" $URLimg -F caption="Atlantico Norte SST"
 
-#curl -s -X POST $URL -d chat_id=$ArgoEsChannel -d text="<strong>Log</strong>%0A%0A `date +"%b %d %T"` %0A`cat /home/pvb/Analisis/SSTGlobalAnalysis/Analysis.log` %0A" -d parse_mode=html

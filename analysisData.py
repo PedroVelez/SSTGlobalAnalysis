@@ -13,6 +13,7 @@ year2='1992'
 Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte']
 Titulos_short = ['GO','NH','SH','NAtl']
 
+
 # Load data
 if os.uname().nodename.lower().find('eemmmbp') != -1:
     base_file = '/Users/pvb/Dropbox/Oceanografia/Data/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
