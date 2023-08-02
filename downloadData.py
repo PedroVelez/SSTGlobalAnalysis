@@ -12,7 +12,7 @@ fileThisYear = 'sst.day.mean.'+str(year)+'.nc'
 
 os.chdir(data_dir)
 
-print('>>>>> Download data '+fileThisYear+' in '+data_dir)
+print('>>>>> Downloading data '+fileThisYear+' in '+data_dir)
     
 ftp = FTP('ftp.cdc.noaa.gov')  # connect to host, default port
 ftp.login()  
@@ -20,3 +20,6 @@ ftp.cwd('Datasets/noaa.oisst.v2.highres/');
 
 ftp.retrbinary("RETR " + fileThisYear, open(fileThisYear, 'wb').write)
 ftp.quit()
+
+print('>>>>> Downloaded data '+fileThisYear+' in '+data_dir)
+

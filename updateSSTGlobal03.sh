@@ -15,38 +15,22 @@ then
   pythonDir=/opt/conda/envs/ocean/bin/python
 fi
 
-/bin/rm $analisisDir/updateSSTGlobal.log
-/bin/touch $analisisDir/updateSSTGlobal.log
-
-printf ">>>> Updating analisis global SSTs \n" >> $analisisDir/updateSSTGlobal.log
-printf ">>>> Updating analisis global SSTs \n"
-printf "   > $strval\n" >> $analisisDir/updateSSTGlobal.log
-printf "   > $strval\n"
-
 #------------------------------------
 #Inicio
 #------------------------------------
-printf "   > Directorio $analisisDir \n"
-
-printf "   > Download data from current year SSTs \n"
-$pythonDir $analisisDir/downloadData.py >> $analisisDir/updateSSTGlobal.log
-
-printf "   > Update data SSTs \n"
-/bin/rm $analisisDir/data/sst*.nc
-$pythonDir $analisisDir/analysisData.py >> $analisisDir/updateSSTGlobal.log
+/bin/rm $analisisDir/images/*.png
 
 printf "   > Plots SSTs \n"
-/bin/rm $analisisDir/images/*.png
-$pythonDir $analisisDir/plotsTimeSeries.py >> $analisisDir/updateSSTGlobal.log
+$pythonDir $analisisDir/plotsTimeSeries.py
 
 printf "   > Plots Mapa anomalia \n"
-$pythonDir $analisisDir/plotsMapAnomalies.py >> $analisisDir/updateSSTGlobal.log
+$pythonDir $analisisDir/plotsMapAnomalies.py
 
 printf "   > Plots comparacionHS \n"
-$pythonDir $analisisDir/plotsComparaHemispheres.py >> $analisisDir/updateSSTGlobal.log
+$pythonDir $analisisDir/plotsComparaHemispheres.py
 
 printf "   > Upload Plots \n"
-$pythonDir $analisisDir/uploadImages.py >> $analisisDir/updateSSTGlobal.log
+$pythonDir $analisisDir/uploadImages.py 
 
 
 #------------------------------------

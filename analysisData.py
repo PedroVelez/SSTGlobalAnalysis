@@ -38,9 +38,6 @@ for i in range(0,len(Titulos)):
     elif titulo_short == 'GO':
         sst = DS.sst.sel(lat=slice( -80, 80))
         print('>>>>> '+titulo)
-    elif titulo_short == 'NCanarias':
-        sst = DS.sst.sel(lon=360-16.1188,lat=28.5559,method='nearest')
-        print('>>>>> '+titulo)
     elif titulo_short == 'NAtl':
         sst = DS.sst.sel(lat=slice(0, 80))
         basins = xr.open_dataset('./data/basins.nc')
@@ -52,6 +49,7 @@ for i in range(0,len(Titulos)):
                 
 # Daily analisis
     print('>>>>> Daily'+titulo+titulo_short)
+
 ## Calculate global mean weigthtened
     print('    > Compute weigthtened mean')
     weights = np.cos(np.deg2rad(sst.lat))
@@ -63,6 +61,7 @@ for i in range(0,len(Titulos)):
 ## Create monthly climatology
     print('    > create climatology')
     sst_clim = sst.sel(time=slice(year1,year2)).groupby('time.dayofyear').mean(dim='time').load();
+
 ## Create anomaly
     sst_anom = sst.groupby('time.dayofyear') - sst_clim
 
