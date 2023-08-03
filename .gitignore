@@ -2,6 +2,7 @@
 .AppleDouble
 *.*~
 *._*
+*.swp
 *.log
 *.nc
 *.png
