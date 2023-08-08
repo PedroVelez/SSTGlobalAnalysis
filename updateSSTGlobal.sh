@@ -29,24 +29,24 @@ printf "   > $strval\n"
 printf "   > Directorio $analisisDir \n"
 
 printf "   > Download data from current year SSTs \n"
-$pythonDir $analisisDir/downloadData.py >> $analisisDir/updateSSTGlobal.log
+$pythonDir $analisisDir/downloadData.py
 
 printf "   > Update data SSTs \n"
 /bin/rm $analisisDir/data/sst*.nc
-$pythonDir $analisisDir/analysisData.py >> $analisisDir/updateSSTGlobal.log
+$pythonDir $analisisDir/analysisData.py
 
 printf "   > Plots SSTs \n"
 /bin/rm $analisisDir/images/*.png
-$pythonDir $analisisDir/plotsTimeSeries.py >> $analisisDir/updateSSTGlobal.log
+$pythonDir $analisisDir/plotsTimeSeries.py
 
 printf "   > Plots Mapa anomalia \n"
-$pythonDir $analisisDir/plotsMapAnomalies.py >> $analisisDir/updateSSTGlobal.log
+$pythonDir $analisisDir/plotsMapAnomalies.py 
 
 printf "   > Plots comparacionHS \n"
-$pythonDir $analisisDir/plotsComparaHemispheres.py >> $analisisDir/updateSSTGlobal.log
+$pythonDir $analisisDir/plotsComparaHemispheres.py 
 
 printf "   > Upload Plots \n"
-$pythonDir $analisisDir/uploadImages.py >> $analisisDir/updateSSTGlobal.log
+$pythonDir $analisisDir/uploadImages.py
 
 
 #------------------------------------

@@ -21,12 +21,8 @@ elif os.uname().nodename.lower().find('rossby') != -1:
     base_file = '/data/shareddata/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
     dataDir = '/home/pvb/Analisis/SSTGlobalAnalysis/data'
 
-# Open log file
-f = open("/home/pvb/Analisis/SSTGlobalAnalysis/analysisData.log", "a")
-
 
 print('>>>>> Cargando ficheros de '+base_file)
-f.write('>>>>> Cargando ficheros de '+base_file)
 
 files = [f'{base_file}.{year}.nc' for year in range(1982, 2024)]
 DS = xr.open_mfdataset(files)
@@ -55,11 +51,9 @@ for i in range(0,len(Titulos)):
                 
 # Daily analisis
     print('>>>>> Daily'+titulo+titulo_short)
-    f.write('>>>>> Daily'+titulo+titulo_short)    
 
 ## Calculate global mean weigthtened
     print('    > Compute weigthtened mean')
-    f.write('    > Compute weigthtened mean')
     weights = np.cos(np.deg2rad(sst.lat))
     weights = weights/weights.max()
     weights.name = "weights"
@@ -68,7 +62,6 @@ for i in range(0,len(Titulos)):
 
 ## Create monthly climatology
     print('    > create climatology')
-    f.write('    > create climatology')
     sst_clim = sst.sel(time=slice(year1,year2)).groupby('time.dayofyear').mean(dim='time').load();
 
 ## Create anomaly
@@ -76,7 +69,6 @@ for i in range(0,len(Titulos)):
 
 ## Calculate global mean anomaly
     print('    > Compute anomaly mean')
-    f.write('    > Compute anomaly mean')
     weights = np.cos(np.deg2rad(sst.lat))
     weights = weights/weights.max()
     weights.name = "weights"
@@ -85,7 +77,6 @@ for i in range(0,len(Titulos)):
 
 ## Save in netcdf
     print('    > Save to netcdf')
-    f.write('    > Save to netcdf')
     sst_wmean.to_netcdf(dataDir+'/sstd_mean_'+titulo_short+'.nc',mode='w')
     sst_anom_wmean.to_netcdf(dataDir+'/sstd_anom_mean_'+titulo_short+'.nc',mode='w')
 
@@ -95,12 +86,10 @@ for i in range(0,len(Titulos)):
     
 # Monthly analisis
     print('>>>>> Monthly'+titulo+titulo_short)
-    f.write('>>>>> Monthly'+titulo+titulo_short)
     sst = sst.resample(time='1M').mean(dim='time',skipna=True).load()
 
 ## Calculate global mean weigthtened
     print('    > Compute weigthtened mean')
-    f.write('    > Compute weigthtened mean')
     weights = np.cos(np.deg2rad(sst.lat))
     weights = weights/weights.max()
     weights.name = "weights"
@@ -109,15 +98,14 @@ for i in range(0,len(Titulos)):
     
 ## Create monthly climatology
     print('    > create climatology')
-    f.write('    > create climatology')
     sst_clim = sst.sel(time=slice(year1,year2)).groupby('time.month').mean(dim='time').load();
 ## Create anomaly
     print('    > Compute anomaly mean')
-    f.write('    > Compute anomaly mean')
     sst_anom = sst.groupby('time.month') - sst_clim
     sst_anom.load();
 
 ##Calculate global mean weigthtened
+    print('    > Compute weigthtened mean')
     weights = np.cos(np.deg2rad(sst.lat))
     weights = weights/weights.max()
     weights.name = "weights"
@@ -127,9 +115,7 @@ for i in range(0,len(Titulos)):
     
 ##Save in netcdf
     print('    > to netcdf')
-    f.write('    > to netcdf')
     sst_anom.to_netcdf(dataDir+'/sstm_anom_'+titulo_short+'.nc',mode='w')
     sst_wmean.to_netcdf(dataDir+'/sstm_mean_'+titulo_short+'.nc',mode='w')
     sst_anom_wmean.to_netcdf(dataDir+'/sstm_anom_mean_'+titulo_short+'.nc',mode='w')
 
-f.close()

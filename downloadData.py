@@ -1,6 +1,7 @@
 from ftplib import FTP
 import datetime
 import os
+import xarray as xr
 
 if os.uname().nodename.lower().find('eemmmbp') != -1:
     data_dir = '/Users/pvb/Dropbox/Oceanografia/Data/Satelite/noaa.oisst.v2.highres/NC'
@@ -23,3 +24,5 @@ ftp.quit()
 
 print('>>>>> Downloaded data '+fileThisYear+' in '+data_dir)
 
+DS = xr.open_dataset(data_dir+'/'+fileThisYear)
+print('>>>>> Last data: '+DS.time[-1].dt.strftime("%d %B %Y").values)
