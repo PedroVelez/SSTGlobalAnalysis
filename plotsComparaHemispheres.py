@@ -9,19 +9,24 @@ import math
 
 plt.rcParams['figure.figsize'] = (10, 4)
 
+if os.uname().nodename.lower().find('eemmmbp') != -1:
+    analisisDir = '/home/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis'
+elif os.uname().nodename.lower().find('rossby') != -1:
+    analisisDir = '/home/pvb/Analisis/SSTGlobalAnalysis'
+
 # Daily data
-data = xr.open_dataset('./data/sstd_anom_mean_GO.nc')
+data = xr.open_dataset(analisisDir+'/data/sstd_anom_mean_GO.nc')
 sstdGO_anom = data.sst
-data = xr.open_dataset('./data/sstd_anom_mean_NH.nc')
+data = xr.open_dataset(analisisDir+'/data/sstd_anom_mean_NH.nc')
 sstdNH_anom = data.sst
-data = xr.open_dataset('./data/sstd_anom_mean_SH.nc')
+data = xr.open_dataset(analisisDir+'/data/sstd_anom_mean_SH.nc')
 sstdSH_anom = data.sst
 
 sstdSH_anom_rolling = sstdSH_anom.rolling(time = 360 , center = True).mean()
 sstdNH_anom_rolling = sstdNH_anom.rolling(time = 360 , center = True).mean()
 sstdGO_anom_rolling = sstdGO_anom.rolling(time = 360 , center = True).mean()
 
-fileOut = './images/sstd_anom_mean_GO_HN_HS.png'
+fileOut = analisisDir+'/images/sstd_anom_mean_GO_HN_HS.png'
 
 ## Figura
 fig,ax = plt.subplots(figsize=(14,8))

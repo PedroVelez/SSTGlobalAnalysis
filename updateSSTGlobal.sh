@@ -18,9 +18,7 @@ fi
 /bin/rm $analisisDir/updateSSTGlobal.log
 /bin/touch $analisisDir/updateSSTGlobal.log
 
-printf ">>>> Updating analisis global SSTs \n" >> $analisisDir/updateSSTGlobal.log
 printf ">>>> Updating analisis global SSTs \n"
-printf "   > $strval\n" >> $analisisDir/updateSSTGlobal.log
 printf "   > $strval\n"
 
 #------------------------------------

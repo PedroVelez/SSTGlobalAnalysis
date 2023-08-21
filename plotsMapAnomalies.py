@@ -13,10 +13,9 @@ import cartopy.feature as cfeature
 plt.rcParams['figure.figsize'] = (10, 4)
 
 if os.uname().nodename.lower().find('eemmmbp') != -1:
-    imagesDir = '/home/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/images'
+    analisisDir = '/home/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis'
 elif os.uname().nodename.lower().find('rossby') != -1:
-    imagesDir = '/home/pvb/Analisis/SSTGlobalAnalysis/images'
-    dataDir = '/home/pvb/Analisis/SSTGlobalAnalysis/data'
+    analisisDir = '/home/pvb/Analisis/SSTGlobalAnalysis'
 
 Titulos = ['Oceano Global','AtlanticoNorte']
 Titulos_short = ['GO','NAtl']
@@ -26,8 +25,8 @@ for i in range(0,len(Titulos)):
     titulo_short = Titulos_short[i]
 
     Title  = 'Anomalia de temperatura superficial en el '+ titulo
-    FileIn =  './data/sstLD_anom_'+titulo_short+'.nc'
-    FileOut = './images/map_sstd_anom_'+titulo_short+'.png'
+    FileIn =  analisisDir+'/data/sstLD_anom_'+titulo_short+'.nc'
+    FileOut = analisisDir+'/images/map_sstd_anom_'+titulo_short+'.png'
     
     print('>>>>> '+Title)
     
