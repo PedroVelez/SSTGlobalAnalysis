@@ -32,16 +32,16 @@ for i in range(0,len(Titulos)):
     titulo_short = Titulos_short[i]
     
     if titulo_short == 'NH':
-        sst = DS.sst.sel(lat=slice(0,80))
+        sst = DS.sst.sel(lat=slice(0,70))
         print('>>>>> '+titulo)
     elif titulo_short == 'SH':
-        sst = DS.sst.sel(lat=slice( -80, 0))
+        sst = DS.sst.sel(lat=slice( -70, 0))
         print('>>>>> '+titulo)
     elif titulo_short == 'GO':
-        sst = DS.sst.sel(lat=slice( -80, 80))
+        sst = DS.sst.sel(lat=slice( -70, 70))
         print('>>>>> '+titulo)
     elif titulo_short == 'NAtl':
-        sst = DS.sst.sel(lat=slice(0, 80))
+        sst = DS.sst.sel(lat=slice(0, 70))
         basins = xr.open_dataset(dataDir+'/basins.nc')
         basin_surf = basins.basin[0]
         basin_surf_interp = basin_surf.interp_like(sst, method='nearest')

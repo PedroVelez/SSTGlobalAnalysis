@@ -68,12 +68,14 @@ def FiguraSerieTemporal_anual(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
 
     dTText = .2
     
-    df         = sst.groupby(sst.time.dt.dayofyear).mean().to_dataframe(name="mean")
-    df["std"]  = sst.groupby(sst.time.dt.dayofyear).std().values
+    currentYear = datetime.date.today().year
+    sstHist = sst.sel(time=slice("1982-01-01", str(currentYear-1)+"-12-31"))
+
+    df         = sstHist.groupby(sstHist.time.dt.dayofyear).mean().to_dataframe(name="mean")
+    df["std"]  = sstHist.groupby(sstHist.time.dt.dayofyear).std().values
 
     for year, yearda in sst.groupby(sst.time.dt.year):
-        df[year] = pd.Series(index=yearda["time"].dt.dayofyear,
-                             data=yearda.values)
+        df[year] = pd.Series(index=yearda["time"].dt.dayofyear, data=yearda.values)
     
     df.index   = pd.date_range(start='01/Jan/2020', end='31/12/2020', freq='D')  
 
@@ -99,7 +101,7 @@ def FiguraSerieTemporal_anual(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
     ax.plot(df.index,df["mean"],'k',linewidth='3',label='mean')
     ax.fill_between(x=df.index, y1=df["mean"]+2*df["std"], 
                             y2=df["mean"]-2*df["std"],alpha=0.5, color='#D3D3D3',
-                            label='1.5*std')
+                            label='2*std')
     ax.set_xlim(df.index[0],df.index[365])
     ax.xaxis.set_major_formatter(date_form)
 
