@@ -32,13 +32,13 @@ for i in range(0,len(Titulos)):
     titulo_short = Titulos_short[i]
     
     if titulo_short == 'NH':
-        sst = DS.sst.sel(lat=slice(0,70))
+        sst = DS.sst.sel(lat=slice(0,65))
         print('>>>>> '+titulo)
     elif titulo_short == 'SH':
-        sst = DS.sst.sel(lat=slice( -70, 0))
+        sst = DS.sst.sel(lat=slice( -65, 0))
         print('>>>>> '+titulo)
     elif titulo_short == 'GO':
-        sst = DS.sst.sel(lat=slice( -70, 70))
+        sst = DS.sst.sel(lat=slice( -65, 65))
         print('>>>>> '+titulo)
     elif titulo_short == 'NAtl':
         sst = DS.sst.sel(lat=slice(0, 70))
