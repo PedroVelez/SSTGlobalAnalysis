@@ -41,7 +41,7 @@ for i in range(0,len(Titulos)):
         sst = DS.sst.sel(lat=slice( -65, 65))
         print('>>>>> '+titulo)
     elif titulo_short == 'NAtl':
-        sst = DS.sst.sel(lat=slice(0, 70))
+        sst = DS.sst.sel(lat=slice(0, 65))
         basins = xr.open_dataset(dataDir+'/basins.nc')
         basin_surf = basins.basin[0]
         basin_surf_interp = basin_surf.interp_like(sst, method='nearest')
