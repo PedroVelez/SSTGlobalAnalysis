@@ -2,7 +2,7 @@
 source $HOME/.zshrc
 source $HOME/.env
 
-## SEtting bases on computer
+## Settings based on computer
 strval=$(uname -a)
 if [[ $strval == *EemmMBP* ]];
 then
