@@ -16,8 +16,13 @@ locale.setlocale(locale.LC_TIME, "es_ES");
 plt.rcParams['figure.figsize'] = (10, 4)
 
 if os.uname().nodename.lower().find('eemmmbp') != -1:
-    analisisDir = '/home/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis'
+    imagesDir = '/Users/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/images'
+    analisisDir='/Users/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis'    
+elif os.uname().nodename.lower().find('sagams') != -1:
+    imagesDir = '/Users/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/images'
+    analisisDir='/Users/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis'
 elif os.uname().nodename.lower().find('rossby') != -1:
+    imagesDir = '/home/pvb/Analisis/SSTGlobalAnalysis/images'
     analisisDir = '/home/pvb/Analisis/SSTGlobalAnalysis'
 
 # Daily data
