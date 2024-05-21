@@ -6,12 +6,16 @@ import pandas as pd
 from matplotlib.dates import DateFormatter
 import os
 
+from dask.distributed import Client
+from dask import delayed
+import dask
+
 # Settings compute de climatoloy
 year1='1982'
 year2='1992'
 
-Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte']
-Titulos_short = ['GO','NH','SH','NAtl']
+Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte', 'Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
+Titulos_short = ['GO','NH','SH','NAtl','LEBA', 'NOR','CAN','SUD','ESAL']
 
 
 # Load data
@@ -24,7 +28,7 @@ elif os.uname().nodename.lower().find('rossby') != -1:
 
 print('>>>>> Cargando ficheros de '+base_file)
 
-files = [f'{base_file}.{year}.nc' for year in range(1982, 2024)]
+files = [f'{base_file}.{year}.nc' for year in range(1982, 2025)]
 DS = xr.open_mfdataset(files)
 
 for i in range(0,len(Titulos)):
@@ -47,8 +51,23 @@ for i in range(0,len(Titulos)):
         basin_surf_interp = basin_surf.interp_like(sst, method='nearest')
         sst = sst.where((basin_surf_interp==1) | (basin_surf_interp==4) ,drop=True)
         print('>>>>> '+titulo)
-
-                
+    elif titulo_short == 'LEBA':
+        sst = DS.sst.sel(lat=slice(35.5,42.5)).sel(lon=slice(0,8))
+        print('>>>>> '+titulo)        
+    elif  titulo_short == 'NOR':
+        sst = DS.sst.sel(lat=slice(41.8,46.2)).sel(lon=slice(348.5,359.5))
+        print('>>>>> '+titulo)        
+    elif  titulo_short == 'CAN':
+        sst = DS.sst.sel(lat=slice(24.3,32.5)).sel(lon=slice(338,350))
+        print('>>>>> '+titulo)
+    elif  titulo_short == 'SUD':
+        sst = DS.sst.sel(lat=slice(35.5,37.4)).sel(lon=slice(352,354))
+        print('>>>>> '+titulo)
+    elif  titulo_short == 'ESAL':
+        sst = DS.sst.sel(lat=slice(35.5,37)).sel(lon=slice(354,359))
+        print('>>>>> '+titulo)
+        
+                       
 # Daily analisis
     print('>>>>> Daily'+titulo+titulo_short)
 
@@ -80,7 +99,7 @@ for i in range(0,len(Titulos)):
     sst_wmean.to_netcdf(dataDir+'/sstd_mean_'+titulo_short+'.nc',mode='w')
     sst_anom_wmean.to_netcdf(dataDir+'/sstd_anom_mean_'+titulo_short+'.nc',mode='w')
 
-    if titulo_short=='GO' or titulo_short=='NAtl':
+    if titulo_short=='GO' or titulo_short=='NAtl' or titulo_short=='LEBA' or titulo_short=='CAN' or titulo_short=='NOR' or titulo_short=='SUD' or titulo_short=='ESAL':
         sst_anom_LD=sst_anom[-1,:,:]
         sst_anom_LD.to_netcdf(dataDir+'/sstLD_anom_'+titulo_short+'.nc',mode='w')
     
