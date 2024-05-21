@@ -21,9 +21,12 @@ Titulos_short = ['GO','NH','SH','NAtl','LEBA', 'NOR','CAN','SUD','ESAL']
 # Load data
 if os.uname().nodename.lower().find('eemmmbp') != -1:
     base_file = '/Users/pvb/Dropbox/Oceanografia/Data/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
+elif os.uname().nodename.lower().find('sagams') != -1:
+    base_file = '/Users/pvb/Dropbox/Oceanografia/Data/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
 elif os.uname().nodename.lower().find('rossby') != -1:
     base_file = '/data/shareddata/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
 
+dataDir='./data'
 
 print('>>>>> Cargando ficheros de '+base_file)
 
