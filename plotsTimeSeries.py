@@ -1,31 +1,37 @@
-import os
-import math
 import numpy as np
 import xarray as xr
 import pandas as pd
 import datetime
+
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.dates import DateFormatter
 matplotlib.use('agg')
 
+import os
+import math
+
+import dask
 from dask.distributed import Client
 from dask import delayed
-import dask
+
+import locale 
 
 import warnings
 
 warnings.filterwarnings("ignore")
 
+locale.setlocale(locale.LC_TIME, "es_ES");
+
 Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte', 'Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
 Titulos_short = ['GO','NH','SH','NAtl','LEBA', 'NOR','CAN','SUD','ESAL']
 
 if os.uname().nodename.lower().find('eemmmbp') != -1:
-    imagesDir = '/home/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/images'
-    dataDir='/home/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/data'    
+    imagesDir = '/Users/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/images'
+    dataDir='/Users/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/data'    
 elif os.uname().nodename.lower().find('sagams') != -1:
-    imagesDir = '/home/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/images'
-    dataDir='/home/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/data'
+    imagesDir = '/Users/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/images'
+    dataDir='/Users/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/data'
 elif os.uname().nodename.lower().find('rossby') != -1:
     imagesDir = '/home/pvb/Analisis/SSTGlobalAnalysis/images'
     dataDir = '/home/pvb/Analisis/SSTGlobalAnalysis/data'
@@ -50,7 +56,7 @@ def FiguraSerieTemporal(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
     z = np.polyfit(sst.time.astype(np.int64)[ind],sst[ind], 1)
     Dlinearf = z[0] * sst.time.astype(np.int64) + z[1]
     Dslope=z[0]/1.e-9*24*3600*365*100 #paso a C por siglo
-    tTendencia =  "\n Tendencia: " + "%2.2f"%(Dslope) + " ºC/siglo "
+    tTendencia =  "\n %2.2f $^\circ$C "%(sst[-1]-sst[0]) + ' desde el ' + sst.time[0].dt.strftime("%d %B %Y").values + " (Tendencia: " + "%2.2f"%(Dslope) + " $^\circ$C/siglo )"
 
     fig, ax = plt.subplots(1 , 1 , figsize = (14,8))
     ax.plot(sst.time , sst,'c' , label = 'Diario')
@@ -62,7 +68,7 @@ def FiguraSerieTemporal(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
 
     ax.legend(loc = 4)
 
-    tTActual = sst.time[-1].dt.strftime("%d %B %Y").values + " %2.2f ºC "%(sst[-1].values)
+    tTActual = sst.time[-1].dt.strftime("%d %B %Y").values + " %2.2f $^\circ$C "%(sst[-1].values)
     tTMaxima =  'Temperatura máxima: ' + "%2.2f ºC"%(tmax) + ' el ' + d_tmax.dt.strftime("%d %B %Y").values
     tTMinima =  'Temperatura mínima: ' + "%2.2f ºC"%(tmin) + ' el ' + d_tmin.dt.strftime("%d %B %Y").values
     tPeriodo =  " [" + sstd.time[0].dt.strftime("%d %B %Y").values + " - "+ sstd.time[-1].dt.strftime("%d %B %Y").values + "]"
@@ -103,30 +109,34 @@ def FiguraSerieTemporal_anual(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
     #Figura
     fig, ax = plt.subplots(figsize=(14,8))
 
-    ax.plot(df.index,df[currentYear],'b',linewidth='3',label=currentYear)
-    for year in range(currentYear-6,1981,-1):
-        ax.plot(df.index,df[year],color='#D3D3D3')
-
-    for year in range(currentYear-1,currentYear-6,-1):
-        ax.plot(df.index,df[year],label=year)
-
-        
-    ax.plot(df.index,df[1982],label='1982')
-
-    ax.plot(df.index[indLastData],df[currentYear][indLastData],'bo', markersize=12)
-    ax.plot(df.index,df["mean"],'k',linewidth='3',label='mean')
     ax.fill_between(x=df.index, y1=df["mean"]+2*df["std"], 
-                            y2=df["mean"]-2*df["std"],alpha=0.5, color='#D3D3D3',
-                            label='2*std')
+                    y2=df["mean"]-2*df["std"],alpha=0.5, color='#D3D3D3',
+                    label='1.5*std')
+
+    ax.plot(df.index,df[1982],label='1982')
+    #for year in range(1983,currentYear-4,2):
+    #    ax.plot(df.index,df[year],color='#D3D3D3')
+
+    for year in range(currentYear-4,currentYear,1):
+        ax.plot(df.index,df[year],label=year)
+    
+    ax.plot(df.index,df["mean"],'k',linewidth='3',label='mean')
+    
+    ax.plot(df.index,df[currentYear],'b',linewidth='3',label=currentYear)
+    ax.plot(df.index[indLastData],df[currentYear][indLastData],'bo', markersize=12)
+
     ax.set_xlim(df.index[0],df.index[365])
     ax.xaxis.set_major_formatter(date_form)
 
-    ax.legend(loc = 4)
+    handles, labels = ax.get_legend_handles_labels()
+    order=[6,0,1,2,3,4,5,7]
+    ax.legend([handles[idx] for idx in order],[labels[idx] for idx in order], loc=4)
+    
     ax.grid(linestyle='-', linewidth=.9)
 
     tPeriodo = ' ['+sst.time[0].dt.strftime("%d %B %Y").values + " - "+ sst.time[-1].dt.strftime("%d %B %Y").values + ']'
-    tTActual = sst.time[-1].dt.strftime("%d %B %Y").values + " %2.2f ºC "%(sst[-1].values)
-    tTMaxima = 'Temperatura máximo: ' + "%2.2f ºC"%(sst.isel(sst.argmax(...)).values)
+    tTActual = sst.time[-1].dt.strftime("%d %B %Y").values + " %2.2f ($^\circ$C) "%(sst[-1].values)
+    tTMaxima = 'Temperatura máxima: ' + "%2.2f ºC"%(sst.isel(sst.argmax(...)).values)
     tFechaTMaxima = ' el ' + sst.time.isel(sst.argmax(...)).dt.strftime("%d %B %Y").values
 
     ax.set_title(TituloFigura + tPeriodo +'\n' + tTActual + '. ' + tTMaxima + tFechaTMaxima);
@@ -168,7 +178,7 @@ for i in range(0,len(Titulos)):
     FiguraSerieTemporal(sstd,Ylabel,Xlabel,Title1,File1,17.5,19)
     
     ## Times series mean Sea Surface Temperature anomaly 
-    Title2  = 'Anomalia de temperatura superficial promedio en el '+ titulo + '\nAnomalia respecto de 1982-1992'
+    Title2  = 'Anomalía de temperatura superficial promedio en el '+ titulo + '\nAnomalía respecto de 1982-1992'
     File2 = imagesDir + '/sstd_anom_mean_'+titulo_short+'.png'
     FiguraSerieTemporal(sstd_anom,Ylabel,Xlabel,Title2,File2,-0.25,0.8,)
     
@@ -178,6 +188,6 @@ for i in range(0,len(Titulos)):
     FiguraSerieTemporal_anual(sstd,Ylabel,Xlabel,Title3,File3,17.5,19)
 
     ## Daily times series anomly Sea Surface Temperature
-    Title4  = 'Anomalia de temperatura superficial, respecto del periodo 1982-1992, en el '+ titulo
+    Title4  = 'Anomalía de temperatura superficial, respecto del periodo 1982-1992, en el '+ titulo
     File4 = imagesDir + '/sstd_anom_'+titulo_short+'.png'
     FiguraSerieTemporal_anual(sstd_anom,Ylabel,Xlabel,Title4,File4,-0.25,0.8)
