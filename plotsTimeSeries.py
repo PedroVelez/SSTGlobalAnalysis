@@ -115,7 +115,7 @@ def FiguraSerieTemporal_anual(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
                             y2=df["mean"]-2*df["std"],alpha=0.5, color='#D3D3D3',
                             label='2*std')
     ax.set_xlim(df.index[0],df.index[365])
-    ax.xaxis.set_major_formatter(date_form)S
+    ax.xaxis.set_major_formatter(date_form)
 
     ax.legend(loc = 4)
     ax.grid(linestyle='-', linewidth=.9)

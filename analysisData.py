@@ -10,9 +10,15 @@ from dask.distributed import Client
 from dask import delayed
 import dask
 
+# Settings 
+year1=1982
+year2=2024
+
 # Settings compute de climatoloy
-year1='1982'
-year2='1992'
+yearC1='1982'
+yearC2='1992'
+
+
 
 Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte', 'Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
 Titulos_short = ['GO','NH','SH','NAtl','LEBA', 'NOR','CAN','SUD','ESAL']
@@ -21,16 +27,19 @@ Titulos_short = ['GO','NH','SH','NAtl','LEBA', 'NOR','CAN','SUD','ESAL']
 # Load data
 if os.uname().nodename.lower().find('eemmmbp') != -1:
     base_file = '/Users/pvb/Dropbox/Oceanografia/Data/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
+    dataDir='./data'
 elif os.uname().nodename.lower().find('sagams') != -1:
     base_file = '/Users/pvb/Dropbox/Oceanografia/Data/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
+    dataDir='./data'
 elif os.uname().nodename.lower().find('rossby') != -1:
     base_file = '/data/shareddata/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
+    dataDir = '/home/pvb/Analisis/SSTGlobalAnalysis/data'
 
-dataDir='./data'
+
 
 print('>>>>> Cargando ficheros de '+base_file)
 
-files = [f'{base_file}.{year}.nc' for year in range(1982, 2025)]
+files = [f'{base_file}.{year}.nc' for year in range(year1, year2+1)]
 DS = xr.open_mfdataset(files)
 
 for i in range(0,len(Titulos)):
@@ -83,7 +92,7 @@ for i in range(0,len(Titulos)):
 
 ## Create monthly climatology
     print('    > create climatology')
-    sst_clim = sst.sel(time=slice(year1,year2)).groupby('time.dayofyear').mean(dim='time').load();
+    sst_clim = sst.sel(time=slice(yearC1,yearC2)).groupby('time.dayofyear').mean(dim='time').load();
 
 ## Create anomaly
     sst_anom = sst.groupby('time.dayofyear') - sst_clim
@@ -119,7 +128,7 @@ for i in range(0,len(Titulos)):
     
 ## Create monthly climatology
     print('    > create climatology')
-    sst_clim = sst.sel(time=slice(year1,year2)).groupby('time.month').mean(dim='time').load();
+    sst_clim = sst.sel(time=slice(yearC1,yearC2)).groupby('time.month').mean(dim='time').load();
 ## Create anomaly
     print('    > Compute anomaly mean')
     sst_anom = sst.groupby('time.month') - sst_clim
