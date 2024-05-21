@@ -1,12 +1,18 @@
-import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
 import pandas as pd
+
+import matplotlib.pyplot as plt
 from matplotlib.dates import DateFormatter
+
 import datetime
+
 import os
 import math
 
+import locale 
+
+locale.setlocale(locale.LC_TIME, "es_ES");
 plt.rcParams['figure.figsize'] = (10, 4)
 
 if os.uname().nodename.lower().find('eemmmbp') != -1:
@@ -51,10 +57,10 @@ ax.legend(loc = 4)
 ax.set_ylabel('Temperatura [ºC]')
 ax.set_xlabel('Fecha')
 
-TituloFigura ='Promedio de anomalia (respecto de 1982-1992) de temperatura superficial para el perido '
+TituloFigura ='Promedio de anomalía (respecto de 1982-1992) de temperatura superficial para el perido '
 tPeriodo = '['+sstdGO_anom.time[0].dt.strftime("%d %B %Y").values + " - "+ sstdGO_anom.time[-1].dt.strftime("%d %B %Y").values + ']'
-tTActual = sstdGO_anom.time[-1].dt.strftime("%d %B %Y").values + " %2.3f ºC "%(sstdGO_anom[-1].values)
-tTMaxima = 'Anomalia maxima: ' + "%2.3f ºC"%(sstdGO_anom.isel(sstdGO_anom.argmax(...)).values)
+tTActual = sstdGO_anom.time[-1].dt.strftime("%d %B %Y").values + " %2.3f $^\circ$C "%(sstdGO_anom[-1].values)
+tTMaxima = 'Anomalía máxima: ' + "%2.3f ºC"%(sstdGO_anom.isel(sstdGO_anom.argmax(...)).values)
 tFechaTMaxima = ' el ' + sstdGO_anom.time.isel(sstdGO_anom.argmax(...)).dt.strftime("%d %B %Y").values
 tAnomalia = 'respecto de 1982-1992'
 
@@ -62,9 +68,6 @@ ax.set_title(TituloFigura + tPeriodo +'\n' + tTMaxima + tFechaTMaxima);
 
 ax.text(sstdGO_anom.time[0] , math.floor(ax.get_ylim()[1]*10)/10 , tTActual, va = 'center',
                 bbox={'facecolor':'white', 'edgecolor':'none', 'pad':10},size=14)
-
-
-
 
 ax.grid(linestyle='-', linewidth=.9)
 ax.set_frame_on(False)

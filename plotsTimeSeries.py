@@ -158,7 +158,7 @@ for i in range(0,len(Titulos)):
     titulo = Titulos[i]
     titulo_short = Titulos_short[i]
     
-    print('>>>>> Figuras: '+titulo+titulo_short)
+    print('>>>>> Figuras: '+titulo+ ' '+ titulo_short)
     
     # Daily data
     data = xr.open_dataset(dataDir+'/sstd_mean_'+titulo_short+'.nc')
