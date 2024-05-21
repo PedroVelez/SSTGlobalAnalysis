@@ -11,7 +11,7 @@ matplotlib.use('agg')
 
 from dask.distributed import Client
 from dask import delayed
-import dasks
+import dask
 
 import warnings
 
