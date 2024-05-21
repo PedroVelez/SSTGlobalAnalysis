@@ -5,6 +5,8 @@ import xarray as xr
 
 if os.uname().nodename.lower().find('eemmmbp') != -1:
     data_dir = '/Users/pvb/Dropbox/Oceanografia/Data/Satelite/noaa.oisst.v2.highres/NC'
+elif os.uname().nodename.lower().find('sagams') != -1:
+    data_dir = '/Users/pvb/Dropbox/Oceanografia/Data/Satelite/noaa.oisst.v2.highres/NC'
 elif os.uname().nodename.lower().find('rossby') != -1:
     data_dir = '/data/shareddata/Satelite/noaa.oisst.v2.highres/NC'
     
