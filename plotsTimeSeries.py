@@ -13,8 +13,8 @@ import warnings
 
 warnings.filterwarnings("ignore")
 
-Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte']
-Titulos_short = ['GO','NH','SH','NAtl']
+Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte', 'Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria']
+Titulos_short = ['GO','NH','SH','NAtl','LEBA', 'NOR','CAN']
 
 if os.uname().nodename.lower().find('eemmmbp') != -1:
     imagesDir = '/home/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/images'
@@ -37,21 +37,29 @@ def FiguraSerieTemporal(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
     d_tmax = sst.time.isel(sst.argmax(...))
     d_tmin = sst.time.isel(sst.argmin(...))
     
+    #Linear fit
+    ind = np.isfinite(sst)
+    z = np.polyfit(sst.time.astype(np.int64)[ind],sst[ind], 1)
+    Dlinearf = z[0] * sst.time.astype(np.int64) + z[1]
+    Dslope=z[0]/1.e-9*24*3600*365*100 #paso a C por siglo
+    tTendencia =  "\n Tendencia: " + "%2.2f"%(Dslope) + " ºC/siglo "
+
     fig, ax = plt.subplots(1 , 1 , figsize = (14,8))
     ax.plot(sst.time , sst,'c' , label = 'Diario')
     ax.plot(sst_rolling.time , sst_rolling,'b', label='Suavizado (1 año)' , linewidth = '3')
+    ax.plot(sst.time,Dlinearf,'b:',linewidth=2,label = 'Tendencia');
 
     ax.plot(d_tmax , tmax,'rs' , markersize = 12 , markeredgecolor='k')
     ax.plot(d_tmin , tmin,'bs' , markersize = 12 , markeredgecolor='k')
 
     ax.legend(loc = 4)
 
-    tTActual = sst.time[-1].dt.strftime("%d %B %Y").values + " %2.3f ºC "%(sst[-1].values)
-    tTMaxima =  'T maxima: ' + "%2.3f ºC"%(tmax) + ' el ' + d_tmax.dt.strftime("%d %B %Y").values
-    tTMinima =  'T minima: ' + "%2.3f ºC"%(tmin) + ' el ' + d_tmin.dt.strftime("%d %B %Y").values
+    tTActual = sst.time[-1].dt.strftime("%d %B %Y").values + " %2.2f ºC "%(sst[-1].values)
+    tTMaxima =  'Temperatura máxima: ' + "%2.2f ºC"%(tmax) + ' el ' + d_tmax.dt.strftime("%d %B %Y").values
+    tTMinima =  'Temperatura mínima: ' + "%2.2f ºC"%(tmin) + ' el ' + d_tmin.dt.strftime("%d %B %Y").values
     tPeriodo =  " [" + sstd.time[0].dt.strftime("%d %B %Y").values + " - "+ sstd.time[-1].dt.strftime("%d %B %Y").values + "]"
 
-    ax.set_title(TituloFigura + tPeriodo + '\n' + tTMaxima + ' - ' + tTMinima);
+    ax.set_title(TituloFigura + tPeriodo + '\n' + tTMaxima + ' - ' + tTMinima + tTendencia);
     ax.text(sst.time[0] , math.floor(ax.get_ylim()[1]*10)/10 , tTActual, va = 'center',
                 bbox={'facecolor':'white', 'edgecolor':'none', 'pad':10},size=14)
 
@@ -103,14 +111,14 @@ def FiguraSerieTemporal_anual(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
                             y2=df["mean"]-2*df["std"],alpha=0.5, color='#D3D3D3',
                             label='2*std')
     ax.set_xlim(df.index[0],df.index[365])
-    ax.xaxis.set_major_formatter(date_form)
+    ax.xaxis.set_major_formatter(date_form)S
 
     ax.legend(loc = 4)
     ax.grid(linestyle='-', linewidth=.9)
 
     tPeriodo = ' ['+sst.time[0].dt.strftime("%d %B %Y").values + " - "+ sst.time[-1].dt.strftime("%d %B %Y").values + ']'
-    tTActual = sst.time[-1].dt.strftime("%d %B %Y").values + " %2.3f ºC "%(sst[-1].values)
-    tTMaxima = 'Maximo: ' + "%2.3f ºC"%(sst.isel(sst.argmax(...)).values)
+    tTActual = sst.time[-1].dt.strftime("%d %B %Y").values + " %2.2f ºC "%(sst[-1].values)
+    tTMaxima = 'Temperatura máximo: ' + "%2.2f ºC"%(sst.isel(sst.argmax(...)).values)
     tFechaTMaxima = ' el ' + sst.time.isel(sst.argmax(...)).dt.strftime("%d %B %Y").values
 
     ax.set_title(TituloFigura + tPeriodo +'\n' + tTActual + '. ' + tTMaxima + tFechaTMaxima);
