@@ -23,7 +23,6 @@ if os.uname().nodename.lower().find('eemmmbp') != -1:
     base_file = '/Users/pvb/Dropbox/Oceanografia/Data/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
 elif os.uname().nodename.lower().find('rossby') != -1:
     base_file = '/data/shareddata/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
-    dataDir = '/home/pvb/Analisis/SSTGlobalAnalysis/data'
 
 
 print('>>>>> Cargando ficheros de '+base_file)
@@ -105,7 +104,7 @@ for i in range(0,len(Titulos)):
     
 # Monthly analisis
     print('>>>>> Monthly'+titulo+titulo_short)
-    sst = sst.resample(time='1M').mean(dim='time',skipna=True).load()
+    sst = sst.resample(time='ME').mean(dim='time',skipna=True).load()
 
 ## Calculate global mean weigthtened
     print('    > Compute weigthtened mean')
