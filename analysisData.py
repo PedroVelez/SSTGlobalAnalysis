@@ -32,7 +32,7 @@ elif os.uname().nodename.lower().find('sagams') != -1:
     base_file = '/Users/pvb/Dropbox/Oceanografia/Data/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
     dataDir='./data'
 elif os.uname().nodename.lower().find('rossby') != -1:
-    base_file = '/data/shareddata/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
+    base_file = '/data/pvb/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
     dataDir = '/home/pvb/Analisis/SSTGlobalAnalysis/data'
 
 
