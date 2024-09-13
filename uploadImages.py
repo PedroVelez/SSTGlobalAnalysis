@@ -9,7 +9,7 @@ f = open(HOME+'/.env', 'r')
 for line in f.readlines():
     Name=line.strip().split('=')[0]
     Content=line.strip().split('=')[-1]
-    if Name=='userFTP' or Name=='passwdFTP':
+    if Name=='dirData' or Name=='dirAnalisis' or Name=='userFTP' or Name=='passwdFTP':
         exec(Name + "=" + "'" + Content + "'")
 f.close()
 
