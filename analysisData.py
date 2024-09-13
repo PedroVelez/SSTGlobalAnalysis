@@ -18,7 +18,16 @@ year2=2024
 yearC1='1982'
 yearC2='1992'
 
-
+## Inicio
+HOME=os.environ['HOME']
+USER=os.environ['USER']    
+f = open(HOME+'/.env', 'r')
+for line in f.readlines():
+    Name=line.strip().split('=')[0]
+    Content=line.strip().split('=')[-1]
+    if Name=='userFTP' or Name=='passwdFTP':
+        exec(Name + "=" + "'" + Content + "'")
+f.close()
 
 Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte', 'Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
 Titulos_short = ['GO','NH','SH','NAtl','LEBA', 'NOR','CAN','SUD','ESAL']
@@ -26,15 +35,14 @@ Titulos_short = ['GO','NH','SH','NAtl','LEBA', 'NOR','CAN','SUD','ESAL']
 
 # Load data
 if os.uname().nodename.lower().find('eemmmbp') != -1:
-    base_file = '/Users/pvb/Dropbox/Oceanografia/Data/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
-    dataDir='./data'
+    base_file = dirData + '/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
+    dataDir   = dirAnalisis + '/SSTGlobalAnalysis/data'
 elif os.uname().nodename.lower().find('sagams') != -1:
-    base_file = '/Users/pvb/Dropbox/Oceanografia/Data/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
-    dataDir='./data'
+    base_file = dirData + '/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
+    dataDir   = dirAnalisis + '/SSTGlobalAnalysis/data'
 elif os.uname().nodename.lower().find('rossby') != -1:
-    base_file = '/data/pvb/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
-    dataDir = '/home/pvb/Analisis/SSTGlobalAnalysis/data'
-
+    base_file = dirData + '/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
+    dataDir   = dirAnalisis + '/SSTGlobalAnalysis/data'
 
 
 print('>>>>> Cargando ficheros de '+base_file)

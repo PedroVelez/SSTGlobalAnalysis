@@ -7,7 +7,7 @@ strval=$(uname -a)
 if [[ $strval == *EemmMBP* ]];
 then
   analisisDir=$HOME/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis
-  pythonDir=/Users/pvb/miniconda3/envs/ocean/bin/python
+  pythonDir=$HOME/miniconda3/envs/ocean/bin/python
 fi
 if [[ $strval == *rossby* ]];
 then

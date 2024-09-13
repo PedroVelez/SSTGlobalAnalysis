@@ -16,20 +16,28 @@ import locale
 locale.setlocale(locale.LC_TIME, "es_ES");
 plt.rcParams['figure.figsize'] = (10, 4)
 
-if os.uname().nodename.lower().find('eemmmbp') != -1:
-    imagesDir = '/Users/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/images'
-    analisisDir='/Users/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis'    
-elif os.uname().nodename.lower().find('sagams') != -1:
-    imagesDir = '/Users/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/images'
-    analisisDir='/Users/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis'
-elif os.uname().nodename.lower().find('rossby') != -1:
-    imagesDir = '/home/pvb/Analisis/SSTGlobalAnalysis/images'
-    analisisDir = '/home/pvb/Analisis/SSTGlobalAnalysis'
+## Inicio
+HOME=os.environ['HOME']   
+f = open(HOME+'/.env', 'r')
+for line in f.readlines():
+    Name=line.strip().split('=')[0]
+    Content=line.strip().split('=')[-1]
+    if Name=='userFTP' or Name=='passwdFTP':
+        exec(Name + "=" + "'" + Content + "'")
+f.close()
 
+if os.uname().nodename.lower().find('eemmmbp') != -1:
+    imagesDir   = dirAnalisis + '/SSTGlobalAnalysis/images'
+    analisisDir = dirAnalisis + '/SSTGlobalAnalysis'    
+elif os.uname().nodename.lower().find('sagams') != -1:
+    imagesDir   = dirAnalisis + '/SSTGlobalAnalysis/images'
+    analisisDir = dirAnalisis + '/SSTGlobalAnalysis'
+elif os.uname().nodename.lower().find('rossby') != -1:
+    imagesDir   = dirAnalisis + '/SSTGlobalAnalysis/images'
+    analisisDir = dirAnalisis + '/SSTGlobalAnalysis'
 
 Titulos = ['Oceano Global','AtlanticoNorte', 'Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
 Titulos_short = ['GO','NAtl','LEBA', 'NOR','CAN','SUD','ESAL']
-
 
 for i in range(0,len(Titulos)):
     titulo = Titulos[i]

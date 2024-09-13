@@ -3,12 +3,23 @@ import datetime
 import os
 import xarray as xr
 
+## Inicio
+USER=os.environ['USER'] 
+HOME=os.environ['HOME']
+f = open(HOME+'/.env', 'r')
+for line in f.readlines():
+    Name=line.strip().split('=')[0]
+    Content=line.strip().split('=')[-1]
+    if Name=='userFTP' or Name=='passwdFTP':
+        exec(Name + "=" + "'" + Content + "'")
+f.close()
+
 if os.uname().nodename.lower().find('eemmmbp') != -1:
-    data_dir = '/Users/pvb/Dropbox/Oceanografia/Data/Satelite/noaa.oisst.v2.highres/NC'
+    data_dir = dirData + '/Satelite/noaa.oisst.v2.highres/NC'
 elif os.uname().nodename.lower().find('sagams') != -1:
-    data_dir = '/Users/pvb/Dropbox/Oceanografia/Data/Satelite/noaa.oisst.v2.highres/NC'
+    data_dir = dirData + '/Satelite/noaa.oisst.v2.highres/NC'
 elif os.uname().nodename.lower().find('rossby') != -1:
-    data_dir = '/data/pvb/Satelite/noaa.oisst.v2.highres/NC'
+    data_dir = dirData + '/Satelite/noaa.oisst.v2.highres/NC'
     
 year = datetime.date.today().year
 fileThisYear = 'sst.day.mean.'+str(year)+'.nc'

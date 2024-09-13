@@ -3,14 +3,8 @@ import datetime
 import os
 import glob
 
-if os.uname().nodename.lower().find('eemmmbp') != -1:
-    imagesDir = '/home/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/images'
-elif os.uname().nodename.lower().find('rossby') != -1:
-    imagesDir = '/home/pvb/Analisis/SSTGlobalAnalysis/images'
-
+## Read env data
 HOME=os.environ['HOME']   
-
-## read user 
 f = open(HOME+'/.env', 'r')
 for line in f.readlines():
     Name=line.strip().split('=')[0]
@@ -18,6 +12,11 @@ for line in f.readlines():
     if Name=='userFTP' or Name=='passwdFTP':
         exec(Name + "=" + "'" + Content + "'")
 f.close()
+
+if os.uname().nodename.lower().find('eemmmbp') != -1:
+    imagesDir = dirAnalisis + '/SSTGlobalAnalysis/images'
+elif os.uname().nodename.lower().find('rossby') != -1:
+    imagesDir = dirAnalisis + '/SSTGlobalAnalysis/images'
 
 os.chdir(imagesDir)
 session = ftplib.FTP('ftp.oceanografia.es',userFTP,passwdFTP)

@@ -23,19 +23,28 @@ warnings.filterwarnings("ignore")
 
 locale.setlocale(locale.LC_TIME, "es_ES");
 
+## Inicio
+HOME=os.environ['HOME']
+f = open(HOME+'/.env', 'r')
+for line in f.readlines():
+    Name=line.strip().split('=')[0]
+    Content=line.strip().split('=')[-1]
+    if Name=='userFTP' or Name=='passwdFTP':
+        exec(Name + "=" + "'" + Content + "'")
+f.close()   
+
 Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte', 'Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
 Titulos_short = ['GO','NH','SH','NAtl','LEBA', 'NOR','CAN','SUD','ESAL']
 
 if os.uname().nodename.lower().find('eemmmbp') != -1:
-    imagesDir = '/Users/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/images'
-    dataDir='/Users/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/data'    
+    imagesDir = dirAnalisis + '/SSTGlobalAnalysis/images'
+    dataDir   = dirAnalisis + '/SSTGlobalAnalysis/data'    
 elif os.uname().nodename.lower().find('sagams') != -1:
-    imagesDir = '/Users/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/images'
-    dataDir='/Users/pvb/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis/data'
+    imagesDir = dirAnalisis + '/SSTGlobalAnalysis/images'
+    dataDir   = dirAnalisis + '/SSTGlobalAnalysis/data'
 elif os.uname().nodename.lower().find('rossby') != -1:
-    imagesDir = '/home/pvb/Analisis/SSTGlobalAnalysis/images'
-    dataDir = '/home/pvb/Analisis/SSTGlobalAnalysis/data'
-
+    imagesDir = dirAnalisis + '/SSTGlobalAnalysis/images'
+    dataDir   = dirAnalisis + '/SSTGlobalAnalysis/data'
 
 ## Funciones
 def FiguraSerieTemporal(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
