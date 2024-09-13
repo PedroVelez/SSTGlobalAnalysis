@@ -2,12 +2,17 @@
 
 Repositorio con los códigos que producen las figuras en:
 
-![caption](files/image.png)[analisis de SST Global](https://www.oceanografia.es/pedro/research_SST_GLOBAL.html)
-https://www.oceanografia.es/pedro/research_SST_CAN.html
-https://www.oceanografia.es/pedro/research_SST_ESAL.html
-https://www.oceanografia.es/pedro/research_SST_LEBA.html
-https://www.oceanografia.es/pedro/research_SST_NOR.html
-https://www.oceanografia.es/pedro/research_SST_SUD.html
-v
+![caption](https://www.oceanografia.es/pedro/images/SST/map_sstd_anom_GO.png)[analisis de SST Global](https://www.oceanografia.es/pedro/research_SST_GLOBAL.html)
 
-research_SST_GLOBAL.html
+https://www.oceanografia.es/pedro/research_SST_CAN.html
+
+https://www.oceanografia.es/pedro/research_SST_ESAL.html
+
+https://www.oceanografia.es/pedro/research_SST_LEBA.html
+
+https://www.oceanografia.es/pedro/research_SST_NOR.html
+
+https://www.oceanografia.es/pedro/research_SST_SUD.html
+
+
+
