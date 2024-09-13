@@ -4,15 +4,15 @@ import os
 import xarray as xr
 
 ## Inicio
-USER=os.environ['USER'] 
-HOME=os.environ['HOME']
+HOME=os.environ['HOME']   
 f = open(HOME+'/.env', 'r')
 for line in f.readlines():
     Name=line.strip().split('=')[0]
     Content=line.strip().split('=')[-1]
-    if Name=='userFTP' or Name=='passwdFTP':
+    if Name=='dirData' or Name=='dirAnalisis':
         exec(Name + "=" + "'" + Content + "'")
 f.close()
+
 
 if os.uname().nodename.lower().find('eemmmbp') != -1:
     data_dir = dirData + '/Satelite/noaa.oisst.v2.highres/NC'

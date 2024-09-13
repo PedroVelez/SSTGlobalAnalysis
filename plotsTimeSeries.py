@@ -24,14 +24,15 @@ warnings.filterwarnings("ignore")
 locale.setlocale(locale.LC_TIME, "es_ES");
 
 ## Inicio
-HOME=os.environ['HOME']
+HOME=os.environ['HOME']   
 f = open(HOME+'/.env', 'r')
 for line in f.readlines():
     Name=line.strip().split('=')[0]
     Content=line.strip().split('=')[-1]
-    if Name=='userFTP' or Name=='passwdFTP':
+    if Name=='dirData' or Name=='dirAnalisis':
         exec(Name + "=" + "'" + Content + "'")
-f.close()   
+f.close()
+ 
 
 Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte', 'Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
 Titulos_short = ['GO','NH','SH','NAtl','LEBA', 'NOR','CAN','SUD','ESAL']
