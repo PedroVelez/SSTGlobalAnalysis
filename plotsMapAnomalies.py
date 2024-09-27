@@ -38,7 +38,7 @@ elif os.uname().nodename.lower().find('rossby') != -1:
     analisisDir = dirAnalisis + '/SSTGlobalAnalysis'
 
 Titulos = ['Oceano Global','AtlanticoNorte', 'Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
-Titulos_short = ['GO','NAtl','LEBA', 'NOR','CAN','SUD','ESAL']
+Titulos_short = ['GO','NAtl','LEB', 'NOR','CAN','SUD','ESA']
 
 for i in range(0,len(Titulos)):
     titulo = Titulos[i]

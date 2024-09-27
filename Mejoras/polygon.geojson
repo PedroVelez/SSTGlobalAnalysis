@@ -1,0 +1,22 @@
+{
+  "type": "FeatureCollection",
+  "features": 
+  [
+    {
+      "type": "Feature",
+      "properties": 
+      {"name": "Sample Polygon"},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [30,-20],
+            [30,20],
+            [10,0],
+            [30,-20]  // Closed polygon (first and last coordinates should be the same)
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -30,7 +30,7 @@ f.close()
 
 
 Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte', 'Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
-Titulos_short = ['GO','NH','SH','NAtl','LEBA', 'NOR','CAN','SUD','ESAL']
+Titulos_short = ['GO','NH','SH','NAtl','LEB', 'NOR','CAN','SUD','ESA']
 
 
 # Load data

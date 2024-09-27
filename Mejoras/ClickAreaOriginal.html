@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html> 
+<head> 
+	<title>IEO Ocean Observing System</title> 
+	<meta charset="utf-8" /> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/> 
+   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+   <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script> 
+   <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' /> 
+	<style>
+		html, body {height: 100		.leaflet-container {height: 600px;width: 800px;max-width: 100	</style>
+	<style>#map { width: 800px; height: 600px; }
+        .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } .info h4 { margin: 0 0 5px; color: #777; }
+        .legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }
+    </style>
+</head> 
+<body> 
+    <div align="center">
+        <div id="map" style="width: 800px; height: 700px;"></div> 
+    </div>
+
+    <script type="text/javascript">
+    // Create the map and set view
+    var map = L.map('map',{scrollwheelzoom: false}).setView([38.00, -8.00],  5);
+    map.addControl(new L.Control.Fullscreen());
+
+    // Add tile layer
+    const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy ESRI'}).addTo(map);
+
+    // Define a polygon
+    var polygonNOR = L.polygon([
+      [46, -11],
+      [46,  -1],
+      [42,  -1],
+      [42, -11]
+    ]).addTo(map);
+    
+    // Add a click event with a popup
+    polygonNOR.on('click', function(e) {
+      var popup = L.popup().setLatLng(e.latlng) 
+        .setContent("<center><a href=\'https://www.oceanografia.es/pedro/research_SST_NOR.html'>Demarcacion NorAtlantica</a></center>") 
+        .openOn(map);});
+
+    // Define a polygon
+    var polygonCan = L.polygon([
+      [30, -20],
+      [30, -10],
+      [25, -15]
+    ]).addTo(map);
+
+
+    // Add a click event with a popup
+    polygonCan.on('click', function(e) {
+      var popup = L.popup().setLatLng(e.latlng) 
+        .setContent("<center><a href=\'https://www.oceanografia.es/pedro/research_SST_CAN.html'>Demarcacion Canaria</a></center>") 
+        .openOn(map);});
+
+  </script>
+</body>
+</html>
+

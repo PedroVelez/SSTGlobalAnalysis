@@ -19,12 +19,22 @@ elif os.uname().nodename.lower().find('rossby') != -1:
     imagesDir = dirAnalisis + '/SSTGlobalAnalysis/images'
 
 os.chdir(imagesDir)
+## 
 session = ftplib.FTP('ftp.oceanografia.es',userFTP,passwdFTP)
 session.cwd('/html/pedro/images/SST')
-
 #Read and uplod files
 filenames = glob.glob(imagesDir+'/*.png')
+for filename in filenames:
+    print('https://www.oceanografia.es/pedro/images/SST/'+filename.split('/')[-1])
+    session.storbinary('STOR '+ filename.split('/')[-1], open(filename, 'rb'))
 
+session.quit()    
+
+## 
+session = ftplib.FTP('ftp.oceanografia.es',userFTP,passwdFTP)
+session.cwd('/html/IEOOS/SST/images')
+#Read and uplod files
+filenames = glob.glob(imagesDir+'/*.png')
 for filename in filenames:
     print('https://www.oceanografia.es/pedro/images/SST/'+filename.split('/')[-1])
     session.storbinary('STOR '+ filename.split('/')[-1], open(filename, 'rb'))
