@@ -1,6 +1,6 @@
 %Titulo
 PaginaWebDir='';
-FileHtmClickStatus='MapaSST_ClickArea.html';
+FileHtmClickStatus='ClickArea.html';
 
 %% Inicio
 
@@ -49,8 +49,10 @@ fprintf(fid,'       attribution: ''Tiles &copy ESRI''}).addTo(map);\n');
 
 fprintf(fid,'// Define el poligono de cada demarcacion\n');
 Demarcaciones={'CAN',     'NOR',     'SUD',         'ESA',             'LEV';...
-               'Canaria', 'Noratlántica','Sudatlántica','Estrecho y Alborán','Levantino-Balear'; ...
+               'Canaria', 'Noroeste','Suratlántica','Estrecho-Alboran','Levante-Baleares'; ...
                 '#bf3eff','#d57016',  '#61a347',     '#e28b05',         '#ff9999'};
+
+
 
 for iD=1:5
     codeDemarcacion=Demarcaciones{1,iD};
@@ -65,7 +67,7 @@ for iD=1:5
     fprintf(fid,'// Add a click event with a popup\n');
     fprintf(fid,'    polygon%3s.on(''click'', function(e) {\n',Demarcaciones{1,iD});
     fprintf(fid,'      var popup = L.popup().setLatLng(e.latlng)\n');
-    fprintf(fid,'        .setContent("<center><a href=\''https://www.oceanografia.es/IEOOS/SST/SST_%3s.html''>Demarcacion marina %s</a></center>") \n',Demarcaciones{1,iD},Demarcaciones{2,iD});
+    fprintf(fid,'        .setContent("<center><a href=\''https://www.oceanografia.es/IEOOS/SST/research_SST_%3s.html''>Demarcacion %s</a></center>") \n',Demarcaciones{1,iD},Demarcaciones{2,iD});
     fprintf(fid,'        .openOn(map);});\n');
 end
 
