@@ -21,27 +21,26 @@ elif os.uname().nodename.lower().find('rossby') != -1:
 os.chdir(imagesDir)
 
 ## Global analisis
-session = ftplib.FTP('ftp.oceanografia.es',userFTP,passwdFTP)
-session.cwd('/html/pedro/images/SST')
+#session = ftplib.FTP('ftp.oceanografia.es',userFTP,passwdFTP)
+#session.cwd('/html/pedro/images/SST')
 Titulos_short = ['GO','NH','SH','NAtl']
 
 #Read and uplod files
-for it in range(0,len(Titulos_short)):
-    titulo_short = Titulos_short[it]
-    filenames = glob.glob(imagesDir+'/*'+titulo_short+'*.png')
-    for filename in filenames:
-        print('https://www.oceanografia.es/pedro/images/SST/'+filename.split('/')[-1])
-        session.storbinary('STOR '+ filename.split('/')[-1], open(filename, 'rb'))
-
-session.quit()    
+#for it in range(0,len(Titulos_short)):
+#    titulo_short = Titulos_short[it]
+#    filenames = glob.glob(imagesDir+'/*'+titulo_short+'*.png')
+#    for filename in filenames:
+#        print('https://www.oceanografia.es/pedro/images/SST/'+filename.split('/')[-1])
+#        session.storbinary('STOR '+ filename.split('/')[-1], open(filename, 'rb'))
+# session.quit()
 
 ## Demarcaciones
 session = ftplib.FTP('ftp.oceanografia.es',userFTP,passwdFTP)
 session.cwd('/html/IEOOS/SST/images')
 Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA']
-
 #Read and uplod files
 for it in range(0,len(Titulos_short)):
+    print(it)
     titulo_short = Titulos_short[it]
     filenames = glob.glob(imagesDir+'/*'+titulo_short+'*.png')
     for filename in filenames:
