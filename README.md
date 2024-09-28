@@ -1,6 +1,6 @@
 # SSTGlobalAnalysis
 
-Repositorio con los códigos en python que producen las figuras en
+Repositorio con los códigos en python que producen las figuras de SST en
 
 ## Globales
 
@@ -10,32 +10,35 @@ Repositorio con los códigos en python que producen las figuras en
 </center>
 
 ## Demarcaciones
-https://www.oceanografia.es/IEOOS/html_files/MapaSST_ClickArea.html
 
 <center>
-      <h2>Analisis global en la demarcacion Canaria</h2>
+      <a href="https://www.oceanografia.es/IEOOS/SST/MapaSST.html">Mapa demarcaciones</a>
+</center>
+
+<center>
+      <h2>Analisis en la demarcacion Canaria</h2>
       <a href="https://www.oceanografia.es/pedro/research_SST_CAN.html"><img src="https://www.oceanografia.es/pedro/images/SST/map_sstd_anom_CAN.png" alt="SST" width="600""></a>
 </center>
 
 
 <center>
-      <h2>Analisis global en la demarcacion Estrecho-Alborán</h2>
+      <h2>Analisis en la demarcacion Estrecho-Alborán</h2>
       <a href="https://www.oceanografia.es/pedro/research_SST_ESAL.html"><img src="https://www.oceanografia.es/pedro/images/SST/map_sstd_anom_ESAL.png" alt="SST" width="600""></a>
 </center>
 
 
 <center>
-      <h2>Analisis global en la demarcacion Levantino Balear</h2>
+      <h2>Analisis en la demarcacion Levantino Balear</h2>
       <a href="https://www.oceanografia.es/pedro/research_SST_LEBA.html"><img src="https://www.oceanografia.es/pedro/images/SST/map_sstd_anom_LEBA.png" alt="SST" width="600""></a>
 </center>
 
 
 <center>
-      <h2>Analisis global en la demarcacion Noratlántica</h2>
+      <h2>Analisis en la demarcacion Noratlántica</h2>
       <a href="https://www.oceanografia.es/pedro/research_SST_NOR.html"><img src="https://www.oceanografia.es/pedro/images/SST/map_sstd_anom_NOR.png" alt="SST" width="600""></a>
 </center>
 
 <center>
-      <h2>Analisis global en la demarcacion SudAtlántica</h2>
+      <h2>Analisis en la demarcacion SudAtlántica</h2>
       <a href="https://www.oceanografia.es/pedro/research_SST_SUD.html"><img src="https://www.oceanografia.es/pedro/images/SST/map_sstd_anom_SUD.png" alt="SST" width="600""></a>
 </center>
