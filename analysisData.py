@@ -70,7 +70,7 @@ for i in range(0,len(Titulos)):
         basin_surf_interp = basin_surf.interp_like(sst, method='nearest')
         sst = sst.where((basin_surf_interp==1) | (basin_surf_interp==4) ,drop=True)
         print('>>>>> '+titulo)
-    elif titulo_short == 'LEBA':
+    elif titulo_short == 'LEB':
         sst = DS.sst.sel(lat=slice(35.5,42.5)).sel(lon=slice(0,8))
         print('>>>>> '+titulo)        
     elif  titulo_short == 'NOR':
@@ -82,7 +82,7 @@ for i in range(0,len(Titulos)):
     elif  titulo_short == 'SUD':
         sst = DS.sst.sel(lat=slice(35.5,37.4)).sel(lon=slice(352,354))
         print('>>>>> '+titulo)
-    elif  titulo_short == 'ESAL':
+    elif  titulo_short == 'ESA':
         sst = DS.sst.sel(lat=slice(35.5,37)).sel(lon=slice(354,359))
         print('>>>>> '+titulo)
         
@@ -118,7 +118,7 @@ for i in range(0,len(Titulos)):
     sst_wmean.to_netcdf(dataDir+'/sstd_mean_'+titulo_short+'.nc',mode='w')
     sst_anom_wmean.to_netcdf(dataDir+'/sstd_anom_mean_'+titulo_short+'.nc',mode='w')
 
-    if titulo_short=='GO' or titulo_short=='NAtl' or titulo_short=='LEBA' or titulo_short=='CAN' or titulo_short=='NOR' or titulo_short=='SUD' or titulo_short=='ESAL':
+    if titulo_short=='GO' or titulo_short=='NAtl' or titulo_short=='LEB' or titulo_short=='CAN' or titulo_short=='NOR' or titulo_short=='SUD' or titulo_short=='ESA':
         sst_anom_LD=sst_anom[-1,:,:]
         sst_anom_LD.to_netcdf(dataDir+'/sstLD_anom_'+titulo_short+'.nc',mode='w')
     
