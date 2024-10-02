@@ -33,12 +33,16 @@ printf "   > Update data SSTs \n"
 /bin/rm $analisisDir/data/sst*.nc
 $pythonDir $analisisDir/analysisData.py
 
+printf "   > Update data SSTs demarcaciones\n"
+$pythonDir $analisisDir/analysisDataiDemarcaciones.py
+
 printf "   > Plots SSTs \n"
 /bin/rm $analisisDir/images/*.png
 $pythonDir $analisisDir/plotsTimeSeries.py
 
 printf "   > Plots Mapa anomalia \n"
 $pythonDir $analisisDir/plotsMapAnomalies.py 
+$pythonDir $analisisDir/plotsMapAnomaliesDemarcaciones.py 
 
 printf "   > Plots comparacionHS \n"
 $pythonDir $analisisDir/plotsComparaHemispheres.py 
