@@ -37,8 +37,8 @@ elif os.uname().nodename.lower().find('rossby') != -1:
     imagesDir   = dirAnalisis + '/SSTGlobalAnalysis/images'
     analisisDir = dirAnalisis + '/SSTGlobalAnalysis'
 
-Titulos = ['Oceano Global','AtlanticoNorte']
-Titulos_short = ['GO','NAtl']
+Titulos = ['Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
+Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA']
 
 for i in range(0,len(Titulos)):
     titulo = Titulos[i]
@@ -54,14 +54,17 @@ for i in range(0,len(Titulos)):
     sst = data.sst
 
     escalaLand='50m'
-    if titulo_short == 'NH':
-        escalaLand='110m'
-    elif titulo_short == 'SH':
-        escalaLand='110m'
-    elif titulo_short == 'GO':
-        escalaLand='110m'
 
-## Figura
+# Load the data from the .txt file
+    lon, lat = [], []
+    if titulo_short == 'CAN' or titulo_short == 'ESA' or titulo_short ==  'LEB' or titulo_short ==  'NOR' or titulo_short ==  'SUD' :
+        with open('./LimiteDemarcaciones/Demarcacion'+titulo_short+'.txt', 'r') as f:
+            for line in f:
+                longitude, latitude = map(float, line.split())
+                lon.append(longitude)
+                lat.append(latitude)
+            
+    ## Figura
     fig = plt.figure(figsize=(14,8))
     ax = plt.axes(projection=ccrs.Robinson())
 
@@ -69,13 +72,13 @@ for i in range(0,len(Titulos)):
                 'land', edgecolor='k', scale = escalaLand ,
                 facecolor=cfeature.COLORS['land'])
     ax.add_feature(land, facecolor='beige')
-    #ax.add_feature(cfeature.LAND)
     
     cm=ax.contourf(sst.lon,sst.lat,sst, levels=np.arange(-4,4.1,0.25), 
                transform=ccrs.PlateCarree(),
                cmap = plt.cm.RdBu.reversed(),
                vmin = -4,vmax = 4,extend='both')
 
+    ax.plot(lon, lat, transform=ccrs.PlateCarree())
     cbar=fig.colorbar(cm,ax=ax, location='bottom',
                   shrink=.8, ticks=[-4,-2,0,2,4], 
                   drawedges=True)

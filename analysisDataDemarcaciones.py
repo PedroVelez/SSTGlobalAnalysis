@@ -29,8 +29,8 @@ for line in f.readlines():
 f.close()
 
 
-Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte']
-Titulos_short = ['GO','NH','SH','NAtl']
+Titulos = ['Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
+Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA']
 
 
 # Load data
@@ -54,23 +54,7 @@ for i in range(0,len(Titulos)):
     titulo = Titulos[i]
     titulo_short = Titulos_short[i]
     
-    if titulo_short == 'NH':
-        sst = DS.sst.sel(lat=slice(0,65))
-        print('>>>>> '+titulo)
-    elif titulo_short == 'SH':
-        sst = DS.sst.sel(lat=slice( -65, 0))
-        print('>>>>> '+titulo)
-    elif titulo_short == 'GO':
-        sst = DS.sst.sel(lat=slice( -65, 65))
-        print('>>>>> '+titulo)
-    elif titulo_short == 'NAtl':
-        sst = DS.sst.sel(lat=slice(0, 65))
-        basins = xr.open_dataset(dataDir+'/basins.nc')
-        basin_surf = basins.basin[0]
-        basin_surf_interp = basin_surf.interp_like(sst, method='nearest')
-        sst = sst.where((basin_surf_interp==1) | (basin_surf_interp==4) ,drop=True)
-        print('>>>>> '+titulo)
-    elif titulo_short == 'LEB':
+    if  titulo_short == 'LEB':
         sst = DS.sst.sel(lat=slice(35.5,42.75)).sel(lon=slice(0,8))
         print('>>>>> '+titulo)        
     elif  titulo_short == 'NOR':
