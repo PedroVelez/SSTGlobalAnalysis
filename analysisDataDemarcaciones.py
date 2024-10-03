@@ -49,25 +49,26 @@ print('>>>>> Cargando ficheros de '+base_file)
 
 files = [f'{base_file}.{year}.nc' for year in range(year1, year2+1)]
 DS = xr.open_mfdataset(files)
+  
 
 for i in range(0,len(Titulos)):
     titulo = Titulos[i]
     titulo_short = Titulos_short[i]
     
     if  titulo_short == 'LEB':
-        sst = DS.sst.sel(lat=slice(35.5,42.75)).sel(lon=slice(0,8))
+        sst = DS.sst.sel(lat=slice(36,43)).sel(lon=slice(0,6.5))
         print('>>>>> '+titulo)        
     elif  titulo_short == 'NOR':
-        sst = DS.sst.sel(lat=slice(41.8,46.5)).sel(lon=slice(347.5,359.5))
+        sst = DS.sst.sel(lat=slice(41.25,47)).sel(lon=slice(345.5,358.50))
         print('>>>>> '+titulo)        
     elif  titulo_short == 'CAN':
-        sst = DS.sst.sel(lat=slice(24.3,32.5)).sel(lon=slice(338,350))
+        sst = DS.sst.sel(lat=slice(24.3,32.5)).sel(lon=slice(337.75,349.75))
         print('>>>>> '+titulo)
     elif  titulo_short == 'SUD':
-        sst = DS.sst.sel(lat=slice(35.5,37.4)).sel(lon=slice(352,354))
+        sst = DS.sst.sel(lat=slice(35.5,37.4)).sel(lon=slice(352,354.25))
         print('>>>>> '+titulo)
     elif  titulo_short == 'ESA':
-        sst = DS.sst.sel(lat=slice(35.5,37)).sel(lon=slice(354,359))
+        sst = DS.sst.sel(lat=slice(35.6,37)).sel(lon=slice(354,358.25))
         print('>>>>> '+titulo)
         
                        
