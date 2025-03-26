@@ -12,7 +12,7 @@ import dask
 
 # Settings 
 year1=1982
-year2=2024
+year2=2025
 
 # Settings compute de climatoloy
 yearC1='1982'
@@ -64,11 +64,11 @@ for i in range(0,len(Titulos)):
         sst = DS.sst.sel(lat=slice( -65, 65))
         print('>>>>> '+titulo)
     elif titulo_short == 'NAtl':
-        sst = DS.sst.sel(lat=slice(0, 65))
+        sst = DS.sst.sel(lat=slice(0, 65),lon=slice(259,359))
         basins = xr.open_dataset(dataDir+'/basins.nc')
         basin_surf = basins.basin[0]
         basin_surf_interp = basin_surf.interp_like(sst, method='nearest')
-        sst = sst.where((basin_surf_interp==1) | (basin_surf_interp==4) ,drop=True)
+        sst = sst.where((basin_surf_interp==1) ,drop=True)
         print('>>>>> '+titulo)
     elif titulo_short == 'LEB':
         sst = DS.sst.sel(lat=slice(35.5,42.75)).sel(lon=slice(0,8))

@@ -34,7 +34,7 @@ printf "   > Update data SSTs \n"
 $pythonDir $analisisDir/analysisData.py
 
 printf "   > Update data SSTs demarcaciones\n"
-$pythonDir $analisisDir/analysisDataiDemarcaciones.py
+$pythonDir $analisisDir/analysisDataDemarcaciones.py
 
 printf "   > Plots SSTs \n"
 /bin/rm $analisisDir/images/*.png
