@@ -37,7 +37,7 @@ session.quit()
 ## Demarcaciones
 session = ftplib.FTP('ftp.oceanografia.es',userFTP,passwdFTP)
 session.cwd('/html/IEOOS/SST/images')
-Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA']
+Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA','IBICan']
 #Read and uplod files
 for it in range(0,len(Titulos_short)):
     titulo_short = Titulos_short[it]

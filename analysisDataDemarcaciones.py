@@ -29,8 +29,8 @@ for line in f.readlines():
 f.close()
 
 
-Titulos = ['Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
-Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA']
+Titulos = ['Iberian Canary Basin','Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
+Titulos_short = ['IBICan','LEB', 'NOR','CAN','SUD','ESA']
 
 
 # Load data
@@ -70,6 +70,13 @@ for i in range(0,len(Titulos)):
     elif  titulo_short == 'ESA':
         sst = DS.sst.sel(lat=slice(35.6,37)).sel(lon=slice(354,358.25))
         print('>>>>> '+titulo)
+    elif  titulo_short == 'IBICan':
+        sst = DS.sst.sel(lat=slice(20, 50),lon=slice(325,360))
+        basins = xr.open_dataset(dataDir+'/basins.nc')
+        basin_surf = basins.basin[0]
+        basin_surf_interp = basin_surf.interp_like(sst, method='nearest')
+        sst = sst.where((basin_surf_interp==1) ,drop=True)
+        print('>>>>> '+titulo)
         
                        
 # Daily analisis
@@ -103,7 +110,7 @@ for i in range(0,len(Titulos)):
     sst_wmean.to_netcdf(dataDir+'/sstd_mean_'+titulo_short+'.nc',mode='w')
     sst_anom_wmean.to_netcdf(dataDir+'/sstd_anom_mean_'+titulo_short+'.nc',mode='w')
 
-    if titulo_short=='GO' or titulo_short=='NAtl' or titulo_short=='LEB' or titulo_short=='CAN' or titulo_short=='NOR' or titulo_short=='SUD' or titulo_short=='ESA':
+    if titulo_short=='GO' or titulo_short=='NAtl' or titulo_short=='LEB' or titulo_short=='CAN' or titulo_short=='NOR' or titulo_short=='SUD' or titulo_short=='ESA' or titulo_short=='IBICan':
         sst_anom_LD=sst_anom[-1,:,:]
         sst_anom_LD.to_netcdf(dataDir+'/sstLD_anom_'+titulo_short+'.nc',mode='w')
     

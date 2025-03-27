@@ -37,14 +37,14 @@ elif os.uname().nodename.lower().find('rossby') != -1:
     imagesDir   = dirAnalisis + '/SSTGlobalAnalysis/images'
     analisisDir = dirAnalisis + '/SSTGlobalAnalysis'
 
-Titulos = ['Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
-Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA']
+Titulos = ['Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán','Iberian Canary Basin']
+Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA','IBICan']
 
 for i in range(0,len(Titulos)):
     titulo = Titulos[i]
     titulo_short = Titulos_short[i]
 
-    Title  = 'Anomalía de temperatura superficial enla '+ titulo
+    Title  = 'Anomalía de temperatura superficial en la '+ titulo
     FileIn =  analisisDir+'/data/sstLD_anom_'+titulo_short+'.nc'
     FileOut = analisisDir+'/images/map_sstd_anom_'+titulo_short+'.png'
     
