@@ -70,21 +70,6 @@ for i in range(0,len(Titulos)):
         basin_surf_interp = basin_surf.interp_like(sst, method='nearest')
         sst = sst.where((basin_surf_interp==1) ,drop=True)
         print('>>>>> '+titulo)
-    elif titulo_short == 'LEB':
-        sst = DS.sst.sel(lat=slice(35.5,42.75)).sel(lon=slice(0,8))
-        print('>>>>> '+titulo)        
-    elif  titulo_short == 'NOR':
-        sst = DS.sst.sel(lat=slice(41.8,46.5)).sel(lon=slice(347.5,359.5))
-        print('>>>>> '+titulo)        
-    elif  titulo_short == 'CAN':
-        sst = DS.sst.sel(lat=slice(24.3,32.5)).sel(lon=slice(338,350))
-        print('>>>>> '+titulo)
-    elif  titulo_short == 'SUD':
-        sst = DS.sst.sel(lat=slice(35.5,37.4)).sel(lon=slice(352,354))
-        print('>>>>> '+titulo)
-    elif  titulo_short == 'ESA':
-        sst = DS.sst.sel(lat=slice(35.5,37)).sel(lon=slice(354,359))
-        print('>>>>> '+titulo)
         
                        
 # Daily analisis

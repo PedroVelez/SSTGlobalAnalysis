@@ -10,6 +10,21 @@ from dask.distributed import Client
 from dask import delayed
 import dask
 
+import pyproj
+from shapely.geometry import Polygon, Point
+from shapely.ops import transform
+
+# Functions
+def point_in_polygon(lon, lat, polygon):
+    point = Point(lon, lat)
+    return polygon.contains(point)
+
+# Define a transformation to ensure the polygon's CRS matches
+def transform_polygon(polygon, src_crs='epsg:4326', tgt_crs='epsg:4326'):
+    # Transform the polygon to match the DataArray CRS if needed
+    proj = pyproj.Transformer.from_proj(pyproj.Proj(src_crs), pyproj.Proj(tgt_crs), always_xy=True)
+    return transform(lambda x, y: proj.transform(x, y), polygon)
+
 # Settings 
 year1=1982
 year2=2025
@@ -57,25 +72,42 @@ for i in range(0,len(Titulos)):
     
     if  titulo_short == 'LEB':
         sst = DS.sst.sel(lat=slice(36,43)).sel(lon=slice(0,6.5))
-        print('>>>>> '+titulo)        
+        print('>>>>> '+titulo)
+                
     elif  titulo_short == 'NOR':
         sst = DS.sst.sel(lat=slice(41.25,47)).sel(lon=slice(345.5,358.50))
-        print('>>>>> '+titulo)        
+        print('>>>>> '+titulo)   
+            
     elif  titulo_short == 'CAN':
         sst = DS.sst.sel(lat=slice(24.3,32.5)).sel(lon=slice(337.75,349.75))
         print('>>>>> '+titulo)
+
     elif  titulo_short == 'SUD':
         sst = DS.sst.sel(lat=slice(35.5,37.4)).sel(lon=slice(352,354.25))
         print('>>>>> '+titulo)
+
     elif  titulo_short == 'ESA':
         sst = DS.sst.sel(lat=slice(35.6,37)).sel(lon=slice(354,358.25))
         print('>>>>> '+titulo)
+
     elif  titulo_short == 'IBICan':
-        sst = DS.sst.sel(lat=slice(20, 50),lon=slice(325,360))
-        basins = xr.open_dataset(dataDir+'/basins.nc')
-        basin_surf = basins.basin[0]
-        basin_surf_interp = basin_surf.interp_like(sst, method='nearest')
-        sst = sst.where((basin_surf_interp==1) ,drop=True)
+        #sst = DS.sst.sel(lat=slice(20, 50),lon=slice(325,360))
+        #basins = xr.open_dataset(dataDir+'/basins.nc')
+        #basin_surf = basins.basin[0]
+        #basin_surf_interp = basin_surf.interp_like(sst, method='nearest')
+        #sst = sst.where((basin_surf_interp==1) ,drop=True)
+        sst = DS.sst.sel(lat=slice(20, 47),lon=slice(325,360))
+        
+        # Area para blanquear el mediterraneo
+        lat_point_list = [40, 40, 30, 30, 40]
+        lon_point_list = [354.5, 360, 360, 354.5, 354.5]
+        polygon_geom = Polygon(zip(lon_point_list, lat_point_list))
+        polygon = transform_polygon(polygon_geom)
+        mask = np.array([[point_in_polygon(lon,lat,polygon) 
+                  for lon in sst.lon.values] 
+                  for lat in sst.lat.values])
+        
+        sst = sst.where(~mask)
         print('>>>>> '+titulo)
         
                        
