@@ -13,5 +13,6 @@ Info/*
 data/*
 images/*
 .ipynb_checkpoints/*
+dask-worker-space/*
 Mejoras/.ipynb_checkpoints/*
 LimiteDemarcaciones/.ipynb_checkpoints

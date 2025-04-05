@@ -6,9 +6,24 @@ import pandas as pd
 from matplotlib.dates import DateFormatter
 import os
 
+import pyproj
+from shapely.geometry import Polygon, Point
+from shapely.ops import transform
+
 from dask.distributed import Client
 from dask import delayed
 import dask
+
+# Functions
+def point_in_polygon(lon, lat, polygon):
+    point = Point(lon, lat)
+    return polygon.contains(point)
+
+# Define a transformation to ensure the polygon's CRS matches
+# Transform the polygon to match the DataArray CRS if needed
+def transform_polygon(polygon, src_crs='epsg:4326', tgt_crs='epsg:4326'):
+    proj = pyproj.Transformer.from_proj(pyproj.Proj(src_crs), pyproj.Proj(tgt_crs), always_xy=True)
+    return transform(lambda x, y: proj.transform(x, y), polygon)
 
 # Settings 
 year1=1982
@@ -64,11 +79,32 @@ for i in range(0,len(Titulos)):
         sst = DS.sst.sel(lat=slice( -65, 65))
         print('>>>>> '+titulo)
     elif titulo_short == 'NAtl':
-        sst = DS.sst.sel(lat=slice(0, 65),lon=slice(259,359))
-        basins = xr.open_dataset(dataDir+'/basins.nc')
-        basin_surf = basins.basin[0]
-        basin_surf_interp = basin_surf.interp_like(sst, method='nearest')
-        sst = sst.where((basin_surf_interp==1) ,drop=True)
+        #sst = DS.sst.sel(lat=slice(0, 65),lon=slice(259,359))
+        #basins = xr.open_dataset(dataDir+'/basins.nc')
+        #basin_surf = basins.basin[0]
+        #basin_surf_interp = basin_surf.interp_like(sst, method='nearest')
+        #sst = sst.where((basin_surf_interp==1) ,drop=True)
+        sst = DS.sst.sel(lat = slice( 0, 65), lon = slice( 260, 360))
+        #Quito el med
+        lat_point_list = [40, 40, 30, 30, 40]
+        lon_point_list = [354.5, 360, 360, 354.5, 354.5]
+        polygon_geom = Polygon(zip(lon_point_list, lat_point_list))
+        polygon = transform_polygon(polygon_geom)
+        mask = np.array([[point_in_polygon(lon,lat,polygon) 
+                  for lon in sst.lon.values] 
+                  for lat in sst.lat.values])
+        sst = sst.where(~mask)
+
+        #Quito el pacifico 
+        lat_point_list = [20,  10,  0, 0, 20]
+        lon_point_list = [260, 285, 285, 260,260]
+
+        polygon_geom = Polygon(zip(lon_point_list, lat_point_list))
+        polygon = transform_polygon(polygon_geom)
+        mask = np.array([[point_in_polygon(lon,lat,polygon) 
+                  for lon in sst.lon.values] 
+                  for lat in sst.lat.values])
+        sst = sst.where(~mask)
         print('>>>>> '+titulo)
         
                        

@@ -58,7 +58,7 @@ for i in range(0,len(Titulos)):
 # Load the data from the .txt file
     lon, lat = [], []
     if titulo_short == 'CAN' or titulo_short == 'ESA' or titulo_short ==  'LEB' or titulo_short ==  'NOR' or titulo_short ==  'SUD' :
-        with open('./LimiteDemarcaciones/Demarcacion'+titulo_short+'.txt', 'r') as f:
+        with open('./data/Demarcacion'+titulo_short+'.txt', 'r') as f:
             for line in f:
                 longitude, latitude = map(float, line.split())
                 lon.append(longitude)

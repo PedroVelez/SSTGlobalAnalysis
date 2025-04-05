@@ -20,8 +20,8 @@ def point_in_polygon(lon, lat, polygon):
     return polygon.contains(point)
 
 # Define a transformation to ensure the polygon's CRS matches
+# Transform the polygon to match the DataArray CRS if needed
 def transform_polygon(polygon, src_crs='epsg:4326', tgt_crs='epsg:4326'):
-    # Transform the polygon to match the DataArray CRS if needed
     proj = pyproj.Transformer.from_proj(pyproj.Proj(src_crs), pyproj.Proj(tgt_crs), always_xy=True)
     return transform(lambda x, y: proj.transform(x, y), polygon)
 
@@ -43,7 +43,6 @@ for line in f.readlines():
         exec(Name + "=" + "'" + Content + "'")
 f.close()
 
-
 Titulos = ['Iberian Canary Basin','Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
 Titulos_short = ['IBICan','LEB', 'NOR','CAN','SUD','ESA']
 
@@ -59,37 +58,85 @@ elif os.uname().nodename.lower().find('rossby') != -1:
     base_file = dirData + '/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
     dataDir   = dirAnalisis + '/SSTGlobalAnalysis/data'
 
-
 print('>>>>> Cargando ficheros de '+base_file)
 
 files = [f'{base_file}.{year}.nc' for year in range(year1, year2+1)]
 DS = xr.open_mfdataset(files)
   
+# Select the data for the demarcacion
 
 for i in range(0,len(Titulos)):
     titulo = Titulos[i]
     titulo_short = Titulos_short[i]
-    
-    if  titulo_short == 'LEB':
-        sst = DS.sst.sel(lat=slice(36,43)).sel(lon=slice(0,6.5))
-        print('>>>>> '+titulo)
-                
+
+    demCoord = []
+    longDem, latiDem = [], []
+    with open('./data/Demarcacion'+titulo_short+'.txt', 'r') as f:
+        for line in f:
+        # Split the line by whitespace and append the values
+            longitude, latitude = map(float, line.split())
+            longitude=longitude+360
+            longDem.append(longitude)
+            latiDem.append(latitude)
+            demCoord.append((longitude,latitude))
+    demPolygon = Polygon(demCoord)    
+    demPolygon_transformed = transform_polygon(demPolygon)
+
+
+    if titulo_short == 'LEB':
+        slicelatitude=slice(36,43)
+        slicelongitude=slice(358,368)
+        sst=DS.sst.sel(lat=slicelatitude).sel(lon=slicelongitude)
+        mask = np.array([[point_in_polygon(lon,lat,demPolygon_transformed) 
+         for lon in sst.lon.values] 
+         for lat in sst.lat.values])
+        sst_unmasked = sst
+        sst = sst.where(mask)
+        print('>>>>> '+titulo)        
+
     elif  titulo_short == 'NOR':
-        sst = DS.sst.sel(lat=slice(41.25,47)).sel(lon=slice(345.5,358.50))
-        print('>>>>> '+titulo)   
-            
+        slicelatitude=slice(41.25,47)
+        slicelongitude=slice(345,360)
+        sst=DS.sst.sel(lat=slicelatitude).sel(lon=slicelongitude)
+        mask = np.array([[point_in_polygon(lon,lat,demPolygon_transformed) 
+         for lon in sst.lon.values] 
+         for lat in sst.lat.values])
+        sst_unmasked = sst
+        sst = sst.where(mask)
+        print('>>>>> '+titulo)        
+        
     elif  titulo_short == 'CAN':
-        sst = DS.sst.sel(lat=slice(24.3,32.5)).sel(lon=slice(337.75,349.75))
-        print('>>>>> '+titulo)
+        slicelatitude=slice(24,32.5)
+        slicelongitude=slice(335,350)
+        sst=DS.sst.sel(lat=slicelatitude).sel(lon=slicelongitude)
+        mask = np.array([[point_in_polygon(lon,lat,demPolygon_transformed) 
+         for lon in sst.lon.values] 
+         for lat in sst.lat.values])
+        sst_unmasked = sst
+        sst = sst.where(mask)
+        print('>>>>> '+titulo)    
 
     elif  titulo_short == 'SUD':
-        sst = DS.sst.sel(lat=slice(35.5,37.4)).sel(lon=slice(352,354.25))
+        slicelatitude=slice(35.5,37.5)
+        slicelongitude=slice(352,354.5)
+        sst=DS.sst.sel(lat=slicelatitude).sel(lon=slicelongitude)
+        mask = np.array([[point_in_polygon(lon,lat,demPolygon_transformed) 
+         for lon in sst.lon.values] 
+         for lat in sst.lat.values])
+        sst_unmasked = sst
+        sst = sst.where(mask)
         print('>>>>> '+titulo)
 
     elif  titulo_short == 'ESA':
-        sst = DS.sst.sel(lat=slice(35.6,37)).sel(lon=slice(354,358.25))
+        slicelatitude=slice(35.5,37)
+        slicelongitude=slice(354,358.5)
+        sst=DS.sst.sel(lat=slicelatitude).sel(lon=slicelongitude)
+        mask = np.array([[point_in_polygon(lon,lat,demPolygon_transformed) 
+         for lon in sst.lon.values] 
+         for lat in sst.lat.values])
+        sst_unmasked = sst
+        sst = sst.where(mask)
         print('>>>>> '+titulo)
-
     elif  titulo_short == 'IBICan':
         #sst = DS.sst.sel(lat=slice(20, 50),lon=slice(325,360))
         #basins = xr.open_dataset(dataDir+'/basins.nc')
@@ -97,8 +144,7 @@ for i in range(0,len(Titulos)):
         #basin_surf_interp = basin_surf.interp_like(sst, method='nearest')
         #sst = sst.where((basin_surf_interp==1) ,drop=True)
         sst = DS.sst.sel(lat=slice(20, 47),lon=slice(325,360))
-        
-        # Area para blanquear el mediterraneo
+        # Para blanquear el mediterraneo
         lat_point_list = [40, 40, 30, 30, 40]
         lon_point_list = [354.5, 360, 360, 354.5, 354.5]
         polygon_geom = Polygon(zip(lon_point_list, lat_point_list))
@@ -109,10 +155,9 @@ for i in range(0,len(Titulos)):
         
         sst = sst.where(~mask)
         print('>>>>> '+titulo)
-        
-                       
+                            
 # Daily analisis
-    print('>>>>> Daily'+titulo+titulo_short)
+    print('>>>>> Daily ')
 
 ## Calculate global mean weigthtened
     print('    > Compute weigthtened mean')
@@ -147,7 +192,7 @@ for i in range(0,len(Titulos)):
         sst_anom_LD.to_netcdf(dataDir+'/sstLD_anom_'+titulo_short+'.nc',mode='w')
     
 # Monthly analisis
-    print('>>>>> Monthly'+titulo+titulo_short)
+    print('>>>>> Monthly')
     sst = sst.resample(time='ME').mean(dim='time',skipna=True).load()
 
 ## Calculate global mean weigthtened
