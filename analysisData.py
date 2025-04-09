@@ -70,21 +70,16 @@ for i in range(0,len(Titulos)):
     titulo_short = Titulos_short[i]
     
     if titulo_short == 'NH':
-        sst = DS.sst.sel(lat=slice(0,65))
+        sst = DS.sst.sel(lat=slice(0,75))
         print('>>>>> '+titulo)
     elif titulo_short == 'SH':
-        sst = DS.sst.sel(lat=slice( -65, 0))
+        sst = DS.sst.sel(lat=slice( -75, 0))
         print('>>>>> '+titulo)
     elif titulo_short == 'GO':
-        sst = DS.sst.sel(lat=slice( -65, 65))
+        sst = DS.sst.sel(lat=slice( -75, 75))
         print('>>>>> '+titulo)
     elif titulo_short == 'NAtl':
-        #sst = DS.sst.sel(lat=slice(0, 65),lon=slice(259,359))
-        #basins = xr.open_dataset(dataDir+'/basins.nc')
-        #basin_surf = basins.basin[0]
-        #basin_surf_interp = basin_surf.interp_like(sst, method='nearest')
-        #sst = sst.where((basin_surf_interp==1) ,drop=True)
-        sst = DS.sst.sel(lat = slice( 0, 65), lon = slice( 260, 360))
+        sst = DS.sst.sel(lat = slice( 0, 65), lon = slice( 262, 360))
         #Quito el med
         lat_point_list = [40, 40, 30, 30, 40]
         lon_point_list = [354.5, 360, 360, 354.5, 354.5]
@@ -96,8 +91,8 @@ for i in range(0,len(Titulos)):
         sst = sst.where(~mask)
 
         #Quito el pacifico 
-        lat_point_list = [20,  10,  0, 0, 20]
-        lon_point_list = [260, 285, 285, 260,260]
+        lat_point_list = [20,  8,  0, 0, 20]
+        lon_point_list = [262, 283, 283, 262,262]
 
         polygon_geom = Polygon(zip(lon_point_list, lat_point_list))
         polygon = transform_polygon(polygon_geom)

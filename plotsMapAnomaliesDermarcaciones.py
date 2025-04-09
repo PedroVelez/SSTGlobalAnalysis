@@ -66,7 +66,7 @@ for i in range(0,len(Titulos)):
             
     ## Figura
     fig = plt.figure(figsize=(14,8))
-    ax = plt.axes(projection=ccrs.Robinson())
+    ax = plt.axes(projection=ccrs.Mollweide())
 
     land = cartopy.feature.NaturalEarthFeature('physical', 
                 'land', edgecolor='k', scale = escalaLand ,

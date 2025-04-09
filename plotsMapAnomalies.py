@@ -63,14 +63,13 @@ for i in range(0,len(Titulos)):
 
 ## Figura
     fig = plt.figure(figsize=(14,8))
-    ax = plt.axes(projection=ccrs.Robinson())
+    ax = plt.axes(projection=ccrs.Mollweide())
 
     land = cartopy.feature.NaturalEarthFeature('physical', 
                 'land', edgecolor='k', scale = escalaLand ,
                 facecolor=cfeature.COLORS['land'])
     ax.add_feature(land, facecolor='beige')
-    #ax.add_feature(cfeature.LAND)
-    
+        
     cm=ax.contourf(sst.lon,sst.lat,sst, levels=np.arange(-4,4.1,0.25), 
                transform=ccrs.PlateCarree(),
                cmap = plt.cm.RdBu.reversed(),
@@ -80,7 +79,7 @@ for i in range(0,len(Titulos)):
                   shrink=.8, ticks=[-4,-2,0,2,4], 
                   drawedges=True)
 
-    ax.gridlines(draw_labels=True, linewidth=.5,color='gray', alpha=0.5, linestyle='--')
+    ax.gridlines(crs=ccrs.PlateCarree(),draw_labels=True, linewidth=.5,color='gray', alpha=0.5, linestyle='--')
     ax.set_title(Title + ', ' + sst.time.dt.strftime("%d %B %Y").values + '\n');
 
     plt.savefig(FileOut)

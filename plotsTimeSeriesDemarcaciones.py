@@ -34,8 +34,8 @@ for line in f.readlines():
 f.close()
  
 
-Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte']
-Titulos_short = ['GO','NH','SH','NAtl']
+Titulos = ['Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán','Iberian Canary Basin']
+Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA','IBICan']
 
 if os.uname().nodename.lower().find('eemmmbp') != -1:
     imagesDir = dirAnalisis + '/SSTGlobalAnalysis/images'

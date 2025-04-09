@@ -30,15 +30,23 @@ printf "   > Download data from current year SSTs \n"
 $pythonDir $analisisDir/downloadData.py
 
 printf "   > Update data SSTs \n"
-/bin/rm $analisisDir/data/sst*.nc
+/bin/rm $analisisDir/data/sst*GO*.nc
+/bin/rm $analisisDir/data/sst*NH*.nc
+/bin/rm $analisisDir/data/sst*SH*.nc
+/bin/rm $analisisDir/data/sst*NAtl*.nc
 $pythonDir $analisisDir/analysisData.py
 
 printf "   > Update data SSTs demarcaciones\n"
+/bin/rm $analisisDir/data/sst*CAN*.nc
+/bin/rm $analisisDir/data/sst*LEB*.nc
+/bin/rm $analisisDir/data/sst*NOR*.nc
+/bin/rm $analisisDir/data/sst*IBICan*.nc
 $pythonDir $analisisDir/analysisDataDemarcaciones.py
 
 printf "   > Plots SSTs \n"
 /bin/rm $analisisDir/images/*.png
 $pythonDir $analisisDir/plotsTimeSeries.py
+$pythonDir $analisisDir/plotsTimeSeriesDemarcaciones.py
 
 printf "   > Plots Mapa anomalia \n"
 $pythonDir $analisisDir/plotsMapAnomalies.py 
