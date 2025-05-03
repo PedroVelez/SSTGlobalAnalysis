@@ -83,7 +83,7 @@ for i in range(0,len(Titulos)):
                   shrink=.8, ticks=[-4,-2,0,2,4], 
                   drawedges=True)
 
-    ax.gridlines(draw_labels=True, linewidth=.5,color='gray', alpha=0.5, linestyle='--')
+    ax.gridlines(draw_labels=True, linewidth=.5,color='gray', alpha=0.5, linestyle='--',x_inline=False, y_inline=False)
     ax.set_title(Title + ', ' + sst.time.dt.strftime("%d %B %Y").values + '\n');
 
     plt.savefig(FileOut)
