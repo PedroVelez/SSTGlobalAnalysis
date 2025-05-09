@@ -6,11 +6,15 @@
 *.log
 *.nc
 *.png
+*.pyc
+*pycache*
+/__pycache__/*
 prueba*
 Prueba*
 **/Info/*
 Info/*
 data/*
+data2/*
 images/*
 .ipynb_checkpoints/*
 dask-worker-space/*
