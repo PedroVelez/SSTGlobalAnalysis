@@ -3,7 +3,10 @@ import datetime
 import os
 import xarray as xr
 
-## Inicio
+from globales import *
+# ------------------------------------------------------------------------
+# Inicio
+# ------------------------------------------------------------------------
 HOME=os.environ['HOME']   
 f = open(HOME+'/.env', 'r')
 for line in f.readlines():
@@ -13,14 +16,8 @@ for line in f.readlines():
         exec(Name + "=" + "'" + Content + "'")
 f.close()
 
+data_dir = GlobalSU['DatPath'] + '/Satelite/noaa.oisst.v2.highres/NC'
 
-if os.uname().nodename.lower().find('eemmmbp') != -1:
-    data_dir = dirData + '/Satelite/noaa.oisst.v2.highres/NC'
-elif os.uname().nodename.lower().find('sagams') != -1:
-    data_dir = dirData + '/Satelite/noaa.oisst.v2.highres/NC'
-elif os.uname().nodename.lower().find('rossby') != -1:
-    data_dir = dirData + '/Satelite/noaa.oisst.v2.highres/NC'
-    
 year = datetime.date.today().year
 fileThisYear = 'sst.day.mean.'+str(year)+'.nc'
 

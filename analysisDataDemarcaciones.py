@@ -14,7 +14,14 @@ import pyproj
 from shapely.geometry import Polygon, Point
 from shapely.ops import transform
 
-# Functions
+from globales import *
+
+# ------------------------------------------------------------------------
+# Inicio
+# ------------------------------------------------------------------------
+# 
+
+# Funciones --------------------------------------------------------------
 def point_in_polygon(lon, lat, polygon):
     point = Point(lon, lat)
     return polygon.contains(point)
@@ -24,6 +31,11 @@ def point_in_polygon(lon, lat, polygon):
 def transform_polygon(polygon, src_crs='epsg:4326', tgt_crs='epsg:4326'):
     proj = pyproj.Transformer.from_proj(pyproj.Proj(src_crs), pyproj.Proj(tgt_crs), always_xy=True)
     return transform(lambda x, y: proj.transform(x, y), polygon)
+#---------------------------------------------------------------------<<<<
+
+base_file = GlobalSU['DatPath'] + '/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
+dataDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/data'
+imagesDir = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
 
 # Settings 
 year1=1982
@@ -33,35 +45,17 @@ year2=2025
 yearC1='1982'
 yearC2='1992'
 
-## Inicio
-HOME=os.environ['HOME']   
-f = open(HOME+'/.env', 'r')
-for line in f.readlines():
-    Name=line.strip().split('=')[0]
-    Content=line.strip().split('=')[-1]
-    if Name=='dirData' or Name=='dirAnalisis':
-        exec(Name + "=" + "'" + Content + "'")
-f.close()
-
 Titulos = ['Iberian Canary Basin','Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
 Titulos_short = ['IBICan','LEB', 'NOR','CAN','SUD','ESA']
 
-
 # Load data
-if os.uname().nodename.lower().find('eemmmbp') != -1:
-    base_file = dirData + '/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
-    dataDir   = dirAnalisis + '/SSTGlobalAnalysis/data'
-elif os.uname().nodename.lower().find('sagams') != -1:
-    base_file = dirData + '/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
-    dataDir   = dirAnalisis + '/SSTGlobalAnalysis/data'
-elif os.uname().nodename.lower().find('rossby') != -1:
-    base_file = dirData + '/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
-    dataDir   = dirAnalisis + '/SSTGlobalAnalysis/data'
-
 print('>>>>> Cargando ficheros de '+base_file)
 
 files = [f'{base_file}.{year}.nc' for year in range(year1, year2+1)]
-DS = xr.open_mfdataset(files)
+DS = xr.open_mfdataset(files,parallel=True, 
+                       combine_attrs= "drop",
+                       autoclose = True, data_vars='minimal', coords="minimal")
+
   
 # Select the data for the demarcacion
 

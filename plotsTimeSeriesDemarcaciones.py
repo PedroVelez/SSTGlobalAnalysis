@@ -16,41 +16,29 @@ from dask.distributed import Client
 from dask import delayed
 
 import locale 
-
-import warnings
-
-warnings.filterwarnings("ignore")
-
 locale.setlocale(locale.LC_TIME, "es_ES");
 
-## Inicio
-HOME=os.environ['HOME']   
-f = open(HOME+'/.env', 'r')
-for line in f.readlines():
-    Name=line.strip().split('=')[0]
-    Content=line.strip().split('=')[-1]
-    if Name=='dirData' or Name=='dirAnalisis':
-        exec(Name + "=" + "'" + Content + "'")
-f.close()
- 
+import warnings
+warnings.filterwarnings("ignore")
+
+from globales import *
+
+# ------------------------------------------------------------------------
+# Inicio
+# ------------------------------------------------------------------------
+base_file = GlobalSU['DatPath'] + '/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
+dataDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/data'
+imagesDir = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
+
 
 Titulos = ['Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán','Iberian Canary Basin']
 Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA','IBICan']
 
-if os.uname().nodename.lower().find('eemmmbp') != -1:
-    imagesDir = dirAnalisis + '/SSTGlobalAnalysis/images'
-    dataDir   = dirAnalisis + '/SSTGlobalAnalysis/data'    
-elif os.uname().nodename.lower().find('sagams') != -1:
-    imagesDir = dirAnalisis + '/SSTGlobalAnalysis/images'
-    dataDir   = dirAnalisis + '/SSTGlobalAnalysis/data'
-elif os.uname().nodename.lower().find('rossby') != -1:
-    imagesDir = dirAnalisis + '/SSTGlobalAnalysis/images'
-    dataDir   = dirAnalisis + '/SSTGlobalAnalysis/data'
 
-## Funciones
+# Funciones --------------------------------------------------------------
 def FiguraSerieTemporal(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
-## Serie temporal anotada con valores maximos y minimos
 
+    ## Serie temporal anotada con valores maximos y minimos
     dTText = .12
     
     sst_rolling = sst.rolling(time = 360 , center = True).mean()
@@ -155,6 +143,8 @@ def FiguraSerieTemporal_anual(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
     ax.set_xlabel(Xlabel)
     ax.set_frame_on(False)
     plt.savefig(FileOut)
+#---------------------------------------------------------------------<<<<
+
 
 #---FiguraSerieTemporal_anual
 Ylabel  = 'Temperatura [($^\circ$C)]'

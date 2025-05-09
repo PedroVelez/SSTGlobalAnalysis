@@ -2,6 +2,10 @@ import ftplib
 import datetime
 import os
 import glob
+from globales import *
+# ------------------------------------------------------------------------
+# Inicio
+# ------------------------------------------------------------------------
 
 ## Read env data
 HOME=os.environ['HOME']   
@@ -13,10 +17,7 @@ for line in f.readlines():
         exec(Name + "=" + "'" + Content + "'")
 f.close()
 
-if os.uname().nodename.lower().find('eemmmbp') != -1:
-    imagesDir = dirAnalisis + '/SSTGlobalAnalysis/images'
-elif os.uname().nodename.lower().find('rossby') != -1:
-    imagesDir = dirAnalisis + '/SSTGlobalAnalysis/images'
+imagesDir = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
 
 os.chdir(imagesDir)
 

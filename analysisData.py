@@ -14,7 +14,13 @@ from dask.distributed import Client
 from dask import delayed
 import dask
 
-# Functions
+from globales import *
+
+# ------------------------------------------------------------------------
+# Inicio
+# ------------------------------------------------------------------------
+
+# Funciones --------------------------------------------------------------
 def point_in_polygon(lon, lat, polygon):
     point = Point(lon, lat)
     return polygon.contains(point)
@@ -24,6 +30,10 @@ def point_in_polygon(lon, lat, polygon):
 def transform_polygon(polygon, src_crs='epsg:4326', tgt_crs='epsg:4326'):
     proj = pyproj.Transformer.from_proj(pyproj.Proj(src_crs), pyproj.Proj(tgt_crs), always_xy=True)
     return transform(lambda x, y: proj.transform(x, y), polygon)
+#---------------------------------------------------------------------<<<<
+
+base_file = GlobalSU['DatPath'] + '/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
+dataDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/data'
 
 # Settings 
 year1=1982
@@ -33,37 +43,18 @@ year2=2025
 yearC1='1982'
 yearC2='1992'
 
-## Inicio
-HOME=os.environ['HOME']   
-f = open(HOME+'/.env', 'r')
-for line in f.readlines():
-    Name=line.strip().split('=')[0]
-    Content=line.strip().split('=')[-1]
-    if Name=='dirData' or Name=='dirAnalisis':
-        exec(Name + "=" + "'" + Content + "'")
-f.close()
-
-
 Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte']
 Titulos_short = ['GO','NH','SH','NAtl']
 
-
-# Load data
-if os.uname().nodename.lower().find('eemmmbp') != -1:
-    base_file = dirData + '/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
-    dataDir   = dirAnalisis + '/SSTGlobalAnalysis/data'
-elif os.uname().nodename.lower().find('sagams') != -1:
-    base_file = dirData + '/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
-    dataDir   = dirAnalisis + '/SSTGlobalAnalysis/data'
-elif os.uname().nodename.lower().find('rossby') != -1:
-    base_file = dirData + '/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
-    dataDir   = dirAnalisis + '/SSTGlobalAnalysis/data'
-
-
+# load data
 print('>>>>> Cargando ficheros de '+base_file)
 
 files = [f'{base_file}.{year}.nc' for year in range(year1, year2+1)]
-DS = xr.open_mfdataset(files)
+
+DS = xr.open_mfdataset(files,parallel=True, 
+                       combine_attrs= "drop",
+                       autoclose = True, data_vars='minimal', coords="minimal")
+
 
 for i in range(0,len(Titulos)):
     titulo = Titulos[i]
@@ -71,13 +62,13 @@ for i in range(0,len(Titulos)):
     
     if titulo_short == 'NH':
         sst = DS.sst.sel(lat=slice(0,75))
-        print('>>>>> '+titulo)
+        print('    > '+titulo)
     elif titulo_short == 'SH':
         sst = DS.sst.sel(lat=slice( -75, 0))
-        print('>>>>> '+titulo)
+        print('    > '+titulo)
     elif titulo_short == 'GO':
         sst = DS.sst.sel(lat=slice( -75, 75))
-        print('>>>>> '+titulo)
+        print('    > '+titulo)
     elif titulo_short == 'NAtl':
         sst = DS.sst.sel(lat = slice( 0, 65), lon = slice( 262, 360))
         #Quito el med
@@ -100,11 +91,11 @@ for i in range(0,len(Titulos)):
                   for lon in sst.lon.values] 
                   for lat in sst.lat.values])
         sst = sst.where(~mask)
-        print('>>>>> '+titulo)
+        print('    > '+titulo)
         
                        
 # Daily analisis
-    print('>>>>> Daily'+titulo+titulo_short)
+    print('   >> Daily '+titulo+titulo_short)
 
 ## Calculate global mean weigthtened
     print('    > Compute weigthtened mean')
@@ -139,7 +130,7 @@ for i in range(0,len(Titulos)):
         sst_anom_LD.to_netcdf(dataDir+'/sstLD_anom_'+titulo_short+'.nc',mode='w')
     
 # Monthly analisis
-    print('>>>>> Monthly'+titulo+titulo_short)
+    print('   >> Monthly '+titulo+titulo_short)
     sst = sst.resample(time='ME').mean(dim='time',skipna=True).load()
 
 ## Calculate global mean weigthtened

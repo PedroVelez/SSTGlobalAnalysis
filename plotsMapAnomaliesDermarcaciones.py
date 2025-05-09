@@ -3,39 +3,26 @@ import xarray as xr
 import pandas as pd
 
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
 from matplotlib.dates import DateFormatter
+
 import cartopy.crs as ccrs
 import cartopy
 import cartopy.feature as cfeature
+plt.rcParams['figure.figsize'] = (10, 4)
 
 import datetime
 import os
 
 import locale 
-
 locale.setlocale(locale.LC_TIME, "es_ES");
-plt.rcParams['figure.figsize'] = (10, 4)
 
-## Inicio
-HOME=os.environ['HOME']   
-f = open(HOME+'/.env', 'r')
-for line in f.readlines():
-    Name=line.strip().split('=')[0]
-    Content=line.strip().split('=')[-1]
-    if Name=='dirData' or Name=='dirAnalisis':
-        exec(Name + "=" + "'" + Content + "'")
-f.close()
+from globales import *
+# ------------------------------------------------------------------------
+# Inicio
+# ------------------------------------------------------------------------
+analisisDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis'
 
-
-if os.uname().nodename.lower().find('eemmmbp') != -1:
-    imagesDir   = dirAnalisis + '/SSTGlobalAnalysis/images'
-    analisisDir = dirAnalisis + '/SSTGlobalAnalysis'    
-elif os.uname().nodename.lower().find('sagams') != -1:
-    imagesDir   = dirAnalisis + '/SSTGlobalAnalysis/images'
-    analisisDir = dirAnalisis + '/SSTGlobalAnalysis'
-elif os.uname().nodename.lower().find('rossby') != -1:
-    imagesDir   = dirAnalisis + '/SSTGlobalAnalysis/images'
-    analisisDir = dirAnalisis + '/SSTGlobalAnalysis'
 
 Titulos = ['Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán','Iberian Canary Basin']
 Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA','IBICan']
@@ -66,7 +53,9 @@ for i in range(0,len(Titulos)):
             
     ## Figura
     fig = plt.figure(figsize=(14,8))
-    ax = plt.axes(projection=ccrs.Mollweide())
+
+    ax = plt.axes(projection=ccrs.Mollweide(),frameon=False)
+    ax.patch.set_visible(False)
 
     land = cartopy.feature.NaturalEarthFeature('physical', 
                 'land', edgecolor='k', scale = escalaLand ,
@@ -78,12 +67,27 @@ for i in range(0,len(Titulos)):
                cmap = plt.cm.RdBu.reversed(),
                vmin = -4,vmax = 4,extend='both')
 
+    cl = ax.contour(sst.lon,sst.lat,sst, levels=[0],
+                           colors='black', linewidths=1,
+                           transform=ccrs.PlateCarree())
+
+    ax.clabel(cl, inline=True, fontsize=8, fmt="%1.1f")
+
     ax.plot(lon, lat, transform=ccrs.PlateCarree())
-    cbar=fig.colorbar(cm,ax=ax, location='bottom',
+
+    cbar=fig.colorbar(cm,ax=ax, location='right',
                   shrink=.8, ticks=[-4,-2,0,2,4], 
                   drawedges=True)
 
-    ax.gridlines(draw_labels=True, linewidth=.5,color='gray', alpha=0.5, linestyle='--',x_inline=False, y_inline=False)
+    gd=ax.gridlines(draw_labels=True, linewidth=.5, color='gray', alpha=0.5, linestyle='--',x_inline=False, y_inline=False)
+    gd.ylocator = mticker.FixedLocator([25, 35, 45])
+    gd.xlocator = mticker.FixedLocator([-30, -20, -10,0])
+    gd.left_labels = False
+    gd.top_labels = False
+
+
     ax.set_title(Title + ', ' + sst.time.dt.strftime("%d %B %Y").values + '\n');
 
     plt.savefig(FileOut)
+
+
