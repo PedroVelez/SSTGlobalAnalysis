@@ -34,7 +34,7 @@ printf "   > Update data SSTs \n"
 /bin/rm $analisisDir/data/sst*NH*.nc
 /bin/rm $analisisDir/data/sst*SH*.nc
 /bin/rm $analisisDir/data/sst*NAtl*.nc
-$pythonDir $analisisDir/analysisData.py
+$pythonDir $analisisDir/analysisData_Dask.py
 
 printf "   > Update data SSTs demarcaciones\n"
 /bin/rm $analisisDir/data/sst*CAN*.nc
