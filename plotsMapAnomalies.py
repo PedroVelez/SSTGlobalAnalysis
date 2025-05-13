@@ -4,11 +4,13 @@ import xarray as xr
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 from matplotlib.dates import DateFormatter
+
 import cartopy.crs as ccrs
 import cartopy
 import cartopy.feature as cfeature
 plt.rcParams['figure.figsize'] = (10, 4)
 
+import time
 import datetime
 import os
 
@@ -19,11 +21,14 @@ from globales import *
 # ------------------------------------------------------------------------
 # Inicio
 # ------------------------------------------------------------------------
+print('>>>>> plotsMapAnomalies' )
+start_time = time.time()
+
 analisisDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/'
 imagesDir     = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
 
-Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte', 'Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán','Iberian Canary Basin']
-Titulos_short = ['GO','NH','SH','NAtl','LEB', 'NOR','CAN','SUD','ESA','IBICan']
+Titulos = ['Oceano Global','AtlanticoNorte']
+Titulos_short = ['GO','NAtl']
 
 
 for i in range(0,len(Titulos)):
@@ -34,7 +39,7 @@ for i in range(0,len(Titulos)):
     FileIn =  analisisDir+'/data/sstLD_anom_'+titulo_short+'.nc'
     FileOut = analisisDir+'/images/map_sstd_anom_'+titulo_short+'.png'
 
-    print('>>>>> '+Title)
+    print('    > '+Title)
 
     data = xr.open_dataset(FileIn)
     sst = data.sst
@@ -71,3 +76,5 @@ for i in range(0,len(Titulos)):
     ax.set_title(Title + ', ' + sst.time.dt.strftime("%d %B %Y").values + '\n');#
 
     plt.savefig(FileOut)
+
+print('      plotsMapAnomalies %6.0f s<<<<<' % (time.time() - start_time))

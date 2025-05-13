@@ -5,19 +5,13 @@ import pandas as pd
 from calendar import monthrange
 import time
 
-import matplotlib.pyplot as plt
-from matplotlib.dates import DateFormatter
-
-import cartopy
-import cartopy.feature as cfeature
-import cartopy.crs as ccrs
-
-
 from shapely.geometry import Polygon, Point
 from shapely.ops import transform
 import pyproj
 
 from globales import *
+
+from FuncionesArea import *
 
 import multiprocessing
 from dask.distributed import Client, LocalCluster
@@ -28,13 +22,13 @@ from dask.distributed import Client, LocalCluster
 def funcionPrincipal():
     
     # Funciones --------------------------------------------------------------
-    def transform_polygon(polygon, src_crs='epsg:4326', tgt_crs='epsg:4326'):
-        proj = pyproj.Transformer.from_proj(pyproj.Proj(src_crs), pyproj.Proj(tgt_crs), always_xy=True)
-        return transform(lambda x, y: proj.transform(x, y), polygon)
+    #def transform_polygon(polygon, src_crs='epsg:4326', tgt_crs='epsg:4326'):
+    #    proj = pyproj.Transformer.from_proj(pyproj.Proj(src_crs), pyproj.Proj(tgt_crs), always_xy=True)
+    #    return transform(lambda x, y: proj.transform(x, y), polygon)
 
-    def point_in_polygon(lon, lat, polygon):
-        point = Point(lon, lat)
-        return polygon.contains(point)
+    #def point_in_polygon(lon, lat, polygon):
+    #    point = Point(lon, lat)
+    #    return polygon.contains(point)
     #---------------------------------------------------------------------<<<<
 
     year1= 2003
@@ -61,7 +55,7 @@ def funcionPrincipal():
         ds = ds.get(['analysed_sst'])   
         return ds.reset_coords(drop=True)
 
-    print('>>>>> Cargando ficheros de '+base_file)
+    print('   >> Cargando ficheros de '+base_file)
 
     DS = xr.open_mfdataset(files,combine='nested', concat_dim="time", parallel=True, combine_attrs= "drop", preprocess=drop_coords,autoclose = True, data_vars='minimal', coords="minimal")
         
@@ -70,8 +64,7 @@ def funcionPrincipal():
         
         titulo = Titulos[it]
         titulo_short = Titulos_short[it]
-        print('>>>>> Analizando '+titulo)
-
+        
         # Load the data from the .txt file
         demCoord = []
         longDem, latiDem = [], []
@@ -96,7 +89,7 @@ def funcionPrincipal():
                 for lat in sst.lat.values])
             sst_unmasked = sst
             sst = sst.where(mask)
-            print('>>>>> '+titulo)        
+            print('   >> '+titulo)        
 
         elif  titulo_short == 'NOR':
             slicelatitude=slice(41.5,46.9)
@@ -107,7 +100,7 @@ def funcionPrincipal():
                 for lat in sst.lat.values])
             sst_unmasked = sst
             sst = sst.where(mask)
-            print('>>>>> '+titulo)        
+            print('   >> '+titulo)              
                 
         elif  titulo_short == 'CAN':
             slicelatitude=slice(24,32.5)
@@ -118,7 +111,7 @@ def funcionPrincipal():
                 for lat in sst.lat.values])
             sst_unmasked = sst
             sst = sst.where(mask)
-            print('>>>>> '+titulo)    
+            print('   >> '+titulo)           
 
         elif  titulo_short == 'SUD':
             slicelatitude=slice(35.5,37.5)
@@ -129,7 +122,7 @@ def funcionPrincipal():
                 for lat in sst.lat.values])
             sst_unmasked = sst
             sst = sst.where(mask)
-            print('>>>>> '+titulo)
+            print('   >> '+titulo)        
 
         elif  titulo_short == 'ESA':
             slicelatitude=slice(35.5,37)
@@ -140,7 +133,8 @@ def funcionPrincipal():
                 for lat in sst.lat.values])
             sst_unmasked = sst
             sst = sst.where(mask)
-            print('>>>>> '+titulo)
+            print('   >> '+titulo)        
+
         elif  titulo_short == 'IBICan':
             sst = DS.analysed_sst.sel(lat=slice(20, 47),lon=slice(325,360))
             # Para blanquear el mediterraneo
@@ -151,13 +145,13 @@ def funcionPrincipal():
             mask = np.array([[point_in_polygon(lon,lat,polygon) 
                         for lon in sst.lon.values] 
                         for lat in sst.lat.values])  
-            sst = sst.where(~mask) 
-
+            sst = sst.where(~mask)
+            print('   >> '+titulo)         
 
         #sst = sst.chunk({"time":1, "lat":851, "lon":1501})
 
         # Daily analisis
-        print('>>>>> Daily'+titulo+titulo_short)
+        print('   >> Daily'+titulo+titulo_short)
 
         ## Calculate mean weigthtened
         weights = np.cos(np.deg2rad(sst.lat))
@@ -184,9 +178,8 @@ def funcionPrincipal():
         sst_wmean.to_netcdf(dataDir+'/sstdMUR_mean_'+titulo_short+'.nc',mode='w')   
         sst_anom_wmean.to_netcdf(dataDir+'/sstdMUR_anom_mean_'+titulo_short+'.nc',mode='w')
 
-        if titulo_short=='GO' or titulo_short=='NAtl' or titulo_short=='LEB' or titulo_short=='CAN' or titulo_short=='NOR' or titulo_short=='SUD' or titulo_short=='ESA' or titulo_short=='IBICan':
-                sst_anom_LD=sst_anom[-1,:,:]
-                sst_anom_LD.to_netcdf(dataDir+'/sstLDMUR_anom_'+titulo_short+'.nc',mode='w')
+        sst_anom_LD=sst_anom[-1,:,:]
+        sst_anom_LD.to_netcdf(dataDir+'/sstLDMUR_anom_'+titulo_short+'.nc',mode='w')
 
         # Monthly analisis
         sst = sst.resample(time='ME').mean(dim='time',skipna=True)
@@ -205,7 +198,6 @@ def funcionPrincipal():
         print('    > Compute anomaly mean')
         sst_anom = sst.groupby('time.month') - sst_clim
     
-
         ##Calculate global mean weigthtened
         print('    > Compute weigthtened mean')
         weights = np.cos(np.deg2rad(sst.lat))
@@ -220,11 +212,14 @@ def funcionPrincipal():
         sst_wmean.to_netcdf(dataDir+'/sstmMUR_mean_'+titulo_short+'.nc',mode='w')
         sst_anom_wmean.to_netcdf(dataDir+'/sstmMUR_anom_mean_'+titulo_short+'.nc',mode='w')
 
-        print("--- %s seconds ---" % (time.time() - start_time))
+        print("    > %s seconds ---" % (time.time() - start_time))
+#---------------------------------------------------------------------<<<<
 
 if __name__ == '__main__':
     cluster = LocalCluster(n_workers=20, threads_per_worker=1)
     client = Client(cluster)
+    
+    print('>>>>> analysisDataMUR_Demarcaciones' )
     
     start_time = time.time()
     

@@ -20,6 +20,7 @@ fi
 
 printf ">>>> Updating analisis global SSTs \n"
 printf "   > $strval\n"
+start=$SECONDS
 
 #------------------------------------
 #Inicio
@@ -34,7 +35,12 @@ printf "   > Update data SSTs \n"
 /bin/rm $analisisDir/data/sst*NH*.nc
 /bin/rm $analisisDir/data/sst*SH*.nc
 /bin/rm $analisisDir/data/sst*NAtl*.nc
-$pythonDir $analisisDir/analysisData_Dask.py
+$pythonDir $analisisDir/analysisData.py
+
+elapsed=$SECONDS
+duration=$(( elapsed - start ))
+printf "   > $elpased seconds \n"
+
 
 printf "   > Update data SSTs demarcaciones\n"
 /bin/rm $analisisDir/data/sst*CAN*.nc
@@ -42,6 +48,11 @@ printf "   > Update data SSTs demarcaciones\n"
 /bin/rm $analisisDir/data/sst*NOR*.nc
 /bin/rm $analisisDir/data/sst*IBICan*.nc
 $pythonDir $analisisDir/analysisDataDemarcaciones.py
+
+elapsed=$SECONDS
+duration=$(( elapsed - start ))
+printf "   > $elpased seconds \n"
+
 
 printf "   > Plots SSTs \n"
 /bin/rm $analisisDir/images/*.png
@@ -58,7 +69,6 @@ $pythonDir $analisisDir/plotsComparaHemispheres.py
 printf "   > Upload Plots \n"
 $pythonDir $analisisDir/uploadImages.py
 
-
 #------------------------------------
 #TelegramBot
 #------------------------------------
@@ -74,3 +84,6 @@ curl -F "photo=@$analisisDir/images/sstd_anom_mean_GO_HN_HS.png" $URLimg -F capt
 curl -F "photo=@$analisisDir/images/sstd_anom_mean_NAtl.png" $URLimg -F caption="Atlantico Norte promedio SST"
 curl -F "photo=@$analisisDir/images/sstd_anom_NAtl.png" $URLimg -F caption="Atlantico Norte SST"
 
+end=$SECONDS
+duration=$(( end - start ))
+printf "   > $duration seconds to complete\n"

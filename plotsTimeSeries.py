@@ -26,6 +26,8 @@ from globales import *
 # ------------------------------------------------------------------------
 # Inicio
 # ------------------------------------------------------------------------
+print('>>>>> plotsTimeSeries' )
+
 dataDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/data'
 imagesDir = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
 
@@ -154,7 +156,7 @@ for i in range(0,len(Titulos)):
     titulo = Titulos[i]
     titulo_short = Titulos_short[i]
     
-    print('>>>>> Figuras: '+titulo+ ' '+ titulo_short)
+    print('    > Figuras: '+titulo+ ' '+ titulo_short)
     
     # Daily data
     data = xr.open_dataset(dataDir+'/sstd_mean_'+titulo_short+'.nc')
@@ -187,3 +189,5 @@ for i in range(0,len(Titulos)):
     Title4  = 'Anomalía de temperatura superficial, respecto del periodo 1982-1992, en el '+ titulo
     File4 = imagesDir + '/sstd_anom_'+titulo_short+'.png'
     FiguraSerieTemporal_anual(sstd_anom,Ylabel,Xlabel,Title4,File4,-0.25,0.8)
+
+print('      plotsTimeSeries <<<<<' )

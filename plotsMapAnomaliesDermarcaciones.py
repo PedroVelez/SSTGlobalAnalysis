@@ -11,6 +11,7 @@ import cartopy
 import cartopy.feature as cfeature
 plt.rcParams['figure.figsize'] = (10, 4)
 
+import time
 import datetime
 import os
 
@@ -21,8 +22,10 @@ from globales import *
 # ------------------------------------------------------------------------
 # Inicio
 # ------------------------------------------------------------------------
-analisisDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis'
+print('>>>>> plotsMapAnomaliesDemarcaciones' )
+start_time = time.time()
 
+analisisDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis'
 
 Titulos = ['Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán','Iberian Canary Basin']
 Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA','IBICan']
@@ -35,7 +38,7 @@ for i in range(0,len(Titulos)):
     FileIn =  analisisDir+'/data/sstLD_anom_'+titulo_short+'.nc'
     FileOut = analisisDir+'/images/map_sstd_anom_'+titulo_short+'.png'
     
-    print('>>>>> '+Title)
+    print('    > '+Title)
     
     data = xr.open_dataset(FileIn)
     sst = data.sst
@@ -90,4 +93,5 @@ for i in range(0,len(Titulos)):
 
     plt.savefig(FileOut)
 
+print('      plotsMapAnomaliesDemarcaciones %6.0f s<<<<<' % (time.time() - start_time))
 

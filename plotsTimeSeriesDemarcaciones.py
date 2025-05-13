@@ -26,6 +26,8 @@ from globales import *
 # ------------------------------------------------------------------------
 # Inicio
 # ------------------------------------------------------------------------
+print('>>>>> plotsTimeSeriesDemarcaciones' )
+
 base_file = GlobalSU['DatPath'] + '/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
 dataDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/data'
 imagesDir = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
@@ -37,8 +39,7 @@ Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA','IBICan']
 
 # Funciones --------------------------------------------------------------
 def FiguraSerieTemporal(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
-
-    ## Serie temporal anotada con valores maximos y minimos
+   
     dTText = .12
     
     sst_rolling = sst.rolling(time = 360 , center = True).mean()
@@ -82,10 +83,8 @@ def FiguraSerieTemporal(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
     plt.savefig(FileOut)
     
 #----def FiguraSerieTemporal
-
 def FiguraSerieTemporal_anual(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
 # Serie temporal por años    
-
     dTText = .2
     
     currentYear = datetime.date.today().year
@@ -158,7 +157,7 @@ for i in range(0,len(Titulos)):
     titulo = Titulos[i]
     titulo_short = Titulos_short[i]
     
-    print('>>>>> Figuras: '+titulo+ ' '+ titulo_short)
+    print('    > Figuras: '+titulo+ ' '+ titulo_short)
     
     # Daily data
     data = xr.open_dataset(dataDir+'/sstd_mean_'+titulo_short+'.nc')
@@ -191,3 +190,5 @@ for i in range(0,len(Titulos)):
     Title4  = 'Anomalía de temperatura superficial, respecto del periodo 1982-1992, en el '+ titulo
     File4 = imagesDir + '/sstd_anom_'+titulo_short+'.png'
     FiguraSerieTemporal_anual(sstd_anom,Ylabel,Xlabel,Title4,File4,-0.25,0.8)
+
+print('      plotsTimeSeriesDemarcaciones <<<<<' )

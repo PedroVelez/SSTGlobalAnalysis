@@ -47,8 +47,8 @@ def funcionPrincipal():
     yearC1='1982'
     yearC2='1992'
 
-    Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte']
-    Titulos_short = ['GO','NH','SH','NAtl']
+    Titulos = ['Hemisferio norte','Hemisferio sur','AtlanticoNorte']
+    Titulos_short = ['NH','SH','NAtl']
 
     # load data
     print('>>>>> Cargando ficheros de '+base_file)
@@ -176,7 +176,7 @@ def funcionPrincipal():
 #---------------------------------------------------------------------<<<<
 
 if __name__ == '__main__':
-    cluster = LocalCluster(n_workers=20, threads_per_worker=1)
+    cluster = LocalCluster(n_workers=26, threads_per_worker=1)
     client = Client(cluster)
     
     print('>>>>> analysisData_Dask ' )
@@ -188,4 +188,5 @@ if __name__ == '__main__':
     cluster.close()
     client.close()
 
-    print("--- %s seconds ---" % (time.time() - start_time))
+    print('      analysisData %6.0f s<<<<<' % (time.time() - start_time))
+    

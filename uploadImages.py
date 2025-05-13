@@ -3,9 +3,11 @@ import datetime
 import os
 import glob
 from globales import *
+
 # ------------------------------------------------------------------------
 # Inicio
 # ------------------------------------------------------------------------
+print('>>>>> uploadImages' )
 
 ## Read env data
 HOME=os.environ['HOME']   
@@ -26,25 +28,28 @@ session = ftplib.FTP('ftp.oceanografia.es',userFTP,passwdFTP)
 session.cwd('/html/pedro/images/SST')
 Titulos_short = ['GO','NH','SH','NAtl']
 
-#Read and uplod files
+# Read and upload files
 for it in range(0,len(Titulos_short)):
     titulo_short = Titulos_short[it]
     filenames = glob.glob(imagesDir+'/*'+titulo_short+'*.png')
     for filename in filenames:
-        print('https://www.oceanografia.es/pedro/images/SST/'+filename.split('/')[-1])
+        print('    > https://www.oceanografia.es/pedro/images/SST/'+filename.split('/')[-1])
         session.storbinary('STOR '+ filename.split('/')[-1], open(filename, 'rb'))
 session.quit()
 
-## Demarcaciones
+# Demarcaciones
 session = ftplib.FTP('ftp.oceanografia.es',userFTP,passwdFTP)
 session.cwd('/html/IEOOS/SST/images')
 Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA','IBICan']
-#Read and uplod files
+
+#Read and upload files
 for it in range(0,len(Titulos_short)):
     titulo_short = Titulos_short[it]
     filenames = glob.glob(imagesDir+'/*'+titulo_short+'*.png')
     for filename in filenames:
-        print('https://www.oceanografia.es/IEOOS/SST/images/'+filename.split('/')[-1])
+        print('    > https://www.oceanografia.es/IEOOS/SST/images/'+filename.split('/')[-1])
         session.storbinary('STOR '+ filename.split('/')[-1], open(filename, 'rb'))
 
 session.quit()    
+
+print('      uploadImages <<<<<' )
