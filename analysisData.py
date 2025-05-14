@@ -123,44 +123,43 @@ def funcionPrincipal():
         print('    > Save to netcdf')
         sst_wmean.to_netcdf(dataDir+'/sstd_mean_'+titulo_short+'.nc',mode='w')
         sst_anom_wmean.to_netcdf(dataDir+'/sstd_anom_mean_'+titulo_short+'.nc',mode='w')
-
         sst_anom_LD=sst_anom[-1,:,:]
         sst_anom_LD.to_netcdf(dataDir+'/sstLD_anom_'+titulo_short+'.nc',mode='w')
         
     # Monthly analisis
-        print('   >> Monthly '+titulo+titulo_short)
-        sst = sst.resample(time='ME').mean(dim='time',skipna=True).load()
+        #print('   >> Monthly '+titulo+titulo_short)
+        #sst = sst.resample(time='ME').mean(dim='time',skipna=True).load()
 
     ## Calculate global mean weigthtened
-        print('    > Compute weigthtened mean')
-        weights = np.cos(np.deg2rad(sst.lat))
-        weights = weights/weights.max()
-        weights.name = "weights"
-        sst_weighted = sst.weighted(weights)
-        sst_wmean = sst_weighted.mean(("lon", "lat"),skipna=True).load()
+        #print('    > Compute weigthtened mean')
+        #weights = np.cos(np.deg2rad(sst.lat))
+        #weights = weights/weights.max()
+        #weights.name = "weights"
+        #sst_weighted = sst.weighted(weights)
+        #sst_wmean = sst_weighted.mean(("lon", "lat"),skipna=True).load()
         
     ## Create monthly climatology
-        print('    > create climatology')
-        sst_clim = sst.sel(time=slice(yearC1,yearC2)).groupby('time.month').mean(dim='time').load();
+        #print('    > create climatology')
+        #sst_clim = sst.sel(time=slice(yearC1,yearC2)).groupby('time.month').mean(dim='time').load();
     ## Create anomaly
         print('    > Compute anomaly mean')
-        sst_anom = sst.groupby('time.month') - sst_clim
-        sst_anom.load();
+        #sst_anom = sst.groupby('time.month') - sst_clim
+        #sst_anom.load();
 
     ##Calculate global mean weigthtened
-        print('    > Compute weigthtened mean')
-        weights = np.cos(np.deg2rad(sst.lat))
-        weights = weights/weights.max()
-        weights.name = "weights"
-        sst_anom_weighted = sst_anom.weighted(weights)
-        sst_anom_wmean = sst_anom_weighted.mean(("lon", "lat"),skipna=True).load()
-        sst_anom_wmean_rolling = sst_anom_wmean.rolling(time=12,center=True).mean()
+        #print('    > Compute weigthtened mean')
+        #weights = np.cos(np.deg2rad(sst.lat))
+        #weights = weights/weights.max()
+        #weights.name = "weights"
+        #sst_anom_weighted = sst_anom.weighted(weights)
+        #sst_anom_wmean = sst_anom_weighted.mean(("lon", "lat"),skipna=True).load()
+        #sst_anom_wmean_rolling = sst_anom_wmean.rolling(time=12,center=True).mean()
         
     ##Save in netcdf
         print('    > to netcdf')
-        sst_anom.to_netcdf(dataDir+'/sstm_anom_'+titulo_short+'.nc',mode='w')
-        sst_wmean.to_netcdf(dataDir+'/sstm_mean_'+titulo_short+'.nc',mode='w')
-        sst_anom_wmean.to_netcdf(dataDir+'/sstm_anom_mean_'+titulo_short+'.nc',mode='w')
+        #sst_anom.to_netcdf(dataDir+'/sstm_anom_'+titulo_short+'.nc',mode='w')
+        #sst_wmean.to_netcdf(dataDir+'/sstm_mean_'+titulo_short+'.nc',mode='w')
+        #sst_anom_wmean.to_netcdf(dataDir+'/sstm_anom_mean_'+titulo_short+'.nc',mode='w')
 
         print("    > %s seconds ---" % (time.time() - start_time))
 #---------------------------------------------------------------------<<<<
@@ -178,4 +177,4 @@ if __name__ == '__main__':
     cluster.close()
     client.close()
 
-    print("--- %s seconds ---" % (time.time() - start_time))
+    print('      analysisData %6.0f s<<<<<' % (time.time() - start_time))

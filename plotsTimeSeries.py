@@ -11,10 +11,6 @@ matplotlib.use('agg')
 import os
 import math
 
-import dask
-from dask.distributed import Client
-from dask import delayed
-
 import locale 
 locale.setlocale(locale.LC_TIME, "es_ES");
 
@@ -165,10 +161,10 @@ for i in range(0,len(Titulos)):
     sstd_anom = data.sst
 
     # Monthly data
-    data = xr.open_dataset(dataDir+'/sstm_mean_'+titulo_short+'.nc')
-    sstm = data.sst
-    data = xr.open_dataset(dataDir+'/sstm_anom_mean_'+titulo_short+'.nc')
-    sstm_anom = data.sst
+    #data = xr.open_dataset(dataDir+'/sstm_mean_'+titulo_short+'.nc')
+    #sstm = data.sst
+    #data = xr.open_dataset(dataDir+'/sstm_anom_mean_'+titulo_short+'.nc')
+    #sstm_anom = data.sst
     
     ## Times series mean Sea Surface Temperature
     Title1  = 'Temperatura superficial promedio en el '+ titulo
