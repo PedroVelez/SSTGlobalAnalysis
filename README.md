@@ -1,6 +1,6 @@
 # SSTGlobalAnalysis
 
-Repositorio con los códigos en python que producen las figuras de SST n:
+Repositorio con los códigos en python que producen las figuras de SST en:
 
 ## Analisis global de SST
 <center>
