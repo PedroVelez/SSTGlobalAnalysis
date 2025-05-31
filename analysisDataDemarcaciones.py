@@ -69,9 +69,18 @@ def funcionPrincipal():
 
         # Select the data for the demarcacion
         if titulo_short == 'LEB':
-            slicelatitude=slice(36,43)
-            slicelongitude=slice(358,368)
-            sst=DS.sst.sel(lat=slicelatitude).sel(lon=slicelongitude)
+            #slicelatitude=slice(36,43)
+            #slicelongitude=slice(358,368)
+            #sst=DS.sst.sel(lat=slicelatitude).sel(lon=slicelongitude)
+            ilati=locate(35.50,DS.lat.values)
+            ilatf=locate(42.75,DS.lat.values)
+            iloni=locate(358,DS.lon.values)
+            ilonf=locate(  8,DS.lon.values)
+            sst1=DS.sst[:,ilati:ilatf,iloni:-1]
+            sst2=DS.sst[:,ilati:ilatf,0:ilonf]
+            sst2['lon']=sst2.lon+360
+            sst=xr.concat([sst1, sst2], dim="lon")
+    
             mask = np.array([[point_in_polygon(lon,lat,demPolygon_transformed) 
             for lon in sst.lon.values] 
             for lat in sst.lat.values])
