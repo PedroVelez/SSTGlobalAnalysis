@@ -1,4 +1,5 @@
 # Global mean Sea Surface Temperatures
+import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
 import pandas as pd
@@ -6,6 +7,8 @@ import pandas as pd
 import os
 
 import time
+
+from matplotlib.dates import DateFormatter
 
 import pyproj
 from shapely.geometry import Polygon, Point
@@ -50,6 +53,7 @@ def funcionPrincipal():
 
     # For each demarcacion
     for i in range(0,len(Titulos)):
+
         titulo = Titulos[i]
         titulo_short = Titulos_short[i]
         start_time = time.time()
@@ -221,7 +225,7 @@ def funcionPrincipal():
 #---------------------------------------------------------------------<<<<
 #         
 if __name__ == '__main__':
-    cluster = LocalCluster(n_workers=20, threads_per_worker=1)
+    cluster = LocalCluster(n_workers=26, threads_per_worker=1)
     client = Client(cluster)
     
     print('>>>>> analysisDataDemarcaciones' )
