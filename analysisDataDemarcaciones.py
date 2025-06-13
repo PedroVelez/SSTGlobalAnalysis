@@ -60,7 +60,7 @@ def funcionPrincipal():
         
         demCoord = []
         longDem, latiDem = [], []
-        with open('./data/Demarcacion'+titulo_short+'.txt', 'r') as f:
+        with open(dataDir+'/Demarcacion'+titulo_short+'.txt', 'r') as f:
             for line in f:
             # Split the line by whitespace and append the values
                 longitude, latitude = map(float, line.split())

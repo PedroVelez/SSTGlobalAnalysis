@@ -2,7 +2,7 @@
 source $HOME/.zshrc
 source $HOME/.env
 
-## Settings based on computer
+# Settings based on computer
 strval=$(uname -a)
 if [[ $strval == *EemmMBP* ]];
 then
@@ -15,8 +15,8 @@ then
   pythonDir=/opt/conda/envs/ocean/bin/python
 fi
 
-#/bin/rm $analisisDir/updateSSTGlobal.log
-#/bin/touch $analisisDir/updateSSTGlobal.log
+/bin/rm $analisisDir/updateSSTGlobal.log
+/bin/touch $analisisDir/updateSSTGlobal.log
 
 printf ">>>> Updating analisis global SSTs \n"
 printf "   > $strval\n"
