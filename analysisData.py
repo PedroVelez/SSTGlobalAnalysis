@@ -38,7 +38,7 @@ def funcionPrincipal():
 
     # Settings compute de climatoloy
     yearC1='1982'
-    yearC2='1992'
+    yearC2='1991'
 
     Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte']
     Titulos_short = ['GO','NH','SH','NAtl']

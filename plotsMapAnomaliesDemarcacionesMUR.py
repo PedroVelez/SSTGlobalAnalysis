@@ -27,14 +27,15 @@ start_time = time.time()
 
 analisisDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis'
 
-Titulos = ['Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán','Iberian Canary Basin']
-Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA','IBICan']
+Titulos = ['Demarcación marina canaria','Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación sudatlántica','Demarcación Estrecho y Alborán','Iberian Canary Basin']
+Titulos_short = ['CAN','LEB', 'NOR','SUD','ESA','IBICan']
+
 
 for i in range(0,len(Titulos)):
     titulo = Titulos[i]
     titulo_short = Titulos_short[i]
 
-    Title  = 'Anomalía de temperatura superficial (MUR) en la '+ titulo
+    Title  = 'Anomalía de temperatura superficial (MUR), respecto de 2003-2012, en la '+ titulo
     FileIn =  analisisDir+'/data/sstLDMUR_anom_'+titulo_short+'.nc'
     FileOut = analisisDir+'/images/map_sstdMUR_anom_'+titulo_short+'.png'
     

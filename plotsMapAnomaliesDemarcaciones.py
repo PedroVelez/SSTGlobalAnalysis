@@ -34,7 +34,7 @@ for i in range(0,len(Titulos)):
     titulo = Titulos[i]
     titulo_short = Titulos_short[i]
 
-    Title  = 'Anomalía de temperatura superficial en la '+ titulo
+    Title  = 'Anomalía de temperatura superficial, respecto de 1982-1992, en la '+ titulo
     FileIn =  analisisDir+'/data/sstLD_anom_'+titulo_short+'.nc'
     FileOut = analisisDir+'/images/map_sstd_anom_'+titulo_short+'.png'
     
@@ -48,7 +48,7 @@ for i in range(0,len(Titulos)):
 # Load the data from the .txt file
     lon, lat = [], []
     if titulo_short == 'CAN' or titulo_short == 'ESA' or titulo_short ==  'LEB' or titulo_short ==  'NOR' or titulo_short ==  'SUD' :
-        with open(dataDir+'/Demarcacion'+titulo_short+'.txt', 'r') as f:
+        with open(analisisDir+'/data/Demarcacion'+titulo_short+'.txt', 'r') as f:
             for line in f:
                 longitude, latitude = map(float, line.split())
                 lon.append(longitude)

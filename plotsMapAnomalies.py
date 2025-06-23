@@ -35,7 +35,7 @@ for i in range(0,len(Titulos)):
     titulo = Titulos[i]
     titulo_short = Titulos_short[i]
 
-    Title  = 'Anomalía de temperatura superficial en el '+ titulo
+    Title  = 'Anomalía de temperatura superficial, respecto de 1982-1992, en el '+ titulo
     FileIn =  analisisDir+'/data/sstLD_anom_'+titulo_short+'.nc'
     FileOut = analisisDir+'/images/map_sstd_anom_'+titulo_short+'.png'
 

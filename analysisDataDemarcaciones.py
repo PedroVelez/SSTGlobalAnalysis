@@ -38,7 +38,7 @@ def funcionPrincipal():
 
     # Settings compute de climatoloy
     yearC1='1982'
-    yearC2='1992'
+    yearC2='1991'
 
     Titulos = ['Iberian Canary Basin','Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
     Titulos_short = ['IBICan','LEB', 'NOR','CAN','SUD','ESA']

@@ -41,10 +41,10 @@ def funcionPrincipal():
 
     # Settings compute de climatoloy
     yearC1='2003'
-    yearC2='2013'
+    yearC2='2012'
 
-    Titulos = ['Iberian Canary Basin','Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán']
-    Titulos_short = ['IBICan','LEB', 'NOR','CAN','SUD','ESA']
+    Titulos = ['Demarcación marina canaria','Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación sudatlántica','Demarcación Estrecho y Alborán','Iberian Canary Basin']
+    Titulos_short = ['CAN','LEB', 'NOR','SUD','ESA','IBICan']
 
     # Load data
     print('>>>>> Cargando ficheros de '+base_file)
@@ -54,11 +54,14 @@ def funcionPrincipal():
         for im in range(1,13):
             for id in range(1,monthrange(iy,im)[1]+1):
                 files.append(base_file+"%04d%02d%02d090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"%(iy,im,id))
-
     iy=year2
     for im in range(1,6):
         for id in range(1,monthrange(iy,im)[1]+1):
             files.append(base_file+"%04d%02d%02d090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"%(iy,im,id))
+    iy=year2
+    im=6
+    for id in range(1,16):
+        files.append(base_file+"%04d%02d%02d090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"%(iy,im,id))
 
     def drop_coords(ds):
         ds = ds.get(['analysed_sst'])
@@ -67,7 +70,7 @@ def funcionPrincipal():
     DS = xr.open_mfdataset(files,combine='nested', concat_dim="time", parallel=True, combine_attrs= "drop", preprocess=drop_coords,autoclose = True, data_vars='minimal', coords="minimal")        
 
     # For each demarcacion
-    for i in range(1,len(Titulos)):
+    for i in range(0,len(Titulos)):
 
         titulo = Titulos[i]
         titulo_short = Titulos_short[i]

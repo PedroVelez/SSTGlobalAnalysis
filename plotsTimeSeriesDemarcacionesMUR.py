@@ -29,8 +29,9 @@ dataDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/data'
 imagesDir = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
 
 
-Titulos = ['Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán','Iberian Canary Basin']
-Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA','IBICan']
+Titulos = ['Demarcación marina canaria','Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación sudatlántica','Demarcación Estrecho y Alborán','Iberian Canary Basin']
+Titulos_short = ['CAN','LEB', 'NOR','SUD','ESA','IBICan']
+
 
 
 # Funciones --------------------------------------------------------------
@@ -166,7 +167,7 @@ for i in range(0,len(Titulos)):
     FiguraSerieTemporal(sstd,Ylabel,Xlabel,Title1,File1,17.5,19)
     
     ## Times series mean Sea Surface Temperature anomaly 
-    Title2  = 'Anomalía de temperatura superficial (MUR) promedio en el '+ titulo + '\nAnomalía respecto de 2003-2013'
+    Title2  = 'Anomalía de temperatura superficial (MUR) promedio en el '+ titulo + '\nAnomalía respecto de 2003-2012'
     File2 = imagesDir + '/sstdMUR_anom_mean_'+titulo_short+'.png'
     FiguraSerieTemporal(sstd_anom,Ylabel,Xlabel,Title2,File2,-0.25,0.8,)
     
@@ -176,7 +177,7 @@ for i in range(0,len(Titulos)):
     FiguraSerieTemporal_anual(sstd,Ylabel,Xlabel,Title3,File3,17.5,19)
 
     ## Daily times series anomly Sea Surface Temperature
-    Title4  = 'Anomalía de temperatura superficial (MUR), respecto del periodo 2003-2013, en el '+ titulo
+    Title4  = 'Anomalía de temperatura superficial (MUR), respecto del periodo 2003-2012, en el '+ titulo
     File4 = imagesDir + '/sstdMUR_anom_'+titulo_short+'.png'
     FiguraSerieTemporal_anual(sstd_anom,Ylabel,Xlabel,Title4,File4,-0.25,0.8)
 
