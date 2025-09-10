@@ -31,10 +31,14 @@ printf "   > Download data from current year SSTs \n"
 $pythonDir $analisisDir/downloadData.py
 
 printf "   > Update data SSTs \n"
-/bin/rm $analisisDir/data/sst*GO*.nc
-/bin/rm $analisisDir/data/sst*NH*.nc
-/bin/rm $analisisDir/data/sst*SH*.nc
-/bin/rm $analisisDir/data/sst*NAtl*.nc
+/bin/rm $analisisDir/data/sstd_*GO.nc
+/bin/rm $analisisDir/data/sstd_*NH.nc
+/bin/rm $analisisDir/data/sstd_*SH.nc
+/bin/rm $analisisDir/data/sstd_*NAtl.nc
+/bin/rm $analisisDir/data/sstLD_*GO.nc
+/bin/rm $analisisDir/data/sstLD_*NH.nc
+/bin/rm $analisisDir/data/sstLD_*SH.nc
+/bin/rm $analisisDir/data/sstLD_*NAtl.nc
 $pythonDir $analisisDir/analysisData.py
 
 elapsed=$SECONDS
@@ -43,10 +47,18 @@ printf "   > $elpased seconds \n"
 
 
 printf "   > Update data SSTs demarcaciones\n"
-/bin/rm $analisisDir/data/sst*CAN*.nc
-/bin/rm $analisisDir/data/sst*LEB*.nc
-/bin/rm $analisisDir/data/sst*NOR*.nc
-/bin/rm $analisisDir/data/sst*IBICan*.nc
+/bin/rm $analisisDir/data/sstd_*CAN.nc
+/bin/rm $analisisDir/data/sstd_*ESA.nc
+/bin/rm $analisisDir/data/sstd_*IBICan.nc
+/bin/rm $analisisDir/data/sstd_*LEB.nc
+/bin/rm $analisisDir/data/sstd_*NOR.nc
+/bin/rm $analisisDir/data/sstd_*IBICan.nc
+/bin/rm $analisisDir/data/sstLD_*CAN.nc
+/bin/rm $analisisDir/data/sstLD_*ESA.nc
+/bin/rm $analisisDir/data/sstLD_*IBICan.nc
+/bin/rm $analisisDir/data/sstLD_*LEB.nc
+/bin/rm $analisisDir/data/sstLD_*NOR.nc
+/bin/rm $analisisDir/data/sstLD_*IBICan.nc
 $pythonDir $analisisDir/analysisDataDemarcaciones.py
 
 elapsed=$SECONDS
@@ -71,20 +83,6 @@ $pythonDir $analisisDir/uploadImages.py
 
 
 
-#------------------------------------
-#TelegramBot
-#------------------------------------
-
-URL="https://api.telegram.org/bot$ArgoEsBotTOKEN/sendMessage"
-URLimg="https://api.telegram.org/bot$ArgoEsBotTOKEN/sendphoto?chat_id=$ArgoEsChannel"
-URLdoc="https://api.telegram.org/bot$ArgoEsBotTOKEN/sendDocument?chat_id=$ArgoEsChannel"
-
-curl -s -X POST $URL -d chat_id=$ArgoEsChannel -d text="Global Analisis SST" -d parse_mode=html
-curl -F "photo=@$analisisDir/images/map_sstd_anom_GO.png" $URLimg -F caption="Map Anomalia SST"
-curl -F "photo=@$analisisDir/images/sstd_GO.png" $URLimg -F caption="Global SST"
-curl -F "photo=@$analisisDir/images/sstd_anom_mean_GO_HN_HS.png" $URLimg -F caption="Compare HGlobal SST"
-curl -F "photo=@$analisisDir/images/sstd_anom_mean_NAtl.png" $URLimg -F caption="Atlantico Norte promedio SST"
-curl -F "photo=@$analisisDir/images/sstd_anom_NAtl.png" $URLimg -F caption="Atlantico Norte SST"
 
 end=$SECONDS
 duration=$(( end - start ))

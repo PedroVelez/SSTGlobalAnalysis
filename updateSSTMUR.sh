@@ -28,11 +28,18 @@ start=$SECONDS
 printf "   > Directorio $analisisDir \n"
 
 printf "   > Update data SSTs MUR demarcaciones\n"
-/bin/rm $analisisDir/data/sst*MUR*CAN*.nc
-/bin/rm $analisisDir/data/sst*MUR*LEB*.nc
-/bin/rm $analisisDir/data/sst*MUR*NOR*.nc
-/bin/rm $analisisDir/data/sst*MUR*IBICan*.nc
-$pythonDir $analisisDir/analysisDataDemarcacionesMUR.py
+/bin/rm $analisisDir/data/sstdMUR_*CAN.nc
+/bin/rm $analisisDir/data/sstdMUR_*ESA.nc
+/bin/rm $analisisDir/data/sstdMUR_*IBICan.nc
+/bin/rm $analisisDir/data/sstdMUR_*LEB.nc
+/bin/rm $analisisDir/data/sstdMUR_*NOR.nc
+/bin/rm $analisisDir/data/sstdMUR_*IBICan.nc
+/bin/rm $analisisDir/data/sstLDMUR_*CAN.nc
+/bin/rm $analisisDir/data/sstLDMUR_*ESA.nc
+/bin/rm $analisisDir/data/sstLDMUR_*IBICan.nc
+/bin/rm $analisisDir/data/sstLDMUR_*LEB.nc
+/bin/rm $analisisDir/data/sstLDMUR_*NOR.nc
+/bin/rm $analisisDir/data/sstLDMUR_*IBICan.nc$pythonDir $analisisDir/analysisDataDemarcacionesMUR.py
 
 elapsed=$SECONDS
 duration=$(( elapsed - start ))

@@ -60,7 +60,7 @@ def funcionPrincipal():
             files.append(base_file+"%04d%02d%02d090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"%(iy,im,id))
     iy=year2
     im=6
-    for id in range(1,16):
+    for id in range(1,29):
         files.append(base_file+"%04d%02d%02d090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"%(iy,im,id))
 
     def drop_coords(ds):
