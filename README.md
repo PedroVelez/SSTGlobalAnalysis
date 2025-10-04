@@ -12,17 +12,20 @@ Repositorio con los códigos en python que producen las figuras de SST en:
 <center>
       <h3>Demarcación Canaria</h3>
       <a href="https://www.oceanografia.es/IEOOS/SST/SST_CAN.html"><img src="https://www.oceanografia.es/IEOOS/SST/images/map_sstd_anom_CAN.png" alt="SST" width="800""></a>
+      <a href="https://www.oceanografia.es/IEOOS/SST/SSTMUR_CAN.html"><img src="https://www.oceanografia.es/IEOOS/SST/images/map_sstdMUR_anom_CAN.png" alt="SST" width="800""></a>
 </center>
+
 
 <center>
       <h3>Demarcación Estrecho-Alborán</h3>
       <a href="https://www.oceanografia.es/IEOOS/SST/SST_ESA.html"><img src="https://www.oceanografia.es/IEOOS/SST/images/map_sstd_anom_ESA.png" alt="SST" width="800""></a>
+      <a href="https://www.oceanografia.es/IEOOS/SST/SSTMUR_ESA.html"><img src="https://www.oceanografia.es/IEOOS/SST/images/map_sstdMUR_anom_ESA.png" alt="SST" width="800""></a>
 </center>
-
 
 <center>
       <h3>Demarcación Levantino Balear</h3>
       <a href="https://www.oceanografia.es/IEOOS/SST/SST_LEB.html"><img src="https://www.oceanografia.es/IEOOS/SST/images/map_sstd_anom_LEB.png" alt="SST" width="800""></a>
+      <a href="https://www.oceanografia.es/IEOOS/SST/SSTMUR_LEB.html"><img src="https://www.oceanografia.es/IEOOS/SST/images/map_sstdMUR_anom_LEB.png" alt="SST" width="800""></a>
 </center>
 
 <center>
@@ -33,8 +36,10 @@ Repositorio con los códigos en python que producen las figuras de SST en:
 <center>
       <h3>Demarcación SudAtlántica</h3>
       <a href="https://www.oceanografia.es/IEOOS/SST/SST_SUD.html"><img src="https://www.oceanografia.es/IEOOS/SST/images/map_sstd_anom_SUD.png" alt="SST" width="800""></a>
+      <a href="https://www.oceanografia.es/IEOOS/SST/SSTMUR_SUD.html"><img src="https://www.oceanografia.es/IEOOS/SST/images/map_sstdMUR_anom_SUD.png" alt="SST" width="800""></a>
 </center>
 <center>
       <h3>Area Iberian-Canary Basin</h3>
       <a href="https://www.oceanografia.es/IEOOS/SST/SST_IBICan.html"><img src="https://www.oceanografia.es/IEOOS/SST/images/map_sstd_anom_IBICan.png" alt="SST" width="800""></a>
+      <a href="https://www.oceanografia.es/IEOOS/SST/SSTMUR_IBICan.html"><img src="https://www.oceanografia.es/IEOOS/SST/images/map_sstdMUR_anom_IBICan.png" alt="SST" width="800""></a>
 </center>
