@@ -39,7 +39,9 @@ printf "   > Update data SSTs MUR demarcaciones\n"
 /bin/rm $analisisDir/data/sstLDMUR_*IBICan.nc
 /bin/rm $analisisDir/data/sstLDMUR_*LEB.nc
 /bin/rm $analisisDir/data/sstLDMUR_*NOR.nc
-/bin/rm $analisisDir/data/sstLDMUR_*IBICan.nc$pythonDir $analisisDir/analysisDataDemarcacionesMUR.py
+/bin/rm $analisisDir/data/sstLDMUR_*IBICan.nc
+
+$pythonDir $analisisDir/analysisDataDemarcacionesMUR.py
 
 elapsed=$SECONDS
 duration=$(( elapsed - start ))

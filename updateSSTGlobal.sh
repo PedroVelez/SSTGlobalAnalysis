@@ -81,6 +81,8 @@ $pythonDir $analisisDir/plotsComparaHemispheres.py
 printf "   > Upload Plots \n"
 $pythonDir $analisisDir/uploadImages.py
 
+printf "   > Send Report \n"
+$pythonDir $analisisDir/sendReportiGlobal.py
 
 
 

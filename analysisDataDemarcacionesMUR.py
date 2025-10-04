@@ -5,6 +5,7 @@ import xarray as xr
 import pandas as pd
 
 from calendar import monthrange
+from datetime import datetime, timedelta
 
 import os
 
@@ -36,8 +37,12 @@ def funcionPrincipal():
     imagesDir = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
 
     # Settings 
-    year1=2003
-    year2=2025
+    now = datetime.now()-timedelta(days=3)
+    dayFin=now.day
+    monthFin=now.month
+
+    yearBeg= 2003
+    yearFin= now.year
 
     # Settings compute de climatoloy
     yearC1='2003'
@@ -50,18 +55,17 @@ def funcionPrincipal():
     print('>>>>> Cargando ficheros de '+base_file)
 
     files = []
-    for iy in range(year1,year2):
+    for iy in range(yearBeg,yearFin):
         for im in range(1,13):
             for id in range(1,monthrange(iy,im)[1]+1):
                 files.append(base_file+"%04d%02d%02d090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"%(iy,im,id))
-    iy=year2
-    for im in range(1,6):
-        for id in range(1,monthrange(iy,im)[1]+1):
-            files.append(base_file+"%04d%02d%02d090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"%(iy,im,id))
-    iy=year2
-    im=6
-    for id in range(1,29):
-        files.append(base_file+"%04d%02d%02d090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"%(iy,im,id))
+
+    for im in range(1,monthFin):
+        for id in range(1,monthrange(yearFin,im)[1]+1):
+            files.append(base_file+"%04d%02d%02d090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"%(yearFin,im,id))
+
+    for id in range(1,dayFin+1):
+        files.append(base_file+"%04d%02d%02d090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"%(yearFin,monthFin,id))         
 
     def drop_coords(ds):
         ds = ds.get(['analysed_sst'])
