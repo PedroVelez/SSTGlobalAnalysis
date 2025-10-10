@@ -21,7 +21,7 @@ from globales import *
 # ------------------------------------------------------------------------
 # Inicio
 # ------------------------------------------------------------------------
-print('>>>>> plotsMapAnomalies' )
+print('>>>>> plotsMapanomalias' )
 start_time = time.time()
 
 analisisDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/'
@@ -75,6 +75,10 @@ for i in range(0,len(Titulos)):
     gd.top_labels = False
     ax.set_title(Title + ', ' + sst.time.dt.strftime("%d %B %Y").values + '\n');#
 
+    fid = open("plotsMapAnomalias.report", "w")
+    fid.write(Title + ', ' + sst.time.dt.strftime("%d %B %Y").values + '\n')
+    fid.close()
+
     plt.savefig(FileOut)
 
-print('      plotsMapAnomalies %6.0f s<<<<<' % (time.time() - start_time))
+print('      plotsMapAnomalias %6.0f s<<<<<' % (time.time() - start_time))

@@ -45,35 +45,17 @@ elapsed=$SECONDS
 duration=$(( elapsed - start ))
 printf "   > $elpased seconds \n"
 
-
-printf "   > Update data SSTs demarcaciones\n"
-/bin/rm $analisisDir/data/sstd_*CAN.nc
-/bin/rm $analisisDir/data/sstd_*ESA.nc
-/bin/rm $analisisDir/data/sstd_*IBICan.nc
-/bin/rm $analisisDir/data/sstd_*LEB.nc
-/bin/rm $analisisDir/data/sstd_*NOR.nc
-/bin/rm $analisisDir/data/sstd_*IBICan.nc
-/bin/rm $analisisDir/data/sstLD_*CAN.nc
-/bin/rm $analisisDir/data/sstLD_*ESA.nc
-/bin/rm $analisisDir/data/sstLD_*IBICan.nc
-/bin/rm $analisisDir/data/sstLD_*LEB.nc
-/bin/rm $analisisDir/data/sstLD_*NOR.nc
-/bin/rm $analisisDir/data/sstLD_*IBICan.nc
-$pythonDir $analisisDir/analysisDataDemarcaciones.py
-
-elapsed=$SECONDS
-duration=$(( elapsed - start ))
-printf "   > $elpased seconds \n"
-
-
 printf "   > Plots SSTs \n"
-/bin/rm $analisisDir/images/*.png
+#/bin/rm $analisisDir/images/*.png
+/bin/rm $analisisDir/images/*GO*.png
+/bin/rm $analisisDir/images/*NH*.png
+/bin/rm $analisisDir/images/*SH*.png
+/bin/rm $analisisDir/images/*NAtl*.png
+
 $pythonDir $analisisDir/plotsTimeSeries.py
-$pythonDir $analisisDir/plotsTimeSeriesDemarcaciones.py
 
 printf "   > Plots Mapa anomalia \n"
-$pythonDir $analisisDir/plotsMapAnomalies.py 
-$pythonDir $analisisDir/plotsMapAnomaliesDemarcaciones.py 
+$pythonDir $analisisDir/plotsMapAnomalias.py 
 
 printf "   > Plots comparacionHS \n"
 $pythonDir $analisisDir/plotsComparaHemispheres.py 
@@ -82,8 +64,7 @@ printf "   > Upload Plots \n"
 $pythonDir $analisisDir/uploadImages.py
 
 printf "   > Send Report \n"
-$pythonDir $analisisDir/sendReportiGlobal.py
-
+$pythonDir $analisisDir/sendReportGlobal.py
 
 
 end=$SECONDS

@@ -22,26 +22,27 @@ from globales import *
 # ------------------------------------------------------------------------
 # Inicio
 # ------------------------------------------------------------------------
-print('>>>>> plotsMapAnomaliesDemarcaciones' )
+print('>>>>> plotsMapanomaliasDemarcaciones' )
 start_time = time.time()
 
 analisisDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis'
 
-Titulos = ['Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán','Iberian Canary Basin']
-Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA','IBICan']
+Titulos = ['Demarcación marina canaria','Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación sudatlántica','Demarcación Estrecho y Alborán','Iberian Canary Basin']
+Titulos_short = ['CAN','LEB', 'NOR','SUD','ESA','IBICan']
+
 
 for i in range(0,len(Titulos)):
     titulo = Titulos[i]
     titulo_short = Titulos_short[i]
 
-    Title  = 'Anomalía de temperatura superficial, respecto de 1982-1992, en la '+ titulo
-    FileIn =  analisisDir+'/data/sstLD_anom_'+titulo_short+'.nc'
-    FileOut = analisisDir+'/images/map_sstd_anom_'+titulo_short+'.png'
+    Title  = 'Anomalía de temperatura superficial (MUR), respecto de 2003-2012, en la '+ titulo
+    FileIn =  analisisDir+'/data/sstLDMUR_anom_'+titulo_short+'.nc'
+    FileOut = analisisDir+'/images/map_sstdMUR_anom_'+titulo_short+'.png'
     
     print('    > '+Title)
     
     data = xr.open_dataset(FileIn)
-    sst = data.sst
+    sst = data.analysed_sst
 
     escalaLand='50m'
 
@@ -93,5 +94,5 @@ for i in range(0,len(Titulos)):
 
     plt.savefig(FileOut)
 
-print('      plotsMapAnomaliesDemarcaciones %6.0f s<<<<<' % (time.time() - start_time))
+print('      plotsMapanomaliasDemarcaciones %6.0f s<<<<<' % (time.time() - start_time))
 

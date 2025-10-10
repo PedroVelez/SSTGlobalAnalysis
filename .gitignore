@@ -7,6 +7,7 @@
 *.nc
 *.png
 *.pyc
+*.report
 *pycache*
 /__pycache__/*
 prueba*

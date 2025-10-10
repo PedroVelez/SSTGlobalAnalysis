@@ -15,10 +15,11 @@ then
   pythonDir=/opt/conda/envs/ocean/bin/python
 fi
 
-/bin/rm $analisisDir/updateSSTMUR.log
-/bin/touch $analisisDir/updateSSTMUR.log
+/bin/rm $analisisDir/updateSSTDemarcacionesMUR.log
+/bin/touch $analisisDir/updateSSTDemarcacionesMUR.log
 
-printf ">>>> Updating analisis global SSTs \n"
+
+printf ">>>> Updating analisis demarcaciones MUR SSTs \n"
 printf "   > $strval\n"
 start=$SECONDS
 
@@ -47,16 +48,18 @@ elapsed=$SECONDS
 duration=$(( elapsed - start ))
 printf "   > $elpased seconds \n"
 
-
 printf "   > Plots SSTs MUR \n"
 /bin/rm $analisisDir/images/*MUR*.png
 $pythonDir $analisisDir/plotsTimeSeriesDemarcacionesMUR.py
 
 printf "   > Plots Mapa anomalia MUR \n"
-$pythonDir $analisisDir/plotsMapAnomaliesDemarcacionesMUR.py 
+$pythonDir $analisisDir/plotsMapAnomaliasDemarcacionesMUR.py 
 
 printf "   > Upload Plots \n"
 $pythonDir $analisisDir/uploadImages.py
+
+printf "   > Send Report \n"
+$pythonDir $analisisDir/sendReportDemarcacionesMUR.py
 
 end=$SECONDS
 duration=$(( end - start ))
