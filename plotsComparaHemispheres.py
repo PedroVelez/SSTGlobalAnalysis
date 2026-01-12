@@ -12,29 +12,14 @@ import math
 
 import locale 
 
+from globales import *
+
 locale.setlocale(locale.LC_TIME, "es_ES");
 plt.rcParams['figure.figsize'] = (10, 4)
 
 ## Inicio
-HOME=os.environ['HOME']   
-f = open(HOME+'/.env', 'r')
-for line in f.readlines():
-    Name=line.strip().split('=')[0]
-    Content=line.strip().split('=')[-1]
-    if Name=='dirData' or Name=='dirAnalisis':
-        exec(Name + "=" + "'" + Content + "'")
-f.close()
-
-
-if os.uname().nodename.lower().find('eemmmbp') != -1:
-    imagesDir   = dirAnalisis + '/SSTGlobalAnalysis/images'
-    analisisDir = dirAnalisis + '/SSTGlobalAnalysis'    
-elif os.uname().nodename.lower().find('sagams') != -1:
-    imagesDir   = dirAnalisis + '/SSTGlobalAnalysis/images'
-    analisisDir = dirAnalisis + '/SSTGlobalAnalysis'
-elif os.uname().nodename.lower().find('rossby') != -1:
-    imagesDir   = dirAnalisis + '/SSTGlobalAnalysis/images'
-    analisisDir = dirAnalisis + '/SSTGlobalAnalysis'
+imagesDir = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
+analisisDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/'
 
 # Daily data
 data = xr.open_dataset(analisisDir+'/data/sstd_anom_mean_GO.nc')

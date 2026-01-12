@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
 import pandas as pd
+from datetime import datetime, timedelta
 
 import os
 
@@ -32,9 +33,11 @@ def funcionPrincipal():
     dataDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/data'
     imagesDir = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
 
+    
     # Settings 
+    now = datetime.now()-timedelta(days=3)
     year1=1982
-    year2=2025
+    year2=now.year
 
     # Settings compute de climatoloy
     yearC1='1982'

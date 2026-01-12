@@ -3,22 +3,21 @@ from datetime import datetime
 import smtplib
 from email.message import EmailMessage
 from email.utils import formataddr
+from dotenv import load_dotenv
 
 # ------------------------------------------------------------------------
 # Inicio
 # ------------------------------------------------------------------------
-print('>>>>> sendReportiDemarcacionesMUR' )
+print('>>>>> sendReportDemarcacionesMUR' )
 
 ## Read env data
-HOME=os.environ['HOME']
-f = open(HOME+'/.env', 'r')
-for line in f.readlines():
-    Name=line.strip().split('=')[0]
-    Content=line.strip().split('=')[-1]
-    if Name=='EMAIL_ADDRESS' or Name=='EMAIL_PASSWORD' or Name=='USER_NAME':
-        exec(Name + "=" + "'" + Content + "'")
-f.close()
+load_dotenv()
 
+SOURCE_IMAP = os.getenv("SOURCE_IMAP")
+SOURCE_SMTP = os.getenv("SOURCE_SMTP")
+ARGO_USER   = os.getenv("ARGO_USER")
+ARGO_MAIL   = os.getenv("ARGO_MAIL")
+ARGO_PASS   = os.getenv("ARGO_PASS")
 
 analisisDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/'
 imagesDir     = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
@@ -27,7 +26,7 @@ current_date = datetime.now().strftime('%d-%b-%Y %H:%M:%S')
 
 msg = EmailMessage()
 msg['Subject'] = 'Demarcaciones MUR Analisis SST actualizado '+current_date
-msg['From'] = formataddr(("IEOOS", EMAIL_ADDRESS))
+msg['From'] = formataddr(("IEOOS", ARGO_MAIL))
 msg['To'] = 'pvelezbelchi@gmail.com'
 msg.set_content('SST')
 
@@ -53,12 +52,9 @@ with open(analisisDir+'images/map_sstdMUR_anom_CAN.png', 'rb') as img:
     img_data = img.read()
     msg.add_attachment(img_data, maintype='image', subtype='png', filename='map_sstdMUR_anom_CAN.png')
 
-
-
 # Send the email
-with smtplib.SMTP_SSL('smtpin.csic.es', 465) as smtp:
-    smtp.login(USER_NAME, EMAIL_PASSWORD)
+with smtplib.SMTP_SSL(SOURCE_SMTP, 465) as smtp:
+    smtp.login(ARGO_USER, ARGO_PASS)
     smtp.send_message(msg)
-
 
 

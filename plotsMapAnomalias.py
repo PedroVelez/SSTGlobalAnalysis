@@ -75,10 +75,6 @@ for i in range(0,len(Titulos)):
     gd.top_labels = False
     ax.set_title(Title + ', ' + sst.time.dt.strftime("%d %B %Y").values + '\n');#
 
-    fid = open("plotsMapAnomalias.report", "w")
-    fid.write(Title + ', ' + sst.time.dt.strftime("%d %B %Y").values + '\n')
-    fid.close()
-
     plt.savefig(FileOut)
 
 print('      plotsMapAnomalias %6.0f s<<<<<' % (time.time() - start_time))

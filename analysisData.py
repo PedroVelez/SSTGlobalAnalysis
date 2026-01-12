@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
 import pandas as pd
+from datetime import datetime, timedelta
 
 import os
 
@@ -33,8 +34,9 @@ def funcionPrincipal():
     dataDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/data'
 
     # Settings 
+    now = datetime.now()-timedelta(days=3)
     year1=1982
-    year2=2025
+    year2=now.year
 
     # Settings compute de climatoloy
     yearC1='1982'
@@ -90,8 +92,7 @@ def funcionPrincipal():
                     for lon in sst.lon.values] 
                     for lat in sst.lat.values])
             sst = sst.where(~mask)
-            print('    > '+titulo)
-            
+            print('    > '+titulo)           
                         
     # Daily analisis
         print('   >> Daily '+titulo+titulo_short)
@@ -142,7 +143,7 @@ def funcionPrincipal():
         #print('    > create climatology')
         #sst_clim = sst.sel(time=slice(yearC1,yearC2)).groupby('time.month').mean(dim='time').load();
     ## Create anomaly
-        print('    > Compute anomaly mean')
+        #print('    > Compute anomaly mean')
         #sst_anom = sst.groupby('time.month') - sst_clim
         #sst_anom.load();
 
@@ -156,7 +157,7 @@ def funcionPrincipal():
         #sst_anom_wmean_rolling = sst_anom_wmean.rolling(time=12,center=True).mean()
         
     ##Save in netcdf
-        print('    > to netcdf')
+        #print('    > to netcdf')
         #sst_anom.to_netcdf(dataDir+'/sstm_anom_'+titulo_short+'.nc',mode='w')
         #sst_wmean.to_netcdf(dataDir+'/sstm_mean_'+titulo_short+'.nc',mode='w')
         #sst_anom_wmean.to_netcdf(dataDir+'/sstm_anom_mean_'+titulo_short+'.nc',mode='w')

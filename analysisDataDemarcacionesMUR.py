@@ -162,8 +162,9 @@ def funcionPrincipal():
             
             sst = sst.where(~mask)
             print('>>>>> '+titulo)
-
+            
     # Convert to Celsius
+        sst = sst.sortby("time") # garantiza índice ordenado    
         sst=sst-273.15
         sst = sst.chunk({"time":1, "lat":sst.sizes['lat'], "lon":sst.sizes['lon']})
     

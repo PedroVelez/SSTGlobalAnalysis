@@ -14,6 +14,8 @@ import datetime
 import os
 import math
 
+from dotenv import load_dotenv
+
 import locale 
 
 locale.setlocale(locale.LC_TIME, "es_ES");
@@ -76,14 +78,13 @@ def ReportSerieTemporal_anual(sst,TituloFigura):
 # -----------------------------------------------------------------------
 
 ## Read env data
-HOME=os.environ['HOME']
-f = open(HOME+'/.env', 'r')
-for line in f.readlines():
-    Name=line.strip().split('=')[0]
-    Content=line.strip().split('=')[-1]
-    if Name=='EMAIL_ADDRESS' or Name=='EMAIL_PASSWORD' or Name=='USER_NAME':
-        exec(Name + "=" + "'" + Content + "'")
-f.close()
+load_dotenv()
+
+SOURCE_IMAP = os.getenv("SOURCE_IMAP")
+SOURCE_SMTP = os.getenv("SOURCE_SMTP")
+ARGO_USER   = os.getenv("ARGO_USER")
+ARGO_MAIL   = os.getenv("ARGO_MAIL")
+ARGO_PASS   = os.getenv("ARGO_PASS")
 
 Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte', 'Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán','Iberian Canary Basin']
 Titulos_short = ['GO','NH','SH','NAtl','LEB', 'NOR','CAN','SUD','ESA','IBICan']
@@ -115,7 +116,7 @@ current_date = datetime.datetime.now().strftime('%d-%b-%Y %H:%M:%S')
 
 msg = EmailMessage()
 msg['Subject'] = 'Global Analisis SST '+current_date
-msg['From'] = formataddr(("IEOOS", EMAIL_ADDRESS))
+msg['From'] = formataddr(("IEOOS", ARGO_MAIL))
 msg['To'] = 'pvelezbelchi@gmail.com'
 msg.add_alternative(f"""
 <html>
@@ -154,10 +155,9 @@ with open(analisisDir+'/images/sstd_anom_NAtl.png', 'rb') as img:
     img_data = img.read()
     msg.add_attachment(img_data, maintype='image', subtype='png', filename='sstd_anom_NAtl.png')
 
-
 # Send the email
-with smtplib.SMTP_SSL('smtpin.csic.es', 465) as smtp:
-    smtp.login(USER_NAME, EMAIL_PASSWORD)
+with smtplib.SMTP_SSL(SOURCE_SMTP, 465) as smtp:
+    smtp.login(ARGO_USER, ARGO_PASS)
     smtp.send_message(msg)
 
 

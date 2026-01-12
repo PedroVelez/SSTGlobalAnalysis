@@ -2,7 +2,9 @@ import ftplib
 import datetime
 import os
 import glob
+from dotenv import load_dotenv
 from globales import *
+
 
 # ------------------------------------------------------------------------
 # Inicio
@@ -10,17 +12,11 @@ from globales import *
 print('>>>>> uploadImages' )
 
 ## Read env data
-HOME=os.environ['HOME']   
-f = open(HOME+'/.env', 'r')
-for line in f.readlines():
-    Name=line.strip().split('=')[0]
-    Content=line.strip().split('=')[-1]
-    if Name=='dirData' or Name=='dirAnalisis' or Name=='userFTP' or Name=='passwdFTP':
-        exec(Name + "=" + "'" + Content + "'")
-f.close()
+load_dotenv()
+userFTP = os.getenv("userFTP")
+passwdFTP = os.getenv("passwdFTP")
 
 imagesDir = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
-
 os.chdir(imagesDir)
 
 ## Global analisis
