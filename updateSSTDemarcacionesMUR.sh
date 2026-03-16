@@ -1,6 +1,5 @@
 #! /bin/zsh
 source $HOME/.zshrc
-source $HOME/.env
 
 # Settings based on computer
 strval=$(uname -a)

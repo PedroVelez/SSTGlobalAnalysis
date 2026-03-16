@@ -1,6 +1,6 @@
 #! /bin/zsh
 source $HOME/.zshrc
-source $HOME/.env
+#source $HOME/.env
 
 # Settings based on computer
 strval=$(uname -a)
@@ -61,7 +61,7 @@ printf "   > Plots comparacionHS \n"
 $pythonDir $analisisDir/plotsComparaHemispheres.py 
 
 printf "   > Upload Plots \n"
-$pythonDir $analisisDir/uploadImages.py
+$pythonDir $analisisDir/uploadImagesGlobal.py
 
 printf "   > Send Report \n"
 $pythonDir $analisisDir/sendReportGlobal.py
