@@ -25,7 +25,7 @@ from globales import *
 print('>>>>> plotsMapanomaliasDemarcaciones' )
 start_time = time.time()
 
-analisisDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis'
+analisisDir   = GlobalSU['ProPath'] + '/SSTGlobalAnalysis'
 
 Titulos = ['Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán','Iberian Canary Basin']
 Titulos_short = ['LEB', 'NOR','CAN','SUD','ESA','IBICan']

@@ -1,17 +1,16 @@
 #! /bin/zsh
 source $HOME/.zshrc
-#source $HOME/.env
 
 # Settings based on computer
 strval=$(uname -a)
 if [[ $strval == *EemmMBP* ]];
 then
-  analisisDir=$HOME/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis
+  analisisDir=$HOME/Dropbox/Oceanografia/Proyectos/SSTGlobalAnalysis
   pythonDir=$HOME/miniconda3/envs/ocean/bin/python
 fi
 if [[ $strval == *rossby* ]];
 then
-  analisisDir=$HOME/Analisis/SSTGlobalAnalysis
+  analisisDir=$HOME/Proyectos/SSTGlobalAnalysis
   pythonDir=/opt/conda/envs/ocean/bin/python
 fi
 

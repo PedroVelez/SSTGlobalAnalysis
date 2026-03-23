@@ -89,8 +89,8 @@ ARGO_PASS   = os.getenv("ARGO_PASS")
 Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte', 'Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación marina canaria','Demarcación sudatlántica','Demarcación Estrecho y Alborán','Iberian Canary Basin']
 Titulos_short = ['GO','NH','SH','NAtl','LEB', 'NOR','CAN','SUD','ESA','IBICan']
 
-analisisDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis'
-dataDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/data'
+analisisDir   = GlobalSU['ProPath'] + '/SSTGlobalAnalysis'
+dataDir   = GlobalSU['ProPath'] + '/SSTGlobalAnalysis/data'
 
 # Daily data
 it=0

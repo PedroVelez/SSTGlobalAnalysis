@@ -24,8 +24,8 @@ from globales import *
 print('>>>>> plotsMapanomalias' )
 start_time = time.time()
 
-analisisDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/'
-imagesDir     = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
+analisisDir   = GlobalSU['ProPath'] + '/SSTGlobalAnalysis/'
+imagesDir     = GlobalSU['ProPath'] + '/SSTGlobalAnalysis/images'
 
 Titulos = ['Oceano Global','AtlanticoNorte']
 Titulos_short = ['GO','NAtl']

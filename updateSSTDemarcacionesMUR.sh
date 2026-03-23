@@ -5,12 +5,12 @@ source $HOME/.zshrc
 strval=$(uname -a)
 if [[ $strval == *EemmMBP* ]];
 then
-  analisisDir=$HOME/Dropbox/Oceanografia/Analisis/SSTGlobalAnalysis
+  analisisDir=$HOME/Dropbox/Oceanografia/Proyectos/SSTGlobalAnalysis
   pythonDir=$HOME/miniconda3/envs/ocean/bin/python
 fi
 if [[ $strval == *rossby* ]];
 then
-  analisisDir=$HOME/Analisis/SSTGlobalAnalysis
+  analisisDir=$HOME/Proyectos/SSTGlobalAnalysis
   pythonDir=/opt/conda/envs/ocean/bin/python
 fi
 
@@ -55,7 +55,7 @@ printf "   > Plots Mapa anomalia MUR \n"
 $pythonDir $analisisDir/plotsMapAnomaliasDemarcacionesMUR.py 
 
 printf "   > Upload Plots \n"
-$pythonDir $analisisDir/uploadImages.py
+$pythonDir $analisisDir/uploadImagesDemarcacionesMUR.py
 
 printf "   > Send Report \n"
 $pythonDir $analisisDir/sendReportDemarcacionesMUR.py

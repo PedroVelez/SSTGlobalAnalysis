@@ -16,7 +16,7 @@ load_dotenv()
 userFTP = os.getenv("userFTP")
 passwdFTP = os.getenv("passwdFTP")
 
-imagesDir = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
+imagesDir = GlobalSU['ProPath'] + '/SSTGlobalAnalysis/images'
 os.chdir(imagesDir)
 
 ## Global analisis

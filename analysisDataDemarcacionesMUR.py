@@ -33,8 +33,8 @@ from globales import *
 # Funciones --------------------------------------------------------------
 def funcionPrincipal():
     base_file = GlobalSU['DatPath'] + '/Satelite/MUR/NC/'
-    dataDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/data'
-    imagesDir = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
+    dataDir   = GlobalSU['ProPath'] + '/SSTGlobalAnalysis/data'
+    imagesDir = GlobalSU['ProPath'] + '/SSTGlobalAnalysis/images'
 
     # Settings 
     now = datetime.now()-timedelta(days=3)

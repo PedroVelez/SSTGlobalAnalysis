@@ -18,8 +18,8 @@ locale.setlocale(locale.LC_TIME, "es_ES");
 plt.rcParams['figure.figsize'] = (10, 4)
 
 ## Inicio
-imagesDir = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
-analisisDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/'
+imagesDir = GlobalSU['ProPath'] + '/SSTGlobalAnalysis/images'
+analisisDir   = GlobalSU['ProPath'] + '/SSTGlobalAnalysis/'
 
 # Daily data
 data = xr.open_dataset(analisisDir+'/data/sstd_anom_mean_GO.nc')

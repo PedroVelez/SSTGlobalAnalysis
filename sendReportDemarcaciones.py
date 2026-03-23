@@ -19,8 +19,8 @@ ARGO_USER   = os.getenv("ARGO_USER")
 ARGO_MAIL   = os.getenv("ARGO_MAIL")
 ARGO_PASS   = os.getenv("ARGO_PASS")
 
-analisisDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/'
-imagesDir     = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
+analisisDir   = GlobalSU['ProPath'] + '/SSTGlobalAnalysis/'
+imagesDir     = GlobalSU['ProPath'] + '/SSTGlobalAnalysis/images'
 
 current_date = datetime.now().strftime('%d-%b-%Y %H:%M:%S')
 

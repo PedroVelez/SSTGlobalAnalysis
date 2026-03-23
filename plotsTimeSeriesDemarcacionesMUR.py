@@ -25,8 +25,8 @@ from globales import *
 print('>>>>> plotsTimeSeriesDemarcaciones' )
 
 base_file = GlobalSU['DatPath'] + '/Satelite/MUR/NC/'
-dataDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/data'
-imagesDir = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
+dataDir   = GlobalSU['ProPath'] + '/SSTGlobalAnalysis/data'
+imagesDir = GlobalSU['ProPath'] + '/SSTGlobalAnalysis/images'
 
 
 Titulos = ['Demarcación marina canaria','Demarcación marina levantino-balear', 'Demarcación marina noratlántica','Demarcación sudatlántica','Demarcación Estrecho y Alborán','Iberian Canary Basin']

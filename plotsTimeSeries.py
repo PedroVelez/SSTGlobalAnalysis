@@ -24,8 +24,8 @@ from globales import *
 # ------------------------------------------------------------------------
 print('>>>>> plotsTimeSeries' )
 
-dataDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/data'
-imagesDir = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
+dataDir   = GlobalSU['ProPath'] + '/SSTGlobalAnalysis/data'
+imagesDir = GlobalSU['ProPath'] + '/SSTGlobalAnalysis/images'
 
 Titulos = ['Oceano Global','Hemisferio norte','Hemisferio sur','AtlanticoNorte']
 Titulos_short = ['GO','NH','SH','NAtl']

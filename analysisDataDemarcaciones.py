@@ -30,8 +30,8 @@ from globales import *
 # Funciones --------------------------------------------------------------
 def funcionPrincipal():
     base_file = GlobalSU['DatPath'] + '/Satelite/noaa.oisst.v2.highres/NC/sst.day.mean'
-    dataDir   = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/data'
-    imagesDir = GlobalSU['AnaPath'] + '/SSTGlobalAnalysis/images'
+    dataDir   = GlobalSU['ProPath'] + '/SSTGlobalAnalysis/data'
+    imagesDir = GlobalSU['ProPath'] + '/SSTGlobalAnalysis/images'
 
     
     # Settings 
