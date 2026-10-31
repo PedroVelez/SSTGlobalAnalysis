@@ -52,6 +52,7 @@ d_tmin = sstdGO_anom.time.isel(sstdGO_anom.argmin(...))
     
 ax.plot(d_tmax , tmax,'rs' , markersize = 12 , markeredgecolor='k')
 ax.plot(d_tmin , tmin,'bs' , markersize = 12 , markeredgecolor='k')
+ax.plot(sstdGO_anom.time[-1] , sstdGO_anom[-1],'co' , markersize = 12 , markeredgecolor='k')
 
 ax.legend(loc = 4)
 

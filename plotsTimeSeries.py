@@ -57,6 +57,7 @@ def FiguraSerieTemporal(sst,Ylabel,Xlabel,TituloFigura,FileOut,Ymin,Ymax):
 
     ax.plot(d_tmax , tmax,'rs' , markersize = 12 , markeredgecolor='k')
     ax.plot(d_tmin , tmin,'bs' , markersize = 12 , markeredgecolor='k')
+    ax.plot(sst.time[-1] , sst[-1],'co' , markersize = 12 , markeredgecolor='k')
 
     ax.legend(loc = 4)
 
